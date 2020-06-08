@@ -1,0 +1,81 @@
+<div fxLayout="row">
+  <div fxFlex.gt-sm="100%">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>New site</mat-card-title>
+
+        <form class="example-form" (ngSubmit)="onSubmit()">
+
+          <mat-form-field>
+            <mat-label>Site ID</mat-label>
+            <input matInput name="sId" [(ngModel)]="site.sId" disabled>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Site type</mat-label>
+            <input matInput name="siteTypeId" [(ngModel)]="site.siteTypeId">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Site name</mat-label>
+            <input matInput name="name" [(ngModel)]="site.name">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Country name</mat-label>
+            <input matInput name="countryName" [(ngModel)]="site.countryName">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>First-level administrative division</mat-label>
+            <input matInput name="firstLevel" [(ngModel)]="site.firstLevel">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Second-level administrative division</mat-label>
+            <input matInput name="secondLevel" [(ngModel)]="site.secondLevel">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Third-level administrative division</mat-label>
+            <input matInput name="thirdLevel" [(ngModel)]="site.thirdLevel">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Fourth-level administrative division</mat-label>
+            <input matInput name="fourthLevel" [(ngModel)]="site.fourthLevel">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Fifth-level administrative division</mat-label>
+            <input matInput name="fifthLevel" [(ngModel)]="site.fifthLevel">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Nearest populated place</mat-label>
+            <input matInput name="nearestPopulatedPlace" [(ngModel)]="site.nearestPopulatedPlace">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Site latitude (in decimal degrees)</mat-label>
+            <input matInput name="latitude" [(ngModel)]="site.latitude">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Site longitude (in decimal degrees)</mat-label>
+            <input matInput name="longitude" [(ngModel)]="site.longitude">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Site elevation (meters)</mat-label>
+            <input matInput name="elevation" [(ngModel)]="site.elevation">
+          </mat-form-field>
+
+          <button mat-raised-button type="submit">Create</button>
+          <button mat-raised-button (click)="back()">Back</button>
+        </form>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

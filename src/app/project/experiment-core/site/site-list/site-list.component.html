@@ -1,0 +1,51 @@
+<div fxLayout="row">
+  <div fxFlex.gt-sm="100%">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>Sites</mat-card-title>
+
+        <p><button mat-raised-button color="primary" (click)="addSite()">New site</button></p>
+
+        <table mat-table [dataSource]="site" class="mat-elevation-z8" style="width: 100%;">
+
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> site ID. </th>
+            <td mat-cell *matCellDef="let element"> {{ element.siteId }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="sId">
+            <th mat-header-cell *matHeaderCellDef> s ID. </th>
+            <td mat-cell *matCellDef="let element"> {{ element.sId }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="countryName">
+            <th mat-header-cell *matHeaderCellDef> Country name </th>
+            <td mat-cell *matCellDef="let element"> {{ element.countryName }} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> no-data </td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element" class="action-link">
+              <a [routerLink]="" (click)="editSite(element.siteId)">Edit</a> |
+              <a [routerLink]="" (click)="deleteSite(element)">Delete</a>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
