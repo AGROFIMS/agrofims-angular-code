@@ -1,0 +1,32 @@
+<div fxLayout="row">
+    <div fxFlex.gt-sm="100%">
+        <mat-card>
+            <mat-card-content>
+                <p class="text-right">
+                    <mat-card-title>Experiment description</mat-card-title>
+                </p>
+                <p>
+                    <a routerLink="/">Home</a> |
+                    <a routerLink="/experiments">Experiments</a> |
+                    <b>Manage experiment: GN2DQ</b>
+                </p>
+                <br>
+                <mat-tab-group mat-align-tabs="start">
+                    <mat-tab label="Experiment">
+                        <!-- <app-experiment-edit [id]="experiment.experimentId.toString()"></app-experiment-edit> -->
+                        <app-experiment-edit [id]="experiment.experimentId.toString()"></app-experiment-edit>
+                        <app-fund-agency-list [id]="experiment.experimentId.toString()"></app-fund-agency-list>
+                        <app-fund-agency-add [id]="experiment.experimentId.toString()"></app-fund-agency-add>
+                    </mat-tab>
+                    <mat-tab label="Personnel">
+                        <h3>Under construction</h3>
+                    </mat-tab>
+                    <mat-tab label=" Manage site">
+                        <app-exp-site-list [id]="experiment.experimentId.toString()"></app-exp-site-list>
+                    </mat-tab>
+                </mat-tab-group>
+
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
