@@ -1,0 +1,41 @@
+fund-agency-edit
+<mat-card>
+  <mat-card-header>
+    <button mat-icon-button color="primary" (click)="save()" title="save">
+      <mat-icon>save</mat-icon>
+    </button>
+    <button mat-icon-button color="basic" (click)="remove(fundAgency)" title="remove">
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content>
+    <div fxLayout="row">
+      <mat-form-field class="p-r-10">
+        <mat-label>Funding agency type</mat-label>
+        <mat-select name="fundAgencyTypeId" [(ngModel)]="fundAgency.fundAgencyTypeId">
+          <mat-option *ngFor="let par of parameter" [value]="par.parameterId">
+            {{ par.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field *ngIf="fundAgency.fundAgencyTypeId == '5'" class="p-l-10">
+        <mat-label>Choose CGIAR center</mat-label>
+        <mat-select name="fundAgencyTypeCenterId" [(ngModel)]="fundAgency.fundAgencyTypeCenterId">
+          <mat-option *ngFor="let par2 of parameter2" [value]="par2.parameterId">
+            {{ par2.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="p-l-10" *ngIf="fundAgency.fundAgencyTypeId != '5'">
+        <mat-label>Funding agency name</mat-label>
+        <input matInput name="fundAgencyTypeName" [(ngModel)]="fundAgency.fundAgencyTypeName">
+      </mat-form-field>
+    </div>
+    <div fxLayout="row">
+      <mat-form-field fxFlex="50" class="p-r-10" *ngIf="fundAgency.fundAgencyTypeId == '16'">
+        <mat-label>Other</mat-label>
+        <input matInput name="fundAgencyTypeOther" [(ngModel)]="fundAgency.fundAgencyTypeOther">
+      </mat-form-field>
+    </div>
+  </mat-card-content>
+</mat-card>

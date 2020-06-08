@@ -1,0 +1,41 @@
+<mat-card-content *ngFor="let row of newRow; let i=index">
+    <!-- <mat-form-field class="example-full-width">
+        <mat-label>Experiment ID</mat-label>
+        <input matInput name="fundAgencyTypeId" [(ngModel)]="fundAgency.fundAgencyTypeId">
+    </mat-form-field> -->
+  
+    <mat-form-field>
+        <mat-label>Funding agency type</mat-label>
+        <mat-select name="fundAgencyTypeId{{i}}" [(ngModel)]="row.fundAgencyTypeId">
+            <mat-option *ngFor="let par of parameter" [value]="par.parameterId">
+            {{ par.name }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field *ngIf="row.fundAgencyTypeId == '5'">
+      <mat-label>Choose CGIAR center</mat-label>
+      <mat-select name="fundAgencyTypeCenterId{{i}}" [(ngModel)]="row.fundAgencyTypeCenterId">
+          <mat-option *ngFor="let par2 of parameter2" [value]="par2.parameterId">
+          {{ par2.name }}
+          </mat-option>
+      </mat-select>
+    </mat-form-field>
+  
+    <mat-form-field class="example-full-width" *ngIf="row.fundAgencyTypeId == '16'">
+      <mat-label>Other</mat-label>
+      <input matInput name="fundAgencyTypeOther{{i}}" [(ngModel)]="row.fundAgencyTypeOther">
+    </mat-form-field>
+    
+    <mat-form-field class="example-full-width" *ngIf="row.fundAgencyTypeId != '5'">
+        <mat-label>Funding agency name</mat-label>
+        <input matInput name="fundAgencyTypeName{{i}}" [(ngModel)]="row.fundAgencyTypeName">
+    </mat-form-field>
+
+    <button mat-raised-button (click)="removeForm(i)">Remove</button>
+  
+</mat-card-content>
+
+<br>
+<button mat-raised-button (click)="addForm()">Add</button>
+<button mat-raised-button (click)="saveFundAgency()">Save</button>
