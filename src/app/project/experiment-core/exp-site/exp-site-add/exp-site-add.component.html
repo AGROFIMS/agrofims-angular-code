@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>New experiment site</h2>
+<mat-dialog-content class="mat-typography">
+
+  <mat-form-field>
+    <mat-label>Experiment ID</mat-label>
+    <input matInput name="sId" [(ngModel)]="expSite.experimentId">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Site ID</mat-label>
+    <input matInput name="siteTypeId" [(ngModel)]="expSite.siteId">
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Site Vegetation</mat-label>
+    <input matInput name="name" [(ngModel)]="expSite.inSiteVegetation">
+  </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="save()">Create</button>
+</mat-dialog-actions>
