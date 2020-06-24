@@ -1,26 +1,26 @@
-<div fxLayout="row">
-    <div fxFlex.gt-sm="100%" >
-            <mat-card>
-                    <mat-card-content>
-                        <mat-card-title>New experiment</mat-card-title>
+<mat-card-content>
 
-                        <br>
-                        
-                        <form class="example-form" (ngSubmit)="onSubmit(experimentModel.expId)">
-                            <mat-form-field class="example-full-width">
-                              <mat-label>Experiment ID</mat-label>
-                              <input matInput name="expId" [(ngModel)]="experimentModel.expId">
-                            </mat-form-field>
-                          
-                            <mat-form-field class="example-full-width">
-                              <mat-label>Experiment Name</mat-label>
-                              <input matInput name="experimentName" [(ngModel)]="experimentModel.experimentName" placeholder="Enter name...">
-                            </mat-form-field>
-                            <button mat-raised-button type="submit">Create</button>
-                            <button mat-raised-button (click)="back()">Back</button>
-                        </form>
+  <mat-card-title>New experiment</mat-card-title>
 
-                    </mat-card-content>        
-            </mat-card>
-    </div>
-</div>
+  <form>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Experiment ID</mat-label>
+      <input matInput name="expId" [(ngModel)]="experimentModel.expId">
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Experiment Name</mat-label>
+      <input matInput name="experimentName" [(ngModel)]="experimentModel.experimentName" placeholder="Enter name...">
+    </mat-form-field>
+
+  </form>
+
+  <mat-card-actions>
+
+    <button mat-raised-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial
+      (click)="post(experimentModel.expId)">Create</button>
+  </mat-card-actions>
+
+</mat-card-content>

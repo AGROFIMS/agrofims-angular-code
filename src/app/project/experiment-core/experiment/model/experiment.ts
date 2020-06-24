@@ -6,7 +6,7 @@ export class Experiment {
         public experimentProjectName: string,
         public experimentStartDate: string,
         public experimentEndDate: string,
-        public experimentType: string[],
+        public experimentType: string,
         public experimentTypeOther: string,
         public experimentObj: string,
         public experimentGrantNumber: string,

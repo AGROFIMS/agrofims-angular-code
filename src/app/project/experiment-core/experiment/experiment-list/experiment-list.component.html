@@ -1,60 +1,78 @@
+<mat-card-header>
+  <mat-card-title>
+    Experiments
+  </mat-card-title>
+</mat-card-header>
+
+<mat-nav-list>
+  <ol>
+    <li class="home"><a routerLink="/">Home</a></li>
+    <li class="active">Experiments</li>
+  </ol>
+</mat-nav-list>
+
 <div fxLayout="row">
-    <div fxFlex.gt-sm="100%" >
-            <mat-card>
-                    <mat-card-content>
-                        <mat-card-title>Experiments</mat-card-title>
+  <div fxFlex.gt-sm="100%">
 
-                        <p><button mat-raised-button color="primary" (click)="addExperiment()">New experiment</button></p>
-                        
-                        <!-- <mat-form-field>
-                            <mat-label>Filter</mat-label>
-                            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium">
-                        </mat-form-field> -->
-                        <table mat-table [dataSource]="experiment" class="mat-elevation-z8" style="width: 100%;">
-    
-                            <ng-container matColumnDef="id">
-                              <th mat-header-cell *matHeaderCellDef> Experiment ID. </th>
-                              <td mat-cell *matCellDef="let element"> {{ element.expId }} </td>
-                            </ng-container>
-                            
-                            <ng-container matColumnDef="name">
-                              <th mat-header-cell *matHeaderCellDef> Experiment name </th>
-                              <td mat-cell *matCellDef="let element"> {{ element.experimentName }} </td>
-                            </ng-container>
-                           
-                            <ng-container matColumnDef="projectName">
-                              <th mat-header-cell *matHeaderCellDef> Experiment project name </th>
-                              <td mat-cell *matCellDef="let element"> {{ element.experimentProjectName }} </td>
-                            </ng-container>
+    <mat-card>
+      <mat-card-content>
 
-                            <ng-container matColumnDef="experimentType">
-                              <th mat-header-cell *matHeaderCellDef> Type of experiment </th>
-                              <td mat-cell *matCellDef="let element"> {{ element.experimentType }} </td>
-                            </ng-container>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" (click)="addExperiment()">New experiment</button>
+        </mat-card-actions>
 
-                            <ng-container matColumnDef="date">
-                              <th mat-header-cell *matHeaderCellDef> Date </th>
-                              <td mat-cell *matCellDef="let element"> no-data </td>
-                            </ng-container>
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+          <ng-container matColumnDef="expId">
+            <th mat-header-cell *matHeaderCellDef> ID </th>
+            <td mat-cell *matCellDef="let element"> {{ element.expId }} </td>
+          </ng-container>
 
-                            <!-- <ng-container matColumnDef="actions">
-                              <th mat-header-cell *matHeaderCellDef> Actions </th>
-                              <td mat-cell *matCellDef="let element"> no-data </td>
-                            </ng-container> -->
+          <ng-container matColumnDef="experimentName">
+            <th mat-header-cell *matHeaderCellDef> Experiment Name </th>
+            <td mat-cell *matCellDef="let element"> {{ element.experimentName }} </td>
+          </ng-container>
 
-                            <ng-container matColumnDef="action">
-                              <th mat-header-cell *matHeaderCellDef> Action </th>
-                              <td mat-cell *matCellDef="let element" class="action-link"> 
-                                <a [routerLink]="" (click)="editExperiment(element.expId)">Edit</a> | 
-                                <a [routerLink]="" (click)="deleteExperiment(element)">Delete</a>  
-                              </td>
-                            </ng-container>
-      
-                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                        </table>
+          <ng-container matColumnDef="experimentProjectName">
+            <th mat-header-cell *matHeaderCellDef> Project Name </th>
+            <td mat-cell *matCellDef="let element"> {{ element.experimentProjectName }} </td>
+          </ng-container>
 
-                    </mat-card-content>        
-            </mat-card>
-    </div>
+          <ng-container matColumnDef="modifiedAt">
+            <th mat-header-cell *matHeaderCellDef> Modified At </th>
+            <td mat-cell *matCellDef="let element"> {{ element.modifiedAt }} </td>
+          </ng-container>
+
+          <!-- <ng-container matColumnDef="experimentType">
+            <th mat-header-cell *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element"> {{ element.experimentType }} </td>
+          </ng-container> -->
+
+          <!-- <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> no-data </td>
+          </ng-container>  -->
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element">
+              <button mat-icon-button color="accent" aria-label="Example icon button with a vertical three dot icon"
+                [routerLink]="" (click)="editExperiment(element.expId)">
+                <mat-icon>open_in_new</mat-icon>
+              </button>
+              <button mat-icon-button color="accent" aria-label="Example icon button with a vertical three dot icon"
+                [routerLink]="" (click)="deleteExperiment(element)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+      </mat-card-content>
+    </mat-card>
+
+
+  </div>
 </div>

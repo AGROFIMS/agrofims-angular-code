@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-
 import { ExperimentService } from '../../experiment/service/experiment.service';
 import { Experiment } from '../../experiment/model/experiment';
 
-import { FormControl } from '@angular/forms';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatChipInputEvent } from '@angular/material/chips';
 
 @Component({
   selector: 'app-experiment-edit',
@@ -12,52 +12,92 @@ import { FormControl } from '@angular/forms';
 })
 export class ExperimentEditComponent implements OnInit {
 
-  values = '';
-
   @Input() id: any;
-  experiment: Experiment = new Experiment('', '', '', '', '', [], '', '', '', '', 'on');
-
-  ta: any = [];
-  ta2: any = ['multi-location', 'on-farm'];
-
-  ivan: any[] = [
-    { name: 'on-farm' },
-    { name: 'on-station' },
-    { name: 'multi-season' },
-    { name: 'one season' },
-    { name: 'multi-location' },
-    { name: 'one location' },
-    { name: 'long-term (10+ years)' },
-    { name: 'Other' }
+  items: string[] = ['on-farm',
+    'on-station',
+    'multi-season',
+    'one season',
+    'multi-location',
+    'one location',
+    'long-term (10+ years)',
+    'Other'
   ];
 
-  // toppings = new FormControl();
-  // tslint:disable-next-line: max-line-length
-  // toppingList: string[] = ['on-farm', 'on-station', 'multi-season', 'one season', 'multi-location', 'one location', 'long-term (10+ years)', 'Other'];
+  experiment: Experiment = new Experiment('', '', '', '', '', '', '', '', '', '', 'on');
 
+  visible = true;
+  selectable = true;
+  removable = true;
+  addOnBlur = true;
+  readonly separatorKeysCodes: number[] = [ENTER, COMMA];
+  itemsOtherSelected: string[] = [];
+  itemsSelected: string[] = [];
 
-  date = new FormControl('2019-08-22T23:00:00');
-
-  constructor(
-    private experimentService: ExperimentService
-  ) { }
+  constructor(private experimentService: ExperimentService) { }
 
   ngOnInit(): void {
-    // console.log(this.id);
-    this.experimentService.get(this.id).subscribe((experiment: Experiment) => this.experiment = experiment);
+    this.get();
   }
 
-  saveExp() {
-    // console.log(JSON.stringify(this.experiment));
-    this.experimentService.put(this.experiment).subscribe();
+  get() {
+    return this.experimentService.get(this.id)
+      .subscribe(
+        (_experiment: Experiment) => {
+          try {
+            this.itemsSelected = _experiment.experimentType.split('|');
+          } catch (error) {
+          }
+
+          try {
+            this.itemsOtherSelected = _experiment.experimentTypeOther.split('|');
+          } catch (error) {
+          }
+          this.experiment = _experiment;
+        }
+      );
   }
 
-  onKey(event: any) {
-    this.saveExp();
+  put() {
+    this.experiment.experimentType = this.itemsSelected
+      .join('|');
+
+    this.experimentService
+      .put(this.experiment)
+      .subscribe();
   }
 
-  onChangeObj(newObj) {
-    this.saveExp();
+  experimentTypeClear() {
+    if (!this.itemsSelected.includes('Other')) {
+      this.itemsOtherSelected = [];
+      this.experiment.experimentTypeOther = null;
+    }
+    this.put();
+
+  }
+
+  add(event: MatChipInputEvent): void {
+    const input = event.input;
+    const value = event.value;
+    if ((value || '').trim()) {
+      const index = this.itemsOtherSelected.indexOf(value);
+      if (index < 0) {
+        this.itemsOtherSelected.push(value.trim());
+        this.experiment.experimentTypeOther = this.itemsOtherSelected.join('|');
+        this.put();
+      }
+    }
+    if (input) {
+      input.value = '';
+    }
+  }
+
+  remove(itemOther: string): void {
+    const index = this.itemsOtherSelected.indexOf(itemOther);
+    if (index >= 0) {
+      this.itemsOtherSelected.splice(index, 1);
+      this.experiment.experimentTypeOther = this.itemsOtherSelected.join('|');
+      this.put();
+    }
   }
 
 }

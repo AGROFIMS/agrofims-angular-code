@@ -21,15 +21,7 @@ export class ExperimentAddComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(id: any) {
-    /*console.log(JSON.stringify(this.experimentModel));*/
-    this.experimentService.post(this.experimentModel).subscribe(() => {
-      this.router.navigate(['/experiments/manage/', id]);
-    });
+  post(id: any) {
+    this.experimentService.post(this.experimentModel).subscribe();
   }
-
-  back() {
-    this.router.navigate(['/experiments']);
-  }
-
 }
