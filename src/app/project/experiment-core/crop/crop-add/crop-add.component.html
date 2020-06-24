@@ -1,0 +1,23 @@
+<div fxLayout="row">
+  <div fxFlex.gt-sm="100%">
+    <mat-card>
+      <mat-card-content>
+        <mat-card-title>New crop</mat-card-title>
+
+        <form class="example-form" (ngSubmit)="onSubmit()">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Crop Common Name</mat-label>
+            <input matInput name="cropCommonName" [(ngModel)]="crop.cropCommonName">
+          </mat-form-field>
+
+
+
+          <button mat-raised-button type="submit">Create</button>
+          <button mat-raised-button (click)="back()">Back</button>
+        </form>
+
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
