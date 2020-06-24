@@ -1,12 +1,11 @@
-import { Component, OnInit, Input } from '@angular/core';
-
 import { ExpSiteService } from '../service/exp-site.service';
-import { ExpSite } from '../model/exp-site';
+import { Component, OnInit, Input } from '@angular/core';
+import { ExpSite, ExpSiteFull } from '../model/exp-site';
 import { Router, ActivatedRoute } from '@angular/router';
 import { SiteService } from '../../site/service/site.service';
-import { Site } from '../../site/model/site';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ExpSiteAddComponent } from '../exp-site-add/exp-site-add.component';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-exp-site-list',
@@ -16,57 +15,80 @@ import { ExpSiteAddComponent } from '../exp-site-add/exp-site-add.component';
 export class ExpSiteListComponent implements OnInit {
 
   @Input() id: any;
-  expSite: ExpSite[] = [];
-  displayedColumns: string[] = ['expSiteId', 'siteId', 'name', 'action'];
+  // expSiteList: ExpSite[] = [];
+  expSiteFullList: ExpSiteFull[] = [];
 
-  site: Site[] = [];
+  // displayedColumns: string[] = ['expSiteId', 'siteId', 'name', 'action'];
+
+  displayedColumnsI: string[] = [
+    'countryName',
+    'name',
+    'modifiedAt',
+    'action'
+  ];
+  ivan: any = '';
 
   constructor(
     private expSiteService: ExpSiteService,
-    private siteService: SiteService,
+    // private siteService: SiteService,
     private router: Router,
     private route: ActivatedRoute,
     public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
-    this.getAll(this.id);
+    // this.getAll(this.id);
+
+    this.getAllFull(this.id);
   }
 
-  getAll(id: string) {
+  // getAll(id: string) {
+  //   return this.expSiteService
+  //     .getByExp(id)
+  //     .subscribe((_expSiteList: ExpSite[]) => {
+  //       this.expSiteList = _expSiteList;
+  //       // console.log(this.expSiteList);
+  //     });
+  // }
+
+  getAllFull(id: any) {
     return this.expSiteService
-      .getByExp(id)
-      .subscribe((expSite: ExpSite[]) => {
-        this.expSite = expSite;
+      .getFull(id)
+      .subscribe((_expSiteFullList: ExpSiteFull[]) => {
+        this.expSiteFullList = _expSiteFullList;
+        // console.log(this.expSiteFullList);
       });
   }
+
 
   editExpSite(id: any) {
     const expId = this.route.snapshot.paramMap.get('id');
     this.router.navigate(['/experiments/manage', expId, 'site', id]);
   }
 
-  deleteExpSite(expSite: ExpSite) {
+  deleteExpSite(id: any) {
     this.expSiteService
-      .delete(expSite)
+      .delete(id)
       .subscribe(() => {
-        this.getAll(this.id);
+        this.getAllFull(this.id);
       });
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(ExpSiteAddComponent);
-
+    const dialogRef = this.dialog.open(ExpSiteAddComponent, { data: { id: this.id } });
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(`Dialog result: ${result}`);
-
+      console.log(result);
       if (`${result}` === 'true') {
-        console.log('si');
-        this.getAll(this.id);
+
+        setTimeout(() => { this.getAllFull(this.id); }, 500);
+
+
       }
-
     });
-
   }
+
+  // onCreate() {
+  //   this.dialog.open(ExpSiteAddComponent);
+  // }
 
 }

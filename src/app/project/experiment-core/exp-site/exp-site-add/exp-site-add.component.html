@@ -1,22 +1,28 @@
-<h2 mat-dialog-title>New experiment site</h2>
 <mat-dialog-content class="mat-typography">
 
-  <mat-form-field>
-    <mat-label>Experiment ID</mat-label>
-    <input matInput name="sId" [(ngModel)]="expSite.experimentId">
-  </mat-form-field>
+  <form>
 
-  <mat-form-field>
-    <mat-label>Site ID</mat-label>
-    <input matInput name="siteTypeId" [(ngModel)]="expSite.siteId">
-  </mat-form-field>
+    <h2 mat-dialog-title>New experiment site</h2>
 
-  <mat-form-field>
-    <mat-label>Site Vegetation</mat-label>
-    <input matInput name="name" [(ngModel)]="expSite.inSiteVegetation">
-  </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Choose country name</mat-label>
+      <mat-select name="countryName" [formControl]="countryName" (selectionChange)="getSiteII()">
+        <mat-option *ngFor="let siteI of siteIList" [value]="siteI">{{ siteI}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Choose name</mat-label>
+      <mat-select name="name" [(ngModel)]="expSite.siteId">
+        <mat-option *ngFor="let siteII of siteIIList" [value]="siteII.siteId">{{ siteII.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
 
 </mat-dialog-content>
+
+
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close>Cancel</button>
   <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="save()">Create</button>

@@ -21,8 +21,8 @@ export class ExpSiteService {
     return this.http.post(`${this.baseUrl}/exp-site/post.php`, expSite);
   }
 
-  delete(expSite: ExpSite) {
-    return this.http.delete(`${this.baseUrl}/exp-site/delete.php?id=${expSite.expSiteId}`);
+  delete(id: string | number) {
+    return this.http.delete(`${this.baseUrl}/exp-site/delete.php?id=${id}`);
   }
 
   get(id: string | number) {
@@ -35,6 +35,10 @@ export class ExpSiteService {
 
   put(expSite: ExpSite) {
     return this.http.put(`${this.baseUrl}/exp-site/put.php`, expSite);
+  }
+
+  getFull(id: string | number) {
+    return this.http.get(`${this.baseUrl}/exp-site/getFull.php?id=${id}`);
   }
 
 }

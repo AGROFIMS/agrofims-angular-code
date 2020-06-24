@@ -1,0 +1,81 @@
+<div class="mat-elevation-z8">
+  <table mat-table class="full-width-table" matSort aria-label="Elements">
+    <!-- Id Column -->
+    <ng-container matColumnDef="expSiteId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>expSiteId</th>
+      <td mat-cell *matCellDef="let row">{{row.expSiteId}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="experimentId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>experimentId</th>
+      <td mat-cell *matCellDef="let row">{{row.experimentId}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="siteId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>siteId</th>
+      <td mat-cell *matCellDef="let row">{{row.siteId}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="inHighLevelId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>inHighLevelId</th>
+      <td mat-cell *matCellDef="let row">{{row.inHighLevelId}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="inHighLevelOther">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>inHighLevelOther</th>
+      <td mat-cell *matCellDef="let row">{{row.inHighLevelOther}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="inSiteVegetation">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>inSiteVegetation</th>
+      <td mat-cell *matCellDef="let row">{{row.inSiteVegetation}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="inSiteVegetationOther">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>inSiteVegetationOther</th>
+      <td mat-cell *matCellDef="let row">{{row.inSiteVegetationOther}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="inSiteDescNotes">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>inSiteDescNotes</th>
+      <td mat-cell *matCellDef="let row">{{row.inSiteDescNotes}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="soilClassSystemId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>soilClassSystemId</th>
+      <td mat-cell *matCellDef="let row">{{row.soilClassSystemId}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="soilClassGroupId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>soilClassGroupId</th>
+      <td mat-cell *matCellDef="let row">{{row.soilClassGroupId}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="soilClassSystemOther">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>soilClassSystemOther</th>
+      <td mat-cell *matCellDef="let row">{{row.soilClassSystemOther}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>status</th>
+      <td mat-cell *matCellDef="let row">{{row.status}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell *matCellDef="let row" class="action-link">
+        <button mat-stroked-button color="accent" [routerLink]="" (click)="editExpSite(row.expSiteId)"
+          class="m-r-5">Edit</button>
+        <button mat-stroked-button color="accent" [routerLink]="" (click)="deleteExpSite(row.expSiteId)"
+          class="m-l-5">Delete</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator #paginator [length]="dataSource?.data.length" [pageIndex]="0" [pageSize]="5"
+    [pageSizeOptions]="[5, 25, 50, 100, 250]">
+  </mat-paginator>
+</div>

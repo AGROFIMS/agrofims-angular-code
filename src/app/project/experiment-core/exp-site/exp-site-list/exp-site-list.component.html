@@ -1,42 +1,85 @@
-<div fxLayout="row">
-    <div fxFlex.gt-sm="100%">
+<form>
+    <mat-card-title>Manage Sites</mat-card-title>
 
-        <p>
-            <mat-card-title>Manage Sites</mat-card-title>
-        </p>
+    <p><button mat-raised-button color="primary" (click)="openDialog()">Add experiment site</button></p>
+</form>
+<mat-card-content>
 
-        <button mat-raised-button color="primary" (click)="openDialog()">Add experiment site</button>
 
-        <mat-card-content>
-            <table mat-table [dataSource]="expSite" class="mat-elevation-z8" style="width: 100%;">
+    <!-- <p><button mat-raised-button color="primary" (click)="onCreate()">Create</button></p> -->
 
-                <ng-container matColumnDef="expSiteId">
-                    <th mat-header-cell *matHeaderCellDef> Exp Site ID. </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.expSiteId }} </td>
-                </ng-container>
+    <!-- <table mat-table [dataSource]="expSiteList" class="mat-elevation-z8" style="width: 100%;">
 
-                <ng-container matColumnDef="siteId">
-                    <th mat-header-cell *matHeaderCellDef> Site ID </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.siteId }} </td>
-                </ng-container>
+        <ng-container matColumnDef="expSiteId">
+            <th mat-header-cell *matHeaderCellDef> Exp Site ID. </th>
+            <td mat-cell *matCellDef="let element"> {{ element.expSiteId }} </td>
+        </ng-container>
 
-                <ng-container matColumnDef="name">
-                    <th mat-header-cell *matHeaderCellDef> Site vegetation </th>
-                    <td mat-cell *matCellDef="let element"> {{ element.inSiteVegetation }} </td>
-                </ng-container>
+        <ng-container matColumnDef="siteId">
+            <th mat-header-cell *matHeaderCellDef> Site ID </th>
+            <td mat-cell *matCellDef="let element"> {{ element.siteId }} </td>
+        </ng-container>
 
-                <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef> Action </th>
-                    <td mat-cell *matCellDef="let element" class="action-link">
-                        <a [routerLink]="" (click)="editExpSite(element.expSiteId)">Edit</a> |
-                        <a [routerLink]="" (click)="deleteExpSite(element)">Delete</a>
-                    </td>
-                </ng-container>
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Site vegetation </th>
+            <td mat-cell *matCellDef="let element"> {{ element.inSiteVegetation }} </td>
+        </ng-container>
 
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table>
-        </mat-card-content>
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element" class="action-link">
+                <a [routerLink]="" (click)="editExpSite(element.expSiteId)">Edit</a> |
+                <a [routerLink]="" (click)="deleteExpSite(element)">Delete</a>
+            </td>
+        </ng-container>
 
-    </div>
-</div>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table> -->
+
+
+    <table mat-table [dataSource]="expSiteFullList" class="mat-elevation-z8" style="width: 100%;">
+
+        <ng-container matColumnDef="countryName">
+            <th mat-header-cell *matHeaderCellDef> Country Name </th>
+            <td mat-cell *matCellDef="let element"> {{ element.countryName }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Name </th>
+            <td mat-cell *matCellDef="let element"> {{ element.name+" ("+element.sId+")"}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="modifiedAt">
+            <th mat-header-cell *matHeaderCellDef> Modified At </th>
+            <td mat-cell *matCellDef="let element"> {{ element.modifiedAt }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <td mat-cell *matCellDef="let element" class="action-link">
+                <button mat-icon-button color="accent" aria-label="Example icon button with a vertical three dot icon"
+                    [routerLink]="" (click)="editExpSite(element.expSiteId)">
+                    <mat-icon>open_in_new</mat-icon>
+                </button>
+                <button mat-icon-button color="accent" aria-label="Example icon button with a vertical three dot icon"
+                    [routerLink]="" (click)="deleteExpSite(element.expSiteId)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsI"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsI;"></tr>
+
+    </table>
+
+
+
+</mat-card-content>
+
+
+<!-- 
+<mat-card-content>
+    <data-table></data-table>
+</mat-card-content> -->
