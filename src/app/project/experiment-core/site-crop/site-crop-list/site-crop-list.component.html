@@ -1,0 +1,24 @@
+<mat-card-title>Description of crops sown</mat-card-title>
+
+<div fxLayout="row">
+  <mat-form-field fxFlex="50" appearance="outline">
+    <mat-label>Cropping system</mat-label>
+    <mat-select name="croppingType" [formControl]="croppingType" (selectionChange)="selectCondition()">
+      <mat-option *ngFor="let par of parameterV" [value]="par.parameterId">
+        {{ par.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<form class="example-form" *ngFor="let item of itemList; let i=index">
+  <app-site-crop-edit (eventEmitterSiteCropEdit)="catchEmitterSiteCropEdit($event)" [siteCropId]="item.siteCropId"
+    [index]="i">
+  </app-site-crop-edit>
+</form>
+
+<mat-card-actions *ngIf="croppingType.value == this.ec2 || croppingType.value == this.ec3 ">
+  <button mat-raised-button color="primary" (click)="post()">
+    <mat-icon>add_circle_outline</mat-icon> Add a site crop
+  </button>
+</mat-card-actions>
