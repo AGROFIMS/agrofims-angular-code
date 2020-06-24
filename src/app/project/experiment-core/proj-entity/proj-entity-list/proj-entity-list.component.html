@@ -1,0 +1,11 @@
+<mat-card-title>Project Management Entities</mat-card-title>
+
+<form class="example-form" *ngFor="let item of itemList; let i=index">
+  <app-proj-entity-edit [id]="item.projEntityId" [index]="i"></app-proj-entity-edit>
+</form>
+
+<mat-card-actions>
+  <button mat-raised-button color="primary" (click)="post()">
+    <mat-icon>add_circle_outline</mat-icon> Add a project management entity
+  </button>
+</mat-card-actions>

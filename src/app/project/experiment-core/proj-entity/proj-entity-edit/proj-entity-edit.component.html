@@ -1,0 +1,60 @@
+<mat-card>
+  <mat-card-header>
+    <button mat-icon-button color="basic" (click)="remove(projEntity)" title="remove">
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <div fxLayout="row">
+
+      <mat-form-field fxFlex="33.3" class="p-r-10" appearance="outline">
+        <mat-label>Project management entity</mat-label>
+        <mat-select name="projEntityOrgId" [(ngModel)]="projEntity.projEntityOrgId"
+          (ngModelChange)="cleanProjEntityOrg()">
+          <mat-option *ngFor="let par of parameter" [value]="par.parameterId">
+            {{ par.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="33.3" *ngIf="projEntity.projEntityOrgId == '35'" class="p-l-10 p-r-10"
+        appearance="outline">
+        <mat-label>Choose CGIAR center</mat-label>
+        <mat-select name="projEntityCenterId" [(ngModel)]="projEntity.projEntityCenterId" (ngModelChange)="put()">
+          <mat-option *ngFor="let par2 of parameter2" [value]="par2.parameterId">
+            {{ par2.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="33.3" *ngIf="projEntity.projEntityOrgId == '35'" class="p-l-10" appearance="outline">
+        <mat-label>Contributor CRP</mat-label>
+        <mat-select name="projEntityCrpId" [(ngModel)]="projEntity.projEntityCrpId" (ngModelChange)="put()">
+          <mat-option *ngFor="let par3 of parameter3" [value]="par3.parameterId">
+            {{ par3.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="33.3" class="p-l-10 p-r-10" *ngIf="projEntity.projEntityOrgId != '35'"
+        appearance="outline">
+        <mat-label>Project management entity name</mat-label>
+        <input matInput name="projEntityName" [(ngModel)]="projEntity.projEntityName" (change)="put()">
+      </mat-form-field>
+
+    </div>
+
+
+    <div fxLayout="row">
+
+      <mat-form-field fxFlex="33.3" class="p-r-10" *ngIf="projEntity.projEntityOrgId == '44'" appearance="outline">
+        <mat-label>Other</mat-label>
+        <input matInput name="projEntityOther" [(ngModel)]="projEntity.projEntityOther" (change)="put()">
+      </mat-form-field>
+
+    </div>
+
+  </mat-card-content>
+</mat-card>
