@@ -1,23 +1,20 @@
 import { Component, OnInit, Input } from '@angular/core';
-
 import { FundAgencyService } from '../service/fund-agency.service';
 import { FundAgency } from '../model/fund-agency';
 import { ParameterService } from '../../parameter/service/parameter.service';
 import { Parameter } from '../../parameter/model/parameter';
 import { FundAgencyListComponent } from '../fund-agency-list/fund-agency-list.component';
-
 @Component({
   selector: 'app-fund-agency-edit',
   templateUrl: './fund-agency-edit.component.html',
   styleUrls: ['./fund-agency-edit.component.css']
 })
 export class FundAgencyEditComponent implements OnInit {
-
   @Input() id: any;
+  @Input() index: any;
   fundAgency: FundAgency = new FundAgency('', '', '', '', '', 'on');
   parameter: Parameter[] = [];
   parameter2: Parameter[] = [];
-
   constructor(
     private fundAgencyService: FundAgencyService,
     private compFundAgencyList: FundAgencyListComponent,
@@ -25,9 +22,6 @@ export class FundAgencyEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    console.log(this.id);
-
     this.get(this.id);
     this.getParameterAll();
     this.getParameterAll2();
@@ -36,36 +30,42 @@ export class FundAgencyEditComponent implements OnInit {
   get(id: string) {
     return this.fundAgencyService
       .get(id)
-      .subscribe((fundAgency: FundAgency) => {
-        this.fundAgency = fundAgency;
-        // console.log(fundAgency);
-      });
+      .subscribe(
+        (_fundAgency: FundAgency) => {
+          this.fundAgency = _fundAgency;
+        });
   }
 
   remove(fundAgency: FundAgency): void {
     this.fundAgencyService
       .delete(fundAgency)
       .subscribe(() => {
-        // console.log(fundAgency.experimentId);
-        this.compFundAgencyList.getAll(fundAgency.experimentId);
+        this.compFundAgencyList.remove(this.index);
       });
   }
 
-  save() {
+  put() {
     this.fundAgencyService
       .put(this.fundAgency)
       .subscribe();
   }
 
+  cleanFundAgencyType() {
+    this.fundAgency.fundAgencyTypeName = null;
+    this.fundAgency.fundAgencyTypeOther = null;
+    this.fundAgency.fundAgencyTypeCenterId = null;
+    this.put();
+  }
+
   getParameterAll() {
     return this.parameterService
       .getAll('fundAgency', 'type')
-      .subscribe((parameter: Parameter[]) => this.parameter = parameter);
+      .subscribe((_parameter: Parameter[]) => this.parameter = _parameter);
   }
 
   getParameterAll2() {
     return this.parameterService
       .getAll('fundAgency', 'cgiar_type')
-      .subscribe((parameter2: Parameter[]) => this.parameter2 = parameter2);
+      .subscribe((_parameter2: Parameter[]) => this.parameter2 = _parameter2);
   }
 }

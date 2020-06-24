@@ -1,20 +1,11 @@
-<h3>Funding Agency</h3>
+<mat-card-title>Funding Agency</mat-card-title>
 
-<form class="example-form" *ngFor="let item of itemList">
-    <app-fund-agency-edit [id]="item.fundAgencyId"></app-fund-agency-edit>
-</form>
-
-<form class="example-form" *ngFor="let f of dataArray">
-    <!-- <mat-form-field class="example-full-width">
-        <mat-label>Funding agency name</mat-label>
-        <input matInput name="fundAgencyTypeName" [(ngModel)]="f.fundAgencyTypeName">
-    </mat-form-field>
-    <button (click)="saveFundAgency()">Save</button> -->
-    <app-fund-agency-edit [id]="f.fundAgencyId"></app-fund-agency-edit>
+<form class="example-form" *ngFor="let item of itemList; let i=index">
+    <app-fund-agency-edit [id]="item.fundAgencyId" [index]="i"></app-fund-agency-edit>
 </form>
 
 <mat-card-actions>
-    <button mat-fab color="accent" (click)="post()">
-        <mat-icon>add</mat-icon>
+    <button mat-raised-button color="primary" (click)="post()">
+        <mat-icon>add_circle_outline</mat-icon> Add a funding agency
     </button>
 </mat-card-actions>
