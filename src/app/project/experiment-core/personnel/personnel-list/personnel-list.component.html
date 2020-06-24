@@ -1,0 +1,11 @@
+<mat-card-title>Personnel associated with the experiment</mat-card-title>
+
+<form class="example-form" *ngFor="let item of itemList; let i=index">
+  <app-personnel-edit [id]="item.personId" [index]="i"></app-personnel-edit>
+</form>
+
+<mat-card-actions>
+  <button mat-raised-button color="primary" (click)="post()">
+    <mat-icon>add_circle_outline</mat-icon> Add personnel
+  </button>
+</mat-card-actions>

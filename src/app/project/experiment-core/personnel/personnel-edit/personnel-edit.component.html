@@ -1,0 +1,91 @@
+<mat-card>
+  <mat-card-header>
+
+    <button mat-icon-button color="basic" (click)="remove(personnel)" title="remove">
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <div fxFlex="50">
+
+      <mat-form-field class="p-r-10" appearance="outline">
+        <mat-label>Person type</mat-label>
+        <mat-select name="personTypeId" [(ngModel)]="personnel.personTypeId" (ngModelChange)="cleanPersonType()">
+          <mat-option *ngFor="let par of parameter" [value]="par.parameterId">
+            {{ par.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="p-r-10" *ngIf="personnel.personTypeId == '126'" appearance="outline">
+        <mat-label>Other</mat-label>
+        <input matInput name="personTypeOther" [(ngModel)]="personnel.personTypeOther" (change)="put()">
+      </mat-form-field>
+
+      <mat-form-field class="p-r-10" appearance="outline">
+        <mat-label>First name</mat-label>
+        <input matInput name="personFirstName" [(ngModel)]="personnel.personFirstName" (change)="put()">
+      </mat-form-field>
+
+      <mat-form-field class="p-r-10" appearance="outline">
+        <mat-label>Last name</mat-label>
+        <input matInput name="personLastName" [(ngModel)]="personnel.personLastName" (change)="put()">
+      </mat-form-field>
+
+    </div>
+
+    <div fxFlex="50">
+
+      <mat-form-field class="p-l-10" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput name="personEmailAddress" [(ngModel)]="personnel.personEmailAddress" (change)="put()">
+      </mat-form-field>
+
+      <mat-form-field class="p-l-10" appearance="outline">
+        <mat-label>Affiliation</mat-label>
+        <mat-select name="personAffiliationId" [(ngModel)]="personnel.personAffiliationId"
+          (ngModelChange)="cleanPersonAffiliation()">
+          <mat-option *ngFor="let par of parameter2" [value]="par.parameterId">
+            {{ par.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="p-l-10"
+        *ngIf="personnel.personAffiliationId !='129' && personnel.personAffiliationId !='137' && personnel.personAffiliationId !=null"
+        appearance="outline">
+        <mat-label>Affiliation name</mat-label>
+        <input matInput name="personAffiliationName" [(ngModel)]="personnel.personAffiliationName" (change)="put()">
+      </mat-form-field>
+
+      <mat-form-field class="p-l-10" *ngIf="personnel.personAffiliationId == '129'" appearance="outline">
+        <mat-label>Choose CGIAR center</mat-label>
+        <mat-select name="personAffiliationCenterId" [(ngModel)]="personnel.personAffiliationCenterId"
+          (ngModelChange)="put()">
+          <mat-option *ngFor="let par of parameter3" [value]="par.parameterId">
+            {{ par.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="p-l-10" *ngIf="personnel.personAffiliationId == '137'" appearance="outline">
+        <mat-label>Other</mat-label>
+        <input matInput name="personAffiliationNameOther" [(ngModel)]="personnel.personAffiliationNameOther"
+          (change)="put()">
+      </mat-form-field>
+
+      <mat-form-field class="p-l-10" appearance="outline">
+        <mat-label>ORCID if available *</mat-label>
+        <input matInput name="personOrcid" [(ngModel)]="personnel.personOrcid" (change)="put()">
+      </mat-form-field>
+
+      <span class="p-l-10">* if not consider <a href="https://orcid.org/register" target="_blank">
+          registering!</a></span>
+    </div>
+
+  </mat-card-content>
+
+</mat-card>
