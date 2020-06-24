@@ -11,67 +11,68 @@ import { ExpSiteEditComponent } from './project/experiment-core/exp-site/exp-sit
 import { SiteListComponent } from './project/experiment-core/site/site-list/site-list.component';
 import { SiteAddComponent } from './project/experiment-core/site/site-add/site-add.component';
 import { SiteEditComponent } from './project/experiment-core/site/site-edit/site-edit.component';
+import { CropListComponent } from './project/experiment-core/crop/crop-list/crop-list.component';
+import { CropAddComponent } from './project/experiment-core/crop/crop-add/crop-add.component';
+import { CropEditComponent } from './project/experiment-core/crop/crop-edit/crop-edit.component';
 
 export const AppRoutes: Routes = [
   {
     path: '',
     component: FullComponent,
     children: [
-      // {
-      //   path: '',
-      //   redirectTo: '/dashboard',
-      //   pathMatch: 'full'
-      // },
-      // {
-      //   path: '',
-      //   loadChildren:
-      //     () => import('./material-component/material.module').then(m => m.MaterialComponentsModule)
-      // },
-      // {
-      //   path: 'dashboard',
-      //   loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
-      // }
       {
         path: '',
         redirectTo: '/about',
-        pathMatch: 'full'
+        pathMatch: 'full',
       },
       {
         path: 'about',
-        component: AboutComponent
+        component: AboutComponent,
       },
       {
         path: 'documentation',
-        component: DocumentationComponent
+        component: DocumentationComponent,
       },
       {
         path: 'experiments',
-        component: ExperimentListComponent
+        component: ExperimentListComponent,
       },
       {
         path: 'experiments/add',
-        component: ExperimentAddComponent
+        component: ExperimentAddComponent,
       },
       {
         path: 'experiments/manage/:id',
-        component: ExperimentManageComponent
+        component: ExperimentManageComponent,
       },
       {
         path: 'experiments/manage/:expId/site/:id',
-        component: ExpSiteEditComponent
+        component: ExpSiteEditComponent,
       },
       {
         path: 'sites',
-        component: SiteListComponent
+        component: SiteListComponent,
       },
       {
         path: 'sites/add',
-        component: SiteAddComponent
+        component: SiteAddComponent,
       },
       {
         path: 'sites/edit/:id',
-        component: SiteEditComponent
-      }
-    ]
-  }
+        component: SiteEditComponent,
+      },
+      {
+        path: 'crops',
+        component: CropListComponent,
+      },
+      {
+        path: 'crops/add',
+        component: CropAddComponent,
+      },
+      {
+        path: 'crops/edit/:id',
+        component: CropEditComponent,
+      },
+    ],
+  },
 ];

@@ -1,11 +1,88 @@
-/* You can add global styles to this file, and also import other style files */
-
 /* bootstrap.css */
 * {
     font-size: 14px;
     line-height: 1.42857143;
 }
 
-.mat-card-header-text {
-    margin: 0 10px !important;
+/* main-nav-bar */
+
+.mat-toolbar.mat-primary {
+    background: #22b24a !important;
+}
+
+.mat-toolbar-row, .mat-toolbar-single-row {
+  height: 54px !important;
+}
+
+/* side-nav-bar */
+
+#snav .mat-list-item.selected > .mat-list-item-content > a {
+  background: #24b14a !important;
+}  
+
+/* appearance-outline */
+
+.mat-form-field-appearance-outline .mat-form-field-wrapper {
+  margin: 0 !important; 
+}
+
+.mat-form-field-wrapper {
+  padding-bottom: 0.75em !important;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.75em 0 0.75em 0 !important;
+}
+
+.mat-form-field-infix {
+  border-top: 0.5em solid transparent !important;
+}
+
+/* mat-card-title */
+.mat-card-title{
+  margin-top: 30px !important;
+  margin-bottom: 15px !important;
+}
+
+/* bread-cums */
+
+.mat-nav-list {
+  margin: 0px 15px;
+  padding: 0px;
+}
+
+.mat-nav-list > ol{
+  display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding: .25rem .50rem;
+    margin: 0rem; 
+    list-style: none;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+}
+
+.mat-nav-list > ol > .home::before {
+  padding-right: 0rem;
+  content: "" !important;
+}
+
+.mat-nav-list > ol > li::before {
+  display: inline-block;
+  padding-right: .5rem;
+  color: #6c757d;
+  content: "/";
+}
+
+.mat-nav-list > ol > li{
+  padding-left: .5rem;
+}
+
+.mat-nav-list > ol > li >a {
+  color: #007bff;
+  text-decoration: none;
+  cursor: pointer;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
 }
