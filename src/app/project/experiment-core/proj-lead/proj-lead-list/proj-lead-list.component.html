@@ -1,0 +1,12 @@
+<p>
+  <mat-card-title>Experiment Leads <small>(if different from project management entity)</small></mat-card-title>
+</p>
+<form class="example-form" *ngFor="let item of itemList; let i=index">
+  <app-proj-lead-edit [id]="item.projLeadId" [index]="i"></app-proj-lead-edit>
+</form>
+
+<mat-card-actions>
+  <button mat-raised-button color="primary" (click)="post()">
+    <mat-icon>add_circle_outline</mat-icon> Add an experiment lead
+  </button>
+</mat-card-actions>

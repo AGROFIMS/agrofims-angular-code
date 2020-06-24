@@ -1,0 +1,54 @@
+<mat-card>
+  <mat-card-header>
+    <button mat-icon-button color="basic" (click)="remove(projLead)" title="remove">
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div fxLayout="row">
+
+      <mat-form-field fxFlex="33.3" class="p-r-10" appearance="outline">
+        <mat-label>Lead organization</mat-label>
+        <mat-select name="projLeadOrgId" [(ngModel)]="projLead.projLeadOrgId" (ngModelChange)="cleanProjLeadOrg()">
+          <mat-option *ngFor="let par of parameter" [value]="par.parameterId">
+            {{ par.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="p-l-10 p-r-10" *ngIf="projLead.projLeadOrgId == '78'" appearance="outline">
+        <mat-label>Choose CGIAR center</mat-label>
+        <mat-select name="projLeadCenterId" [(ngModel)]="projLead.projLeadCenterId" (`)="put()">
+          <mat-option *ngFor="let par2 of parameter2" [value]="par2.parameterId">
+            {{ par2.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="p-l-10" *ngIf="projLead.projLeadOrgId == '78'" appearance="outline">
+        <mat-label>Contributor CRP</mat-label>
+        <mat-select name="projLeadCRPId" [(ngModel)]="projLead.projLeadCRPId" (ngModelChange)="put()">
+          <mat-option *ngFor="let par2 of parameter3" [value]="par2.parameterId">
+            {{ par2.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="33.3" class="p-l-10 p-r-10" *ngIf="projLead.projLeadOrgId == '87'" appearance="outline">
+        <mat-label>Other</mat-label>
+        <input matInput name="projLeadOther" [(ngModel)]="projLead.projLeadOther" (change)="put()">
+      </mat-form-field>
+    </div>
+
+
+    <div fxLayout="row">
+
+      <mat-form-field fxFlex="33.3" class="p-r-10" appearance="outline">
+        <mat-label>Lead person/Primary Investigator</mat-label>
+        <input matInput name="projLeadPerson" [(ngModel)]="projLead.projLeadPerson" (change)="put()">
+      </mat-form-field>
+
+    </div>
+  </mat-card-content>
+</mat-card>

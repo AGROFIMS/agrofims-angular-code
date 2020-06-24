@@ -1,0 +1,14 @@
+.mat-card{
+  padding:  12px !important;
+  margin: 12px 0px;
+  background-color: #f1f1f1;
+}
+
+.mat-card-header{
+    justify-content: flex-end;
+    padding: 0px;
+  }
+
+  .mat-card-content{
+    padding: 0px 12px;
+  }
