@@ -8,9 +8,10 @@ export interface Menu {
 }
 
 const MENUITEMS = [
-  { state: 'sites', name: 'Sites', type: 'link', icon: 'av_timer' },
-  { state: 'experiments', name: 'Experiments', type: 'link', icon: 'av_timer' },
-  { state: 'documentation', name: 'Documentation', type: 'link', icon: 'av_timer' },
+  { state: 'crops', name: 'Crops', type: 'link', icon: 'av_timer' },
+  { state: 'sites', name: 'Sites', type: 'link', icon: 'place' },
+  { state: 'experiments', name: 'Experiments', type: 'link', icon: 'book' },
+  { state: 'documentation', name: 'Documentation', type: 'link', icon: 'receipt' },
   { state: 'about', name: 'About', type: 'link', icon: 'av_timer' },
   // { state: 'dashboard', name: 'Dashboard', type: 'link', icon: 'av_timer' },
   // { state: 'button', type: 'link', name: 'Buttons', icon: 'crop_7_5' },
