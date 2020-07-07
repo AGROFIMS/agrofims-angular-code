@@ -19,7 +19,8 @@
     <div fxFlex.gt-sm="100%">
         <mat-card>
             <mat-card-content>
-                <mat-tab-group mat-align-tabs="start">
+
+                <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="demo1TabIndex">
                     <mat-tab label="Experiment">
                         <app-experiment-edit [id]="experimentId.toString()"> </app-experiment-edit>
                         <app-proj-entity-list [id]="experimentId.toString()"> </app-proj-entity-list>
@@ -32,6 +33,15 @@
                         <app-exp-site-list [id]="experimentId.toString()"></app-exp-site-list>
                     </mat-tab>
                 </mat-tab-group>
+
+                <br>
+                <hr>
+
+                <p>
+                    <button mat-raised-button (click)="demo1BtnClick()">
+                        Next!
+                    </button>
+                </p>
 
             </mat-card-content>
         </mat-card>

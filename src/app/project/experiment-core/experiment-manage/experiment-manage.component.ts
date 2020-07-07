@@ -17,6 +17,7 @@ export class ExperimentManageComponent implements OnInit {
   expId: string;
   experiment: Experiment = new Experiment('', '', '', '', '', '', '', '', '', '', 'on');
   experimentId: any;
+  demo1TabIndex = 0;
 
   constructor(
     private experimentService: ExperimentService,
@@ -31,5 +32,10 @@ export class ExperimentManageComponent implements OnInit {
         this.experimentId = experiment.experimentId;
       }
     );
+  }
+
+  demo1BtnClick() {
+    const tabCount = 3;
+    this.demo1TabIndex = (this.demo1TabIndex + 1) % tabCount;
   }
 }
