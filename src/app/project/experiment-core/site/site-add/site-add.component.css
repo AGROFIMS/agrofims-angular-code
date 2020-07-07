@@ -1,0 +1,8 @@
+#map {
+  height: 100%;
+  width: 100%;
+}
+
+#map-pad {
+  padding: 0px 0px 10px 10px;
+}

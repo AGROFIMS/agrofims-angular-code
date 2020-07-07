@@ -4,6 +4,8 @@ import { SiteService } from '../service/site.service';
 import { Site } from '../model/site';
 import { Router } from '@angular/router';
 
+import { latLng, MapOptions, tileLayer } from 'leaflet';
+
 @Component({
   selector: 'app-site-list',
   templateUrl: './site-list.component.html',
@@ -13,7 +15,9 @@ export class SiteListComponent implements OnInit {
 
   site: Site[] = [];
 
-  displayedColumns: string[] = ['id', 'sId', 'name', 'countryName', 'date', 'action'];
+  displayedColumns: string[] = ['#', 'sId', 'siteTypeId', 'name', 'countryName', 'date', 'action'];
+
+  mapOptions: MapOptions;
 
   constructor(
     private siteService: SiteService,
@@ -22,6 +26,23 @@ export class SiteListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSites();
+
+    this.initializeMapOptions();
+  }
+
+  initializeMapOptions() {
+    this.mapOptions = {
+      center: latLng(0, 0),
+      zoom: 2,
+      layers: [
+        tileLayer(
+          'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          {
+            maxZoom: 18,
+            attribution: 'Map data © OpenStreetMap contributors'
+          })
+      ],
+    };
   }
 
   getSites() {
