@@ -6,7 +6,7 @@
 
     <mat-form-field appearance="outline">
       <mat-label>Choose country name</mat-label>
-      <mat-select name="countryName" [formControl]="countryName" (selectionChange)="getSiteII()">
+      <mat-select name="countryName" [formControl]="countryName" (selectionChange)="getSiteII()" cdkFocusInitial>
         <mat-option *ngFor="let siteI of siteIList" [value]="siteI">{{ siteI}}</mat-option>
       </mat-select>
     </mat-form-field>
@@ -25,5 +25,5 @@
 
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial (click)="save()">Create</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="save()">Create</button>
 </mat-dialog-actions>

@@ -14,6 +14,7 @@ import { SiteCrop } from '../../site-crop/model/site-crop';
 
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { SiteCropService } from '../../site-crop/service/site-crop.service';
 @Component({
   providers: [SiteCropListComponent],
   selector: 'app-exp-site-edit',
@@ -29,6 +30,7 @@ export class ExpSiteEditComponent implements OnInit {
   site = new Site(null, null, null, null, null, null, null, null, null, null, null, null, null, 'on');
   expSite = new ExpSite(null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'on');
   countryName = new FormControl();
+  expSiteId: string;
   parameterI: Parameter[] = [];
   parameterII: Parameter[] = [];
   parameterIII: Parameter[] = [];
@@ -36,7 +38,7 @@ export class ExpSiteEditComponent implements OnInit {
   parameterV: Parameter[] = [];
   parameterVI: Parameter[] = [];
 
-  itemList: SiteCrop[] = [];
+  itemList: SiteCrop[];
 
   visible = true;
   selectable = true;
@@ -61,16 +63,25 @@ export class ExpSiteEditComponent implements OnInit {
     private experimentService: ExperimentService,
     private parameterService: ParameterService,
     private compSiteCropList: SiteCropListComponent,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private siteCropService: SiteCropService,
   ) { }
 
 
   catchEmitterSiteCropList($event) {
-    this.itemList = $event;
+    if ($event) {
+      return this.siteCropService
+        .getById(this.route.snapshot.paramMap.get('id'))
+        .subscribe(
+          (_itemList: SiteCrop[]) => {
+            this.itemList = _itemList;
+          });
+    }
   }
 
   ngOnInit(): void {
     const expSiteId = this.route.snapshot.paramMap.get('id');
+    this.expSiteId = expSiteId;
     this.get(expSiteId);
     this.getSiteI();
     this.getParameterI();

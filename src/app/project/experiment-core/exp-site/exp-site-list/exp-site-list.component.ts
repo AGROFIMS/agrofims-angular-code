@@ -21,6 +21,7 @@ export class ExpSiteListComponent implements OnInit {
   // displayedColumns: string[] = ['expSiteId', 'siteId', 'name', 'action'];
 
   displayedColumnsI: string[] = [
+    '#',
     'countryName',
     'name',
     'modifiedAt',

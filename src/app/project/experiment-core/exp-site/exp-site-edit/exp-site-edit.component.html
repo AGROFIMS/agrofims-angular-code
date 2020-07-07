@@ -23,8 +23,6 @@
       <mat-card-content>
         <mat-tab-group mat-align-tabs="start">
 
-
-
           <!-- tab site -->
           <mat-tab label="Site">
             <form class="form">
@@ -114,7 +112,6 @@
                 </mat-form-field>
               </div>
 
-
               <div fxLayout="row">
                 <mat-form-field class="p-r-10" fxFlex="50" appearance="outline">
                   <mat-label>Site description notes</mat-label>
@@ -123,7 +120,6 @@
                   </textarea>
                 </mat-form-field>
               </div>
-
 
               <mat-card-title>Soil classification</mat-card-title>
 
@@ -166,13 +162,10 @@
                     (ngModelChange)="put()">
                 </mat-form-field>
 
-
               </div>
 
             </form>
           </mat-tab>
-
-
 
           <!-- tab crop -->
           <mat-tab label="Crop">
@@ -198,7 +191,7 @@
                 </mat-form-field>
               </div> -->
 
-              <app-site-crop-list [expSite]="expSite" [expSiteId]="expSite.expSiteId.toString()"
+              <app-site-crop-list [expSite]="expSite" [expSiteId]="expSiteId"
                 (eventEmitterSiteCropList)="catchEmitterSiteCropList($event)">
               </app-site-crop-list>
               <mat-card-title>Intercrop details</mat-card-title>
@@ -226,8 +219,15 @@
             <h3>Under construction</h3>
           </mat-tab> -->
           <mat-tab label="C. measurement">
-            <app-measurement-list [childMessage]="itemList">
-            </app-measurement-list>
+
+            <mat-card-title>Crop measurement</mat-card-title>
+            <mat-card-subtitle>Please, select measurement by click.</mat-card-subtitle>
+            <mat-tab-group mat-align-tabs="start">
+              <mat-tab *ngFor="let item of itemList; let index = index" [label]="item.cropLabel">
+                <app-crop-measurement-list [siteCrop]="item"></app-crop-measurement-list>
+              </mat-tab>
+            </mat-tab-group>
+
           </mat-tab>
           <mat-tab label="C. Phenology">
             <h3>Under construction</h3>
