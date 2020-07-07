@@ -15,6 +15,7 @@ export class SiteCropEditComponent implements OnInit {
   @Input() index: any;
 
   cropList: Crop[] = [];
+  childCropList: Crop[] = [];
 
   siteCrop: SiteCrop = new SiteCrop('', '', '', '', '', '', '', '', '', 'on');
 
@@ -27,8 +28,9 @@ export class SiteCropEditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getCropList();
     this.get(this.siteCropId);
+    this.getCropList();
+    this.getChildCropList();
   }
 
   get(siteCropId: any) {
@@ -48,7 +50,7 @@ export class SiteCropEditComponent implements OnInit {
   }
 
   put() {
-    this.siteCropService
+    return this.siteCropService
       .put(this.siteCrop)
       .subscribe(() =>
         this.siteCropService
@@ -63,9 +65,42 @@ export class SiteCropEditComponent implements OnInit {
     return this.cropService.getAll()
       .subscribe(
         (_cropList: Crop[]) => {
-          this.cropList = _cropList;
+          this.cropList = _cropList.filter(
+            item => item.isFather === 'on'
+          );
         }
       );
+  }
+
+  getChildCropList() {
+    return this.cropService.getAll()
+      .subscribe(
+        (_cropList: Crop[]) => {
+          this.childCropList = _cropList.filter(
+            item => item.isFather === 'off' && item.fatherCropId === this.siteCrop.cropId
+          );
+        }
+      );
+  }
+
+  selectCrop() {
+    this.cleanChildCrop();
+    this.cleanCropCommonNameOther();
+    this.getChildCropList();
+    this.put();
+  }
+
+  selectChildCrop() {
+    this.cleanCropCommonNameOther();
+    this.put();
+  }
+
+  cleanChildCrop() {
+    this.siteCrop.cropSonId = null;
+  }
+
+  cleanCropCommonNameOther() {
+    this.siteCrop.cropCommonNameOther = null;
   }
 
 }

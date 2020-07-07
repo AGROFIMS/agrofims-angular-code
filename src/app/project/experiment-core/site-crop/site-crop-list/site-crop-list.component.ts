@@ -18,7 +18,9 @@ export class SiteCropListComponent implements OnInit {
   @Input() expSiteId: any;
 
   itemList: any[] = [];
+  itemListAux: any[];
   item: any;
+
 
   parameterV: Parameter[] = [];
   croppingType = new FormControl();
@@ -33,7 +35,7 @@ export class SiteCropListComponent implements OnInit {
 
   siteCrop: SiteCrop;
 
-  @Output() eventEmitterSiteCropList = new EventEmitter<SiteCrop[]>();
+  @Output() eventEmitterSiteCropList = new EventEmitter<boolean>();
 
   constructor(
     private siteCropService: SiteCropService,
@@ -52,7 +54,7 @@ export class SiteCropListComponent implements OnInit {
       .subscribe(
         (_itemList: SiteCrop[]) => {
           this.itemList = _itemList;
-          this.eventEmitterSiteCropList.emit(this.itemList);
+          this.eventEmitterSiteCropList.emit(true);
           this.croppingType.setValue([...new Set(_itemList.map(item => item.croppingTypeId))][0]);
         }
       );
@@ -72,19 +74,18 @@ export class SiteCropListComponent implements OnInit {
         (val) => {
           this.item.siteCropId = val['result'];
           this.itemList.push(this.item);
-          this.eventEmitterSiteCropList.emit(this.itemList);
+          this.eventEmitterSiteCropList.emit(true);
         }
       );
   }
 
   remove(index: number) {
     this.itemList.splice(index, 1);
+    this.eventEmitterSiteCropList.emit(true);
   }
 
   catchEmitterSiteCropEdit($event) {
-    this.siteCrop = $event;
-    this.itemList[[...new Set(this.itemList.map(item => item.siteCropId))].indexOf(this.siteCrop.siteCropId)] = this.siteCrop;
-    this.eventEmitterSiteCropList.emit(this.itemList);
+    this.eventEmitterSiteCropList.emit(true);
   }
 
   getParameterV() {

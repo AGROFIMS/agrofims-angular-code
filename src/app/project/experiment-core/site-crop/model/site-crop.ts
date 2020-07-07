@@ -12,10 +12,10 @@ export class SiteCrop {
     public varietyName: string,
     public intercropValueRowCrop: string,
     public status: string,
-    public siteCropId?: number,
+    public siteCropId?: string,
 
     public cropCommonName?: string,
-
+    public cropLabel?: string,
   ) { }
 }
 
