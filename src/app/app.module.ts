@@ -44,8 +44,13 @@ import { CropEditComponent } from './project/experiment-core/crop/crop-edit/crop
 import { CropListComponent } from './project/experiment-core/crop/crop-list/crop-list.component';
 import { SiteCropListComponent } from './project/experiment-core/site-crop/site-crop-list/site-crop-list.component';
 import { SiteCropEditComponent } from './project/experiment-core/site-crop/site-crop-edit/site-crop-edit.component';
-import { MeasurementEditComponent } from './project/experiment-core/measurement/measurement-edit/measurement-edit.component';
-import { MeasurementListComponent } from './project/experiment-core/measurement/measurement-list/measurement-list.component';
+import {
+  CropMeasurementEditComponent
+} from './project/experiment-core/crop-measurement/crop-measurement-edit/crop-measurement-edit.component';
+import {
+  CropMeasurementListComponent
+} from './project/experiment-core/crop-measurement/crop-measurement-list/crop-measurement-list.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,8 +84,8 @@ import { MeasurementListComponent } from './project/experiment-core/measurement/
     CropListComponent,
     SiteCropListComponent,
     SiteCropEditComponent,
-    MeasurementEditComponent,
-    MeasurementListComponent,
+    CropMeasurementEditComponent,
+    CropMeasurementListComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,7 +99,8 @@ import { MeasurementListComponent } from './project/experiment-core/measurement/
     RouterModule.forRoot(AppRoutes),
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    LeafletModule
   ],
   providers: [
     {

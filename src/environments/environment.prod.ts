@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl: '.',
+  baseUrl: 'https://research.cip.cgiar.org/agrofims/api/app',
 };

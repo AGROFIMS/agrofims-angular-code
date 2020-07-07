@@ -7,18 +7,22 @@
 /* main-nav-bar */
 
 .mat-toolbar.mat-primary {
-    background: #22b24a !important;
-}
-
-.mat-toolbar-row, .mat-toolbar-single-row {
-  height: 54px !important;
+    background: #869910 !important;
 }
 
 /* side-nav-bar */
 
 #snav .mat-list-item.selected > .mat-list-item-content > a {
-  background: #24b14a !important;
-}  
+  background: #2187e5 !important;
+} 
+
+.mat-drawer {
+  background-color: #343a40 !important;
+}
+
+#snav .mat-list-item .mat-list-item-content:hover > a {
+  color: #fafafa !important;
+} 
 
 /* appearance-outline */
 
@@ -53,14 +57,14 @@
 
 .mat-nav-list > ol{
   display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-    flex-wrap: wrap;
-    padding: .25rem .50rem;
-    margin: 0rem; 
-    list-style: none;
-    background-color: #e9ecef;
-    border-radius: .25rem;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding: .25rem .50rem;
+  margin: 0rem; 
+  list-style: none;
+  background-color: #e9ecef;
+  border-radius: .25rem;
 }
 
 .mat-nav-list > ol > .home::before {
@@ -85,4 +89,19 @@
   cursor: pointer;
   -webkit-transition: all .2s ease-in-out;
   transition: all .2s ease-in-out;
+}
+
+/* chip */
+
+.mat-standard-chip {
+  min-height: 27px !important;
+}
+
+.mat-chip {
+  font-size: 12px !important;
+}
+
+/* icono de desplegue (triangulo) */
+.mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+  transform: translateY(-0%) !important;
 }

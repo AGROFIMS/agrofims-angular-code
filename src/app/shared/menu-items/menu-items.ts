@@ -8,9 +8,9 @@ export interface Menu {
 }
 
 const MENUITEMS = [
-  { state: 'crops', name: 'Crops', type: 'link', icon: 'av_timer' },
-  { state: 'sites', name: 'Sites', type: 'link', icon: 'place' },
   { state: 'experiments', name: 'Experiments', type: 'link', icon: 'book' },
+  { state: 'sites', name: 'Sites', type: 'link', icon: 'place' },
+  { state: 'crops', name: 'Crops', type: 'link', icon: 'eco' },
   { state: 'documentation', name: 'Documentation', type: 'link', icon: 'receipt' },
   { state: 'about', name: 'About', type: 'link', icon: 'av_timer' },
   // { state: 'dashboard', name: 'Dashboard', type: 'link', icon: 'av_timer' },
