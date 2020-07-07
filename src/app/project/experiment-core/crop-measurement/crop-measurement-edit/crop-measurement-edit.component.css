@@ -1,0 +1,31 @@
+
+.pull-right {
+  position: absolute;
+  right: 0px;
+  margin: -12px 10px 10px 10px;
+}
+
+.pull-left {
+  position: absolute;
+  left: 0px;
+  margin: 0px 24px;
+}
+
+
+
+
+.mat-card{
+  padding:  12px !important;
+  margin: 12px 0px;
+  background-color: #f1f1f1;
+}
+
+.mat-card-header{
+  padding: 12px 12px 42px 12px;
+}
+
+  .mat-card-content{
+    padding: 0px 12px;
+  }
+
+  

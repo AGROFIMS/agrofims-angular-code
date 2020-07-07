@@ -1,0 +1,24 @@
+<br>
+<div fxLayout="row">
+
+  <mat-form-field fxFlex="33.3" class="p-r-10" appearance="outline">
+    <mat-label>Crop measurement</mat-label>
+    <mat-select name="studyVariableId" [formControl]="studyVariable">
+      <mat-option *ngFor="let measurement of measurementList" [value]="measurement">
+        {{ measurement.measurement }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-card-actions class="p-l-10">
+    <button mat-raised-button color="primary" (click)="post()">
+      <mat-icon>add_circle_outline</mat-icon> Add measurement
+    </button>
+  </mat-card-actions>
+
+</div>
+
+<form class="example-form" *ngFor="let item of itemList ; let i=index">
+  <app-crop-measurement-edit [id]="item.cropMeasurementId" [index]="i" [studyVariableId]="item.studyVariableId">
+  </app-crop-measurement-edit>
+</form>

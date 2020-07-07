@@ -1,10 +1,26 @@
+<mat-card-header>
+  <mat-card-title>
+    Crops
+  </mat-card-title>
+</mat-card-header>
+
+<mat-nav-list>
+  <ol>
+    <li class="home active"><a routerLink="/">Home</a></li>
+    <li class="active">Crops</li>
+  </ol>
+</mat-nav-list>
+
 <div fxLayout="row">
   <div fxFlex.gt-sm="100%">
     <mat-card>
       <mat-card-content>
-        <mat-card-title>Crops</mat-card-title>
 
-        <p><button mat-raised-button color="primary" (click)="addCrop()">New crop</button></p>
+        <p>
+          <button mat-raised-button color="primary" (click)="addCrop()">
+            <mat-icon>add_circle_outline</mat-icon> New crop
+          </button>
+        </p>
 
         <table mat-table [dataSource]="cropList" class="mat-elevation-z8" style="width: 100%;">
 
