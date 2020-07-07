@@ -1,26 +1,25 @@
-<mat-card-content>
+<mat-dialog-content class="mat-typography">
 
-  <mat-card-title>New experiment</mat-card-title>
+  <h2 mat-dialog-title>New experiment</h2>
 
   <form>
 
     <mat-form-field appearance="outline">
       <mat-label>Experiment ID</mat-label>
-      <input matInput name="expId" [(ngModel)]="experimentModel.expId">
+      <input matInput name="expId" [(ngModel)]="experimentModel.expId" disabled>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Experiment Name</mat-label>
-      <input matInput name="experimentName" [(ngModel)]="experimentModel.experimentName" placeholder="Enter name...">
+      <input matInput name="experimentName" [(ngModel)]="experimentModel.experimentName" placeholder="Enter name..."
+        cdkFocusInitial>
     </mat-form-field>
 
   </form>
 
-  <mat-card-actions>
-
-    <button mat-raised-button mat-dialog-close>Cancel</button>
-    <button mat-raised-button color="primary" [mat-dialog-close]="true" cdkFocusInitial
-      (click)="post(experimentModel.expId)">Create</button>
-  </mat-card-actions>
-
-</mat-card-content>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true"
+    (click)="post(experimentModel.expId)">Create</button>
+</mat-dialog-actions>

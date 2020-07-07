@@ -24,7 +24,7 @@ export class ExperimentListComponent implements OnInit {
     public dialog: MatDialog,
   ) { }
 
-  displayedColumns: string[] = ['expId', 'experimentName', 'experimentProjectName', 'modifiedAt', 'action'];
+  displayedColumns: string[] = ['#', 'expId', 'experimentName', 'experimentProjectName', 'modifiedAt', 'action'];
   dataSource = new MatTableDataSource();
 
 
