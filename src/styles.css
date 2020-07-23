@@ -101,7 +101,13 @@
   font-size: 12px !important;
 }
 
-/* icono de desplegue (triangulo) */
+/* drop-down-list icon */
 .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
   transform: translateY(-0%) !important;
+}
+
+/*padding tab reduce*/
+.mat-tab-label {
+  padding: 0 20px !important;
+  min-width: 110px !important;
 }
