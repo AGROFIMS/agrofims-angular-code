@@ -1,0 +1,131 @@
+<mat-card>
+  <mat-card-header *ngIf="typeFertilizer === 'Product'">
+    <h4 class="pull-left">Factor level {{filter.indexOrder}} [{{levelNameSplit}}]</h4>
+  </mat-card-header>
+
+  <mat-card-header *ngIf="typeFertilizer === 'Nutrient'">
+    <h4 class="pull-left">Factor level {{filter.indexOrder}} [{{levelNameSplit}}] ({{unit}})</h4>
+  </mat-card-header>
+
+
+  <mat-card-content>
+
+    <div fxFlex="20.0">
+
+      <mat-form-field *ngIf="typeFertilizer === 'Nutrient'" class="p-r-10" appearance="outline"
+        title="{{productValueControl.value}}">
+        <input type="text" placeholder="Select product..." aria-label="Number" matInput
+          [formControl]="productValueControl" [matAutocomplete]="auto" (ngModelChange)="optionSelected($event)">
+        <button mat-button matSuffix aria-label="Arrow" *ngIf="!productValueControl.value" mat-icon-button
+          class="mat-select-arrow-wrapper">
+          <div class="mat-select-arrow"></div>
+        </button>
+        <button mat-button *ngIf="productValueControl.value" matSuffix mat-icon-button aria-label="Clear"
+          (click)="optionRemove()">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+            {{option}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="typeFertilizer === 'Product'" class="p-r-10" appearance="outline"
+        title="{{productValueControl.value}}">
+        <input matInput name="timingFrequency" [(ngModel)]="productValueControl.value" disabled>
+      </mat-form-field>
+
+    </div>
+
+    <div fxFlex="80.0" class="div-table">
+      <table class="table nutrient-table">
+        <tr>
+          <th fxFlex="7.14" class="text-center  b-r">N</th>
+          <th fxFlex="7.14" class="text-center  b-r">P</th>
+          <th fxFlex="7.14" class="text-center  b-r">K</th>
+          <th fxFlex="7.14" class="text-center  b-r">Ca</th>
+          <th fxFlex="7.14" class="text-center  b-r">Mg</th>
+          <th fxFlex="7.14" class="text-center  b-r">S</th>
+          <th fxFlex="7.14" class="text-center  b-r">Mb</th>
+          <th fxFlex="7.14" class="text-center  b-r">Zn</th>
+          <th fxFlex="7.14" class="text-center  b-r">B</th>
+          <th fxFlex="7.14" class="text-center  b-r">Cu</th>
+          <th fxFlex="7.14" class="text-center  b-r">Fe</th>
+          <th fxFlex="7.14" class="text-center  b-r">Mn</th>
+          <th fxFlex="7.14" class="text-center  b-r">Ni</th>
+          <th fxFlex="7.18" class="text-center ">Cl</th>
+        </tr>
+        <tr>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementN"
+              [(ngModel)]="nutrientElementN" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value">
+          </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementP"
+              [(ngModel)]="nutrientElementP" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementK"
+              [(ngModel)]="nutrientElementK" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementCa"
+              [(ngModel)]="nutrientElementCa" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementMg"
+              [(ngModel)]="nutrientElementMg" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementS"
+              [(ngModel)]="nutrientElementS" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementMb"
+              [(ngModel)]="nutrientElementMb" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementZn"
+              [(ngModel)]="nutrientElementZn" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementB"
+              [(ngModel)]="nutrientElementB" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementCu"
+              [(ngModel)]="nutrientElementCu" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementFe"
+              [(ngModel)]="nutrientElementFe" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementMn"
+              [(ngModel)]="nutrientElementMn" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementNi"
+              [(ngModel)]="nutrientElementNi" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+          <td fxFlex="7.18" class="text-center ">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementCl"
+              [(ngModel)]="nutrientElementCl" (ngModelChange)="updateTable()" placeholder="0.0"
+              [disabled]="!productValueControl.value"> </td>
+        </tr>
+      </table>
+    </div>
+
+  </mat-card-content>
+
+  <mat-card-content>
+
+    <div *ngFor="let factorFertilizer of factorFertilizerListFiltered">
+      <app-factor-fertilizer-edit-row [factorFertilizer]="factorFertilizer" [factorType]="filter.factorType">
+      </app-factor-fertilizer-edit-row>
+    </div>
+
+  </mat-card-content>
+</mat-card>

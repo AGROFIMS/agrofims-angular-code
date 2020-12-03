@@ -1,0 +1,18 @@
+
+.div-toggle{
+  margin: auto;
+  margin-bottom: 2px;
+  height: 100%;
+  min-width: 395px;
+  border-radius: 5px;
+  border: 1px dashed #ada9a9;
+  padding: 10px 10px 0px 10px;
+}
+
+.b-r{
+  border-right: 1px dashed #ada9a9;
+}
+
+.mat-form-field{
+  min-width: 100px !important;
+}  

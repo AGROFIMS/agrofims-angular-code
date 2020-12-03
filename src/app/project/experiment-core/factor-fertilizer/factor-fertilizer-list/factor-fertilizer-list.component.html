@@ -1,0 +1,83 @@
+<h2 mat-dialog-title>Fertilizer application details [{{data.itemGroup.siteFactorList[0].factorName}}]</h2>
+
+<div mat-dialog-content class="mat-typography">
+
+  <div *ngFor="let filter of filterList">
+    <app-factor-fertilizer-edit *ngIf="productList.length>0" [filter]="filter"
+      [siteFactorList]="data.itemGroup.siteFactorList" [factorFertilizerList]="data.factorFertilizerList"
+      [productList]="productList">
+    </app-factor-fertilizer-edit>
+  </div>
+
+  <div>
+    <mat-card-actions align=center>
+      <button style="margin: auto!important;" mat-raised-button color="primary" (click)="calculate()">
+        <mat-icon>calculate</mat-icon> Calculate
+      </button>
+    </mat-card-actions>
+  </div>
+
+
+  <div *ngIf="resStatus === '200'">
+
+    <div fxLayout="row" *ngIf="data.type_factor === 'Product'">
+      <span class="m-auto">
+        Nutrient: amount ...
+      </span>
+    </div>
+
+    <div fxLayout="row" *ngIf="data.type_factor === 'Nutrient'">
+      <span class="m-auto">
+        Amount of product to be added (...)
+      </span>
+    </div>
+
+    <table class="class-table">
+      <tr>
+        <th style="width: 30%;">Product</th>
+        <th style="width: 5%;">N</th>
+        <th style="width: 5%;">P</th>
+        <th style="width: 5%;">K</th>
+        <th style="width: 5%;">Ca</th>
+        <th style="width: 5%;">Mg</th>
+        <th style="width: 5%;">S</th>
+        <th style="width: 5%;">Mb</th>
+        <th style="width: 5%;">Zn</th>
+        <th style="width: 5%;">B</th>
+        <th style="width: 5%;">Cu</th>
+        <th style="width: 5%;">Fe</th>
+        <th style="width: 5%;">Mn</th>
+        <th style="width: 5%;">Ni</th>
+        <th style="width: 5%;">Cl</th>
+      </tr>
+      <tr *ngFor="let item of resDataTable">
+        <td>{{item.productvalue}}</td>
+        <td>{{item.N}}</td>
+        <td>{{item.P}}</td>
+        <td>{{item.K}}</td>
+        <td>{{item.Ca}}</td>
+        <td>{{item.Mg}}</td>
+        <td>{{item.S}}</td>
+        <td>{{item.Mb}}</td>
+        <td>{{item.Zn}}</td>
+        <td>{{item.B}}</td>
+        <td>{{item.Cu}}</td>
+        <td>{{item.Fe}}</td>
+        <td>{{item.Mn}}</td>
+        <td>{{item.Ni}}</td>
+        <td>{{item.Cl}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <br>
+</div>
+
+
+<!-- <div fxLayout="row">
+  <h3 class="m-auto" @load *ngIf="showMessage">{{resMsg}}</h3>
+</div> -->
+
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>

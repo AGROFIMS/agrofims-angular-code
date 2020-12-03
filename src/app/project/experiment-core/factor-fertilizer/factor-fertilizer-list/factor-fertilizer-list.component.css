@@ -1,0 +1,24 @@
+.mat-dialog-actions{
+  justify-content: flex-end;
+}
+
+
+.class-table > tr > th {
+  border: 1px solid #ccc!important;
+  text-justify: auto;
+  text-align: center;
+ }
+
+.class-table > tr > td {
+  border: 1px solid #ccc!important;
+  text-justify: auto;
+  text-align: center;
+}
+
+.class-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  display: table;
+}  

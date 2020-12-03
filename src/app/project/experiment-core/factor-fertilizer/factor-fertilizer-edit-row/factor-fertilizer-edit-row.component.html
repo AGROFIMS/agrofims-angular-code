@@ -1,0 +1,112 @@
+<div fxLayout="row" class="div-toggle m-t-5">
+
+  <mat-form-field fxFlex="10.0" class="b-r p-r-10" appearance="outline">
+    <mat-label *ngIf="factorFertilizer.typeFertilizer ==='Product'">Product amount {{factorFertilizer.unit}}</mat-label>
+    <mat-label *ngIf="factorFertilizer.typeFertilizer ==='Nutrient'">{{factorType}}</mat-label>
+    <input matInput name="unitValue" [(ngModel)]="factorFertilizer.unitValue" (ngModelChange)="put()">
+  </mat-form-field>
+
+  <div fxFlex="30.0" class="b-r">
+    <div fxLayout="row">
+
+      <mat-form-field fxFlex="50.0" class="p-l-10 p-r-10" appearance="outline">
+        <mat-label>Timing</mat-label>
+        <mat-select name="unit" [(ngModel)]="factorFertilizer.timing" (ngModelChange)="timingChange()">
+          <mat-option *ngFor="let timingOption of timingOptionList" [value]="timingOption.name">
+            {{ timingOption.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="50.0" class="p-r-10" *ngIf="factorFertilizer.timing === 'Days after planting'"
+        appearance="outline">
+        <mat-label>Days after planting</mat-label>
+        <mat-chip-list #chipList aria-label="Days after planting">
+          <mat-chip *ngFor="let formControlItem of formControlListDAP" [selectable]="selectable" [removable]="removable"
+            (removed)="removeTiming(formControlItem)">
+            {{formControlItem}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="updateTiming($event)">
+        </mat-chip-list>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="50.0" class="p-r-10" *ngIf="factorFertilizer.timing === 'Frequency'" appearance="outline">
+        <mat-label>Frequency</mat-label>
+        <input matInput name="timingFrequency" [(ngModel)]="formControlFrequency"
+          (ngModelChange)="updateTiming($event)">
+      </mat-form-field>
+
+      <mat-form-field fxFlex="50.0" class="p-r-10" *ngIf="factorFertilizer.timing === 'Growth stage'"
+        appearance="outline">
+        <mat-label>Growth stage</mat-label>
+        <mat-chip-list #chipList aria-label="Days after planting">
+          <mat-chip *ngFor="let formControlItem of formControlListGS" [selectable]="selectable" [removable]="removable"
+            (removed)="removeTiming(formControlItem)">
+            {{formControlItem}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="updateTiming($event)">
+        </mat-chip-list>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="50.0" class="p-r-10" *ngIf="factorFertilizer.timing === 'Other'" appearance="outline">
+        <mat-label>Other</mat-label>
+        <mat-chip-list #chipList aria-label="Days after planting">
+          <mat-chip *ngFor="let formControlItem of formControlListO" [selectable]="selectable" [removable]="removable"
+            (removed)="removeTiming(formControlItem)">
+            {{formControlItem}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="updateTiming($event)">
+        </mat-chip-list>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="50.0" class="p-r-10" *ngIf="factorFertilizer.timing === 'Date'" appearance="outline">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="pickerInit" [formControl]="formControlDate"
+          (dateChange)="updateTiming($event)">
+        <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
+        <mat-datepicker #pickerInit color="primary"></mat-datepicker>
+      </mat-form-field>
+
+    </div>
+  </div>
+
+  <div fxFlex="30" class="b-r">
+    <div fxLayout="row">
+      <mat-form-field fxFlex="auto" class="p-l-10 p-r-10" appearance="outline">
+        <mat-label>Technique</mat-label>
+        <mat-select name="unit" [(ngModel)]="factorFertilizer.techniqueId" (ngModelChange)="put()">
+          <mat-option *ngFor="let technique of techniqueList" [value]="technique.parameterId">
+            {{ technique.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="50.0" class="p-r-10" *ngIf="factorFertilizer.techniqueId === '337'" appearance="outline">
+        <input matInput name="techniqueOther" [(ngModel)]="factorFertilizer.techniqueOther" (change)="put()">
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxFlex="30">
+    <div fxLayout="row">
+      <mat-form-field fxFlex="auto" class="p-l-10" appearance="outline">
+        <mat-label>Traction</mat-label>
+        <mat-select name="unit" [(ngModel)]="factorFertilizer.tractionId" (ngModelChange)="put()">
+          <mat-option *ngFor="let traction of tractionList" [value]="traction.parameterId">
+            {{ traction.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="50.0" class="p-l-10" *ngIf="factorFertilizer.tractionId === '342'" appearance="outline">
+        <input matInput name="tractionOther" [(ngModel)]="factorFertilizer.tractionOther" (change)="put()">
+      </mat-form-field>
+    </div>
+  </div>
+
+
+</div>
