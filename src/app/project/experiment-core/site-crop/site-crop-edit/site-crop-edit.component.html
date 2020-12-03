@@ -1,6 +1,8 @@
 <mat-card>
   <mat-card-header>
-    <button mat-icon-button color="basic" (click)="remove(siteCrop)" title="remove">
+    <h4 class="pull-left">Crop </h4>
+    <button mat-icon-button *ngIf="index>=8" color="basic" class="pull-right" (click)="remove(siteCrop)" title="delete"
+      color="warn">
       <mat-icon>highlight_off</mat-icon>
     </button>
   </mat-card-header>
@@ -8,9 +10,12 @@
   <mat-card-content>
 
     <div fxLayout="row">
+
+      <!-- [formControl]="cropId"  -->
+
       <mat-form-field fxFlex="50" class="p-r-10" appearance="outline">
-        <mat-label>Crop common name</mat-label>
-        <mat-select name="cropId" [(ngModel)]="siteCrop.cropId" (ngModelChange)="selectCrop()">
+        <mat-label>{{siteCrop.cropTitle}}</mat-label>
+        <mat-select name="cropId" [(ngModel)]="siteCrop.cropId" (ngModelChange)="selectCrop($event)" required>
           <mat-option *ngFor="let crop of cropList" [value]="crop.cropId">
             {{ crop.cropCommonName }}
           </mat-option>
@@ -19,26 +24,23 @@
 
       <mat-form-field fxFlex="50" class="p-l-10" appearance="outline">
         <mat-label>Variety name(s)</mat-label>
-        <input matInput name="varietyName" [(ngModel)]="siteCrop.varietyName" (change)="put()">
+        <mat-chip-list #chipList aria-label="Variety names">
+          <mat-chip *ngFor="let chip of chipsSelected" [selectable]="selectable" [removable]="removable"
+            (removed)="removeChip(chip)">
+            {{chip}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addChip($event)">
+        </mat-chip-list>
       </mat-form-field>
     </div>
-
-
-    <div fxLayout="row" *ngIf="siteCrop.cropId == '3'">
-      <mat-form-field fxFlex="50" class="p-r-10" appearance="outline">
-        <mat-select name="childCropId" [(ngModel)]="siteCrop.cropSonId" (ngModelChange)="selectChildCrop()">
-          <mat-option *ngFor="let crop of childCropList" [value]="crop.cropId">
-            {{ crop.cropCommonName }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-
 
     <div fxLayout="row" *ngIf="siteCrop.cropId == '15' || siteCrop.cropSonId == '16'">
       <mat-form-field fxFlex="50" class="p-r-10" appearance="outline">
         <mat-label>Other</mat-label>
-        <input matInput name="cropCommonNameOther" [(ngModel)]="siteCrop.cropCommonNameOther" (change)="put()">
+        <input matInput name="cropCommonNameOther" [(ngModel)]="siteCrop.cropCommonNameOther"
+          (ngModelChange)="putOther($event)">
       </mat-form-field>
     </div>
 

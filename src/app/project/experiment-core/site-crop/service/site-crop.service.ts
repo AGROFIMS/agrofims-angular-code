@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../../environments/environment';
 import { SiteCrop } from '../model/site-crop';
+import { ExpSite } from '../../exp-site/model/exp-site';
 
 @Injectable({
   providedIn: 'root'
@@ -30,10 +31,13 @@ export class SiteCropService {
     return this.http.put(`${this.baseUrl}/site-crop/put.php`, siteCrop);
   }
 
-  getById(id: string | number) {
-    return this.http.get(`${this.baseUrl}/site-crop/getById.php?id=${id}`);
+  putStatus(expSite: ExpSite) {
+    return this.http.put(`${this.baseUrl}/site-crop/putStatus.php`, expSite);
   }
 
+  getById(id1: string | number) {
+    return this.http.get(`${this.baseUrl}/site-crop/getById.php?id1=${id1}`);
+  }
 }
 
 

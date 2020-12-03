@@ -1,24 +1,65 @@
 <mat-card-title>Description of crops sown</mat-card-title>
 
 <div fxLayout="row">
-  <mat-form-field fxFlex="50" appearance="outline">
+  <mat-form-field fxFlex="50" class="p-r-10" appearance="outline">
     <mat-label>Cropping system</mat-label>
-    <mat-select name="croppingType" [formControl]="croppingType" (selectionChange)="selectCondition()">
-      <mat-option *ngFor="let par of parameterV" [value]="par.parameterId">
+    <mat-select name="croppingType" [(ngModel)]="expSite.croppingTypeId" (selectionChange)="selectCondition()">
+      <mat-option *ngFor="let par of parameterList" [value]="par.parameterId">
+        {{ par.name }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-label class="fieldBookClass">{{expSite.fieldbookId}}</mat-label>
+
+</div>
+
+<form class="example-form" *ngFor="let siteCrop of siteCropList let i=index">
+  <app-site-crop-edit *ngIf="siteCrop.croppingTypeId==expSite.croppingTypeId && siteCrop.cropId !=='57' " [index]="i"
+    [siteCrop]="siteCrop" [expSite]="expSite" [experimentStartDate]="experimentStartDate" [countryName]="countryName">
+  </app-site-crop-edit>
+</form>
+
+<mat-card-actions *ngIf="expSite.croppingTypeId == this.ec2 || expSite.croppingTypeId == this.ec3 ">
+  <button mat-raised-button color="primary" (click)="post()">
+    <mat-icon>add_circle_outline</mat-icon> Add crop
+  </button>
+</mat-card-actions>
+
+<mat-card-title *ngIf="expSite.croppingTypeId === '163'">Intercrop details</mat-card-title>
+<div *ngIf="expSite.croppingTypeId === '163'" fxLayout="row">
+  <mat-form-field fxFlex="50" class="p-r-10" appearance="outline">
+    <mat-label>Intercrop arrangement</mat-label>
+    <mat-select name="intercropArrangementId" [(ngModel)]="expSite.intercropArrangementId"
+      (selectionChange)="intercropArrangementChange()">
+      <mat-option *ngFor="let par of parameterVI" [value]="par.parameterId">
         {{ par.name }}
       </mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 
-<form class="example-form" *ngFor="let item of itemList; let i=index">
-  <app-site-crop-edit (eventEmitterSiteCropEdit)="catchEmitterSiteCropEdit($event)" [siteCropId]="item.siteCropId"
-    [index]="i">
-  </app-site-crop-edit>
-</form>
+<mat-card-title *ngIf="expSite.croppingTypeId === '163' && expSite.intercropArrangementId ==='161'">
+  Intercrop row geometry
+</mat-card-title>
+<div *ngIf="expSite.croppingTypeId === '163' && expSite.intercropArrangementId ==='161'" fxLayout="row">
 
-<mat-card-actions *ngIf="croppingType.value == this.ec2 || croppingType.value == this.ec3 ">
-  <button mat-raised-button color="primary" (click)="post()">
-    <mat-icon>add_circle_outline</mat-icon> Add a site crop
-  </button>
-</mat-card-actions>
+  <form class="example-form" *ngFor="let item of siteCropList let i=index">
+    <div *ngIf="item.croppingTypeId==expSite.croppingTypeId && item.croppingTypeId== '163' && item.cropId !=='57'">
+
+      <mat-form-field fxFlex="50" appearance="outline">
+        <mat-label> {{item.cropLabel}} </mat-label>
+        <input matInput name="intercropValueRowCrop" [(ngModel)]="item.intercropValueRowCrop"
+          (change)="updateFormControl(i)">
+      </mat-form-field>
+
+      <span class="span-align"> row(s)</span>
+
+      <div *ngIf="inLimit(item.siteCropId)" fxFlex="50" class="m-auto" style="text-align: center;">
+        <mat-icon>clear</mat-icon>
+      </div>
+
+    </div>
+  </form>
+
+</div>

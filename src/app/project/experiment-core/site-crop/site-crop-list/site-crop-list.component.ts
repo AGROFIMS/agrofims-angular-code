@@ -1,110 +1,186 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { SiteCropService } from '../service/site-crop.service';
 import { SiteCrop } from '../model/site-crop';
-import { isNull } from 'util';
 import { Parameter } from '../../parameter/model/parameter';
 import { ParameterService } from '../../parameter/service/parameter.service';
 import { FormControl } from '@angular/forms';
-import { Crop } from '../../crop/model/crop';
 import { CropService } from '../../crop/service/crop.service';
+import { ExpSiteService } from '../../exp-site/service/exp-site.service';
+import { ExpSite } from '../../exp-site/model/exp-site';
 
 @Component({
   selector: 'app-site-crop-list',
   templateUrl: './site-crop-list.component.html',
   styleUrls: ['./site-crop-list.component.css']
 })
-export class SiteCropListComponent implements OnInit {
-  @Input() expSite: any;
-  @Input() expSiteId: any;
-
-  itemList: any[] = [];
-  itemListAux: any[];
-  item: any;
-
-
-  parameterV: Parameter[] = [];
-  croppingType = new FormControl();
-
-  // mono_crop
-  ec1 = 162;
-  // inter_crop
-  ec2 = 163;
-  // relay_crop
-  ec3 = 164;
-
+export class SiteCropListComponent implements OnInit, OnChanges {
+  @Input() expSite: ExpSite;
+  @Input() siteCropList: SiteCrop[];
+  @Input() experimentStartDate: string;
+  @Input() countryName: any;
 
   siteCrop: SiteCrop;
 
-  @Output() eventEmitterSiteCropList = new EventEmitter<boolean>();
+  parameterList: Parameter[] = [];
+  // croppingType = new FormControl();
+
+  // mono_crop
+  ec1 = '162';
+  // inter_crop
+  ec2 = '163';
+  // relay_crop
+  ec3 = '164';
+
+  // siteCrop: SiteCrop;
+  parameterVI: Parameter[] = [];
+
+
+  formControlList = [];
 
   constructor(
     private siteCropService: SiteCropService,
-    private cropService: CropService,
+    private expSiteService: ExpSiteService,
     private parameterService: ParameterService,
   ) { }
 
   ngOnInit(): void {
-    this.getAll(this.expSiteId);
-    this.getParameterV();
+    this.getParameterList();
+    this.getParameterVI();
   }
 
-  getAll(expSiteId: any) {
-    return this.siteCropService
-      .getById(expSiteId)
-      .subscribe(
-        (_itemList: SiteCrop[]) => {
-          this.itemList = _itemList;
-          this.eventEmitterSiteCropList.emit(true);
-          this.croppingType.setValue([...new Set(_itemList.map(item => item.croppingTypeId))][0]);
+  ngOnChanges() {
+  }
+
+  selectCondition() {
+    switch (this.expSite.croppingTypeId) {
+      case this.ec1:
+        const cropCommonName = this.siteCropList
+          .filter(obj_1 => obj_1.croppingTypeId === this.ec1)[1].cropCommonName;
+        if (cropCommonName) {
+          this.expSite.fieldbookId =
+            'FM' + cropCommonName.replace(' ', '_')
+            + this.experimentStartDate.slice(0, 7).replace('-', '')
+            + '_' + this.countryName.replace(' ', '_');
+        } else {
+          this.expSite.fieldbookId =
+            'FM' + this.experimentStartDate.slice(0, 7).replace('-', '')
+            + '_' + this.countryName.replace(' ', '_');
         }
-      );
+        this.siteCropList.forEach((siteCrop) => {
+          siteCrop.status = ((siteCrop.croppingTypeId === this.ec1) ? 'on' : 'off');
+          this.siteCropService.put(siteCrop).subscribe();
+        });
+        break;
+      case this.ec2:
+        this.expSite.fieldbookId =
+          'FInt' + this.experimentStartDate.slice(0, 7).replace('-', '')
+          + '_' + this.countryName.replace(' ', '_');
+        this.siteCropList.forEach((siteCrop) => {
+          siteCrop.status = ((siteCrop.croppingTypeId === this.ec2) ? 'on' : 'off');
+          this.siteCropService.put(siteCrop).subscribe();
+        });
+        break;
+      case this.ec3:
+        this.expSite.fieldbookId =
+          'FRel' + this.experimentStartDate.slice(0, 7).replace('-', '')
+          + '_' + this.countryName.replace(' ', '_');
+        this.siteCropList.forEach((siteCrop) => {
+          siteCrop.status = ((siteCrop.croppingTypeId === this.ec3) ? 'on' : 'off');
+          this.siteCropService.put(siteCrop).subscribe();
+        });
+        break;
+      default:
+        break;
+    }
+    this.putExpSiteCropsOn(this.siteCropList);
+  }
+
+  putExpSiteCropsOn(siteCropList: SiteCrop[]) {
+    this.expSite.siteCropsOn = siteCropList
+      .filter(obj_1 => obj_1.croppingTypeId === this.expSite.croppingTypeId)
+      .map(obj_2 =>
+        obj_2.croppingTypeId + '.' + obj_2.siteCropId + '.' + obj_2.cropId + '.' + obj_2.cropCommonName +
+        (obj_2.cropCommonName === 'Other' ? '-' + obj_2.cropCommonNameOther : '')
+      )
+      .join('|');
+    this.putExpSite();
+  }
+
+  intercropArrangementChange() {
+    this.siteCropList.forEach(siteCrop => {
+      siteCrop.intercropValueRowCrop = null;
+      this.siteCropService.put(siteCrop).subscribe();
+    });
+    this.expSite.intercropValueRowCrop = null;
+    this.putExpSite();
+  }
+
+  putExpSite() {
+    this.expSiteService
+      .put(this.expSite)
+      .subscribe();
   }
 
   post() {
-    this.item = new SiteCrop(
+    this.siteCrop = new SiteCrop(
       this.expSite.expSiteId,
-      this.expSite.experimentId,
-      this.expSite.siteId,
-      null, null, this.croppingType.value,
+      this.expSite.croppingTypeId === this.ec2 ? 'Crop common name' : 'Relay crop common name',
+      null, null,
+      this.expSite.croppingTypeId,
       null, null, null,
       'on');
-
-    this.siteCropService.post(this.item)
+    this.siteCropService.post(this.siteCrop)
       .subscribe(
         (val) => {
-          this.item.siteCropId = val['result'];
-          this.itemList.push(this.item);
-          this.eventEmitterSiteCropList.emit(true);
+          this.siteCrop.siteCropId = val['result'];
+          this.siteCropList
+            .push(this.siteCrop);
+
+          this.putExpSiteCropsOn(this.siteCropList);
         }
       );
   }
 
   remove(index: number) {
-    this.itemList.splice(index, 1);
-    this.eventEmitterSiteCropList.emit(true);
+    this.siteCropList.splice(index, 1);
+    this.updateFormControl(index);
+    this.putExpSiteCropsOn(this.siteCropList);
   }
 
-  catchEmitterSiteCropEdit($event) {
-    this.eventEmitterSiteCropList.emit(true);
-  }
-
-  getParameterV() {
+  getParameterList() {
     return this.parameterService
       .getAll('expSite', 'cropping_type')
-      .subscribe((_parameter: Parameter[]) => this.parameterV = _parameter);
+      .subscribe((_parameter: Parameter[]) => this.parameterList = _parameter);
+  }
+  getParameterVI() {
+    return this.parameterService
+      .getAll('expSite', 'intercrop_arrangement')
+      .subscribe((_parameter: Parameter[]) => this.parameterVI = _parameter);
   }
 
-  selectCondition() {
-    switch (this.croppingType.value) {
-      case this.ec1.toString(): this.post();
-        break;
-      case this.ec2.toString(): { this.post(); this.post(); }
-        break;
-      case this.ec3.toString(): { this.post(); this.post(); }
-        break;
-      default:
-        break;
+  updateFormControl(i: number) {
+    const inputList: string[] = [];
+    this.siteCropList.forEach(siteCrop => {
+      if (siteCrop.croppingTypeId === '163' && siteCrop.intercropValueRowCrop) {
+        inputList.push(siteCrop.intercropValueRowCrop);
+        this.siteCropService.put(siteCrop).subscribe();
+      }
+    });
+    this.expSite.intercropValueRowCrop = inputList.join('|');
+    this.expSiteService
+      .put(this.expSite)
+      .subscribe();
+  }
+
+  inLimit(siteCropId: string): boolean {
+    const itemList = this.siteCropList.filter(object => object.croppingTypeId === '163').map(object => object.siteCropId);
+    const lastItem = itemList[itemList.length - 1];
+    if (siteCropId === lastItem) {
+      return false;
+    } else {
+      return true;
     }
   }
-
 }
+
+
