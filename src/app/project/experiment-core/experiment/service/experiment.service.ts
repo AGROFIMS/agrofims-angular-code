@@ -21,8 +21,8 @@ export class ExperimentService {
     return this.http.post(`${this.baseUrl}/experiment/post.php`, experiment);
   }
 
-  delete(experiment: Experiment) {
-    return this.http.delete(`${this.baseUrl}/experiment/delete.php?id=${experiment.experimentId}`);
+  delete(id: string | number) {
+    return this.http.delete(`${this.baseUrl}/experiment/delete.php?id=${id}`);
   }
 
   get(id: string | number) {
@@ -37,4 +37,9 @@ export class ExperimentService {
     return this.http.put(`${this.baseUrl}/experiment/put.php`, experiment);
   }
 
+  rSend(id: string | number) {
+    const ver = 'version';
+    const env = 'environment';
+    return this.http.get(`${this.baseUrl}/r-connection/rSend.php?id=${id}&ver=${ver}&env=${env}`);
+  }
 }

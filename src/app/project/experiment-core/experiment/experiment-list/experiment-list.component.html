@@ -17,69 +17,73 @@
     <mat-card>
       <mat-card-content>
 
+        <!-- <span><b>NOTE:</b> By November 2020 you will be able to set up your private account so that only you can see the
+          fieldbooks that you create. However, for now, your fieldbook/s will be available for all to view and use.
+        </span> -->
+
         <p>
           <button mat-raised-button color="primary" (click)="addExperiment()">
             <mat-icon>add_circle_outline</mat-icon> New experiment
           </button>
         </p>
 
-        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;">
+
           <ng-container matColumnDef="#">
-            <th mat-header-cell *matHeaderCellDef> # </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
             <td mat-cell *matCellDef="let ndx = index"> {{ ndx+1 }} </td>
           </ng-container>
 
           <ng-container matColumnDef="expId">
-            <th mat-header-cell *matHeaderCellDef> Experiment ID </th>
-            <td mat-cell *matCellDef="let element"> {{ element.expId }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Experiment ID </th>
+            <td mat-cell *matCellDef="let row"> {{ row.expId }} </td>
           </ng-container>
 
           <ng-container matColumnDef="experimentName">
-            <th mat-header-cell *matHeaderCellDef> Experiment name </th>
-            <td mat-cell *matCellDef="let element"> {{ element.experimentName }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Experiment name </th>
+            <td mat-cell *matCellDef="let row" title="{{row.experimentName}}">
+              {{  row.experimentName &&  row.experimentName.length>20 ? row.experimentName.substring(0,25) + '...' : row.experimentName}}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="experimentProjectName">
-            <th mat-header-cell *matHeaderCellDef> Experiment project name </th>
-            <td mat-cell *matCellDef="let element"> {{ element.experimentProjectName }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Experiment project name </th>
+            <td mat-cell *matCellDef="let row" title="{{row.experimentProjectName}}">
+              {{ row.experimentProjectName && row.experimentProjectName.length>20 ? row.experimentProjectName.substring(0,25) + '...' : row.experimentProjectName}}
+            </td>
           </ng-container>
 
-          <ng-container matColumnDef="modifiedAt">
-            <th mat-header-cell *matHeaderCellDef> Date </th>
-            <td mat-cell *matCellDef="let element"> {{ element.createdAt }} </td>
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <td mat-cell *matCellDef="let row"> {{ row.createdAt }} </td>
           </ng-container>
-
-          <!-- <ng-container matColumnDef="experimentType">
-            <th mat-header-cell *matHeaderCellDef> Type </th>
-            <td mat-cell *matCellDef="let element"> {{ element.experimentType }} </td>
-          </ng-container> -->
-
-          <!-- <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef> Date </th>
-            <td mat-cell *matCellDef="let element"> no-data </td>
-          </ng-container>  -->
 
           <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
-            <td mat-cell *matCellDef="let element">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+            <td mat-cell *matCellDef="let row">
+
               <button mat-icon-button color="accent" aria-label="Example icon button with a vertical three dot icon"
-                [routerLink]="" (click)="editExperiment(element.expId)">
+                [routerLink]="" (click)="editExperiment(row.expId)" title="open">
                 <mat-icon>open_in_new</mat-icon>
               </button>
-              <button mat-icon-button color="accent" aria-label="Example icon button with a vertical three dot icon"
-                [routerLink]="" (click)="deleteExperiment(element)">
+
+              <button mat-icon-button color="warn" aria-label="Example icon button with a vertical three dot icon"
+                [routerLink]="" (click)="popup(row.experimentId)" title="delete">
                 <mat-icon>delete</mat-icon>
               </button>
+
             </td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
         </table>
+
+        <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
 
       </mat-card-content>
     </mat-card>
-
 
   </div>
 </div>

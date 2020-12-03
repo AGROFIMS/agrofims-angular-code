@@ -1,0 +1,24 @@
+  .example-button-toggle-label {
+    display: inline-block;
+    margin: 16px;
+  }
+  
+  [aria-label=primary] {
+    background-color: rgb(4, 0, 255);
+  }
+  
+  [aria-label=accent] {
+    background-color: aqua;
+  }
+
+  
+.pull-right {
+  position: absolute;
+  right: 30px;
+  margin: 20px 0px ; 
+}
+
+.pull-left {
+  position: absolute;
+  left: 0px;
+}

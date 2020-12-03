@@ -9,7 +9,7 @@
         <li class="home"><a routerLink="/">Home</a></li>
         <li class="inactive"><a routerLink="/experiments">Experiments</a></li>
         <li class="active">Manage experiment: <b>
-                <mat-label>{{expId}}</mat-label>
+                <mat-label>{{expId}} ({{experimentId}})</mat-label>
             </b>
         </li>
     </ol>
@@ -22,24 +22,23 @@
 
                 <mat-tab-group mat-align-tabs="start" [(selectedIndex)]="demo1TabIndex">
                     <mat-tab label="Experiment">
-                        <app-experiment-edit [id]="experimentId.toString()"> </app-experiment-edit>
-                        <app-proj-entity-list [id]="experimentId.toString()"> </app-proj-entity-list>
-                        <app-proj-lead-list [id]="experimentId.toString()"> </app-proj-lead-list>
+                        <app-experiment-edit *ngIf="experimentId" [experimentId]="experimentId"> </app-experiment-edit>
+                        <app-proj-entity-list *ngIf="experimentId" [id]="experimentId"> </app-proj-entity-list>
+                        <app-proj-lead-list *ngIf="experimentId" [id]="experimentId"> </app-proj-lead-list>
                     </mat-tab>
                     <mat-tab label="Personnel">
-                        <app-personnel-list [id]="experimentId.toString()"> </app-personnel-list>
+                        <app-personnel-list *ngIf="experimentId" [id]="experimentId"> </app-personnel-list>
                     </mat-tab>
-                    <mat-tab label=" Manage site">
-                        <app-exp-site-list [id]="experimentId.toString()"></app-exp-site-list>
+                    <mat-tab label="Fieldbooks">
+                        <app-exp-site-list *ngIf="experimentId && dateYearMonth && emailAddress" [id]="experimentId"
+                            [dateYearMonth]="dateYearMonth" [emailAddress]="emailAddress"></app-exp-site-list>
                     </mat-tab>
                 </mat-tab-group>
-
                 <br>
                 <hr>
-
                 <p>
-                    <button mat-raised-button (click)="demo1BtnClick()">
-                        Next!
+                    <button mat-raised-button (click)="next()" *ngIf="demo1TabIndex!==2">
+                        Next
                     </button>
                 </p>
 

@@ -9,15 +9,16 @@ import { empty } from 'rxjs';
   selector: 'app-experiment-manage',
   templateUrl: './experiment-manage.component.html',
   styleUrls: ['./experiment-manage.component.css'],
-  // providers: [
-  //   { provide: 'this.experimentId', useValue: 'experimentId' }
-  // ]
 })
 export class ExperimentManageComponent implements OnInit {
-  expId: string;
   experiment: Experiment = new Experiment('', '', '', '', '', '', '', '', '', '', 'on');
-  experimentId: any;
+
+  experimentId: string;
+  dateYearMonth: string;
+  emailAddress: string;
+
   demo1TabIndex = 0;
+  expId: string;
 
   constructor(
     private experimentService: ExperimentService,
@@ -25,17 +26,30 @@ export class ExperimentManageComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const expId = this.route.snapshot.paramMap.get('id');
-    this.expId = expId;
-    this.experimentService.getByExp(expId).subscribe(
-      (experiment: Experiment) => {
-        this.experimentId = experiment.experimentId;
+    this.expId = this.route.snapshot.paramMap.get('id').toString();
+    this.getByExp(this.expId);
+  }
+  getByExp(expId: string) {
+    return this.experimentService.getByExp(expId).subscribe(
+      (_experiment: Experiment) => {
+        this.experimentId = _experiment.experimentId.toString();
+        this.dateYearMonth = _experiment.experimentStartDate.slice(0, 7).replace('-', '');
+        this.emailAddress = _experiment.emailAddress;
       }
     );
   }
 
-  demo1BtnClick() {
+  next() {
     const tabCount = 3;
     this.demo1TabIndex = (this.demo1TabIndex + 1) % tabCount;
+  }
+
+  rConnection() {
+    return this.experimentService.rSend(this.experimentId)
+      .subscribe(
+        (val) => {
+          console.log(val);
+        }
+      );
   }
 }

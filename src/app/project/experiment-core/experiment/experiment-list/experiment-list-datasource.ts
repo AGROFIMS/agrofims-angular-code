@@ -3,8 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-
-
 import { Experiment } from '../model/experiment';
 
 export class ExperimentListDataSource extends DataSource<Experiment> {

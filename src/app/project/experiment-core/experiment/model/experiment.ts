@@ -13,6 +13,7 @@ export class Experiment {
         public experimentGrantId: string,
         public status: string,
         public experimentId?: number,
+        public emailAddress?: string,
     ) { }
 
 }

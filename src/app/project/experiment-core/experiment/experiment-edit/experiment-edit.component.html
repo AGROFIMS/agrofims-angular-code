@@ -1,40 +1,41 @@
 <form class="form-I">
-
     <mat-card-title>Experiment details</mat-card-title>
 
-    <mat-form-field appearance="outline">
+    <!-- <mat-form-field appearance="outline">
         <mat-label>ID</mat-label>
         <input matInput disabled name="experimentId" [(ngModel)]="experiment.experimentId">
-    </mat-form-field>
+    </mat-form-field> -->
 
     <mat-form-field appearance="outline">
         <mat-label>Experiment ID</mat-label>
         <input matInput disabled name="expId" [(ngModel)]="experiment.expId">
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-        <mat-label>Experiment Name</mat-label>
-        <input matInput name="experimentName" [(ngModel)]="experiment.experimentName" placeholder="Enter..."
-            (change)="put()" #experimentName>
+    <mat-form-field appearance="outline" [class.m-b-10]="expandInputError1">
+        <mat-label>Experiment name</mat-label>
+        <input matInput placeholder="Enter..." [formControl]="experimentNameFormControl" required
+            (blur)="blurInput1($event)" name="experimentName" (change)="put()" #experimentName>
+        <mat-error *ngIf=" experimentNameFormControl.invalid">{{getErrorMessage1()}}</mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-        <mat-label>Experiment Project Name</mat-label>
-        <input matInput name="experimentProjectName" [(ngModel)]="experiment.experimentProjectName"
-            placeholder="Enter..." (change)="put()">
+    <mat-form-field appearance="outline" [class.m-b-10]="expandInputError2">
+        <mat-label>Experiment project name</mat-label>
+        <input matInput name="experimentProjectName" placeholder="Enter..." (change)="put()"
+            [formControl]="experimentProjectNameFormControl" required (blur)="blurInput2($event)">
+        <mat-error *ngIf=" experimentProjectNameFormControl.invalid">{{getErrorMessage2()}}</mat-error>
     </mat-form-field>
 
     <div fxLayout="row">
         <mat-form-field class="p-r-10" color="accent" appearance="outline">
             <mat-label>Experiment start date</mat-label>
-            <input matInput [matDatepicker]="pickerInit" [formControl]="dateInit" (dateChange)="put()">
+            <input matInput [matDatepicker]="pickerInit" [formControl]="dateInit" (dateChange)="dateChangeInit()">
             <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
             <mat-datepicker #pickerInit color="primary"></mat-datepicker>
         </mat-form-field>
 
         <mat-form-field class="p-l-10" color="accent" appearance="outline">
             <mat-label>Experiment end date</mat-label>
-            <input matInput [matDatepicker]="pickerEnd" [formControl]="dateEnd" (dateChange)="put()">
+            <input matInput [matDatepicker]="pickerEnd" [formControl]="dateEnd" (dateChange)="dateChangeEnd()">
             <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
             <mat-datepicker #pickerEnd color="primary"></mat-datepicker>
         </mat-form-field>
@@ -67,11 +68,10 @@
             (ngModelChange)="put()">
         </textarea>
     </mat-form-field>
-
 </form>
 
 <form class="form-II">
-    <app-fund-agency-list [id]="experiment.experimentId.toString()"> </app-fund-agency-list>
+    <app-fund-agency-list [id]="experimentId"> </app-fund-agency-list>
 </form>
 
 <form class="form-III">
