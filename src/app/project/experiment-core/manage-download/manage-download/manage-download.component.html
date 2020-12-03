@@ -1,0 +1,37 @@
+<h2 mat-dialog-title>Manage downloads</h2>
+<mat-dialog-content class="mat-typography">
+
+  <div fxFlex="50">
+    <div fxLayout="row">
+      db: {{data.db}}<br>
+      expId: {{data.expId}}<br>
+      expSiteId: {{data.expSiteId}}<br>
+      siteCropIds: {{data.siteCropIds}}<br>
+    </div>
+    <div fxLayout="row">
+      <button mat-raised-button color="primary" (click)="rConnection()" class="pull-right">
+        <mat-icon>send</mat-icon> Build fieldbook
+      </button>
+    </div>
+    <div fxLayout="row">
+
+      <a mat-raised-button>Download</a>
+
+    </div>
+  </div>
+
+  <div fxFlex="50">
+
+  </div>
+
+  <!-- <form>
+   
+    <div *ngFor="let filter of filterList">
+      <app-factor-fertilizer-edit [filter]="filter" [siteFactorList]="data.itemGroup.siteFactorList"
+        [factorFertilizerList]="data.factorFertilizerList">
+      </app-factor-fertilizer-edit>
+    </div>
+     
+  </form> -->
+
+</mat-dialog-content>

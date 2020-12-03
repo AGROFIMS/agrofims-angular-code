@@ -1,0 +1,37 @@
+ .div-toggle{
+  margin: auto;
+  width: 100%;
+  border-radius: 5px;
+  border: 2px dashed #ada9a9;
+  padding: 10px;
+  /* margin-bottom: 20px; */
+} 
+ 
+.mat-dialog-actions{
+  justify-content: flex-end;
+}
+
+.text-black{
+  margin-left: 10px;
+  color: #000000;
+}
+
+.text-green{
+  margin-left: 10px;
+  color: #28a745;
+}
+
+.text-red{
+  margin-left: 10px;
+  color: #dc3545;
+}
+
+.text-blue{
+  margin-left: 10px;
+  color: #007bff;
+}
+
+
+.icon-disabled{
+  opacity: 0.4;
+}
