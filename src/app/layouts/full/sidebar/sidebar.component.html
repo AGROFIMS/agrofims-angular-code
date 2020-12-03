@@ -1,14 +1,14 @@
 <!-- ============================================================== -->
 <!-- sidebar -->
 <!-- ============================================================== -->
-<div class="user-profile" style="background: url(assets/images/background/user-info.jpg) no-repeat;">
-    <!-- User profile image -->
-    <div class="profile-img"> <img src="assets/images/users/profile.png" alt="user"> </div>
-    <!-- User profile text-->
-    <!-- ============================================================== -->
-    <!-- Profile - style you can find in header.scss -->
-    <!-- ============================================================== -->
-    <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class=""> Ivan Perez <i
+<!-- <div class="user-profile" style="background: url(assets/images/background/user-info_v5.jpg) no-repeat;"> -->
+<!-- User profile image -->
+<!-- <div class="profile-img"> <img src="assets/images/users/profile.png" alt="user"> </div> -->
+<!-- User profile text-->
+<!-- ============================================================== -->
+<!-- Profile - style you can find in header.scss -->
+<!-- ============================================================== -->
+<!-- <div class="profile-text"><a [matMenuTriggerFor]="sdprofile" class=""> Ivan Perez <i
                 class="ti-angle-down font-12 m-l-5"></i></a></div>
     <mat-menu #sdprofile="matMenu" class="mymegamenu">
         <button mat-menu-item>
@@ -23,21 +23,65 @@
         <button mat-menu-item>
             <mat-icon>exit_to_app</mat-icon> Sign Out
         </button>
-    </mat-menu>
+    </mat-menu> -->
 
-</div>
-<br>
+<!-- <div class="profile-text"><a class=""><i class="ti-angle-down font-12 m-l-5"></i></a></div> -->
+<!-- <mat-menu #sdprofile="matMenu" class="mymegamenu">
+        <button mat-menu-item>
+            <mat-icon>settings</mat-icon> Settings
+        </button>
+        <button mat-menu-item>
+            <mat-icon>account_box</mat-icon> Profile
+        </button>
+        <button mat-menu-item>
+            <mat-icon>notifications_off</mat-icon> Disable notifications
+        </button>
+        <button mat-menu-item>
+            <mat-icon>exit_to_app</mat-icon> Sign Out
+        </button>
+    </mat-menu> -->
+
+<!-- </div> -->
+
+<img src="assets/images/background/user-info_v6.jpg" class="img-responsive" alt="Responsive image">
+
+<!-- <br> -->
 <mat-nav-list appAccordion>
+
     <mat-list-item appAccordionLink *ngFor="let menuitem of menuItems.getMenuitem()" routerLinkActive="selected"
         group="{{menuitem.state}}">
-        <a class="" appAccordionToggle [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'link'">
+
+        <!-- <a appAccordionToggle [routerLink]="['/', menuitem.state]"
+            *ngIf="menuitem.type === 'link' && menuitem.name !== 'Statistical analysis'">
             <mat-icon>{{ menuitem.icon }}</mat-icon>
             <span>{{ menuitem.name }}</span>
-            <span fxFlex></span>
-            <!-- <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span> -->
+        </a> -->
+
+        <a appAccordionToggle [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'link'">
+            <mat-icon>{{ menuitem.icon }}</mat-icon>
+            <span>{{ menuitem.name }}</span>
         </a>
 
+        <!-- <mat-expansion-panel appAccordionToggle *ngIf="menuitem.name === 'Statistical analysis'">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <mat-icon>{{ menuitem.icon }}</mat-icon>
+                    <span>{{ menuitem.name }}</span>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-list-item>
+                <a appAccordionToggle [routerLink]="['/', menuitem.state]" *ngIf="menuitem.type === 'link'">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                    <span>Single Fieldbook Analysis</span>
+                    <span fxFlex></span>
+                </a>
+            </mat-list-item>
+        </mat-expansion-panel> -->
 
     </mat-list-item>
 
 </mat-nav-list>
+<br>
+<p align="center" style="font-size:12px;"><a style="color:red" href="mailto:agrofims@cgiar.org">agrofims@cgiar.org</a>
+</p>
+<p align="center" style="color:white; font-size:10px;">AgroFIMS v0.3.45 build 2</p>
