@@ -13,12 +13,12 @@
 </mat-nav-list>
 
 <div fxLayout="row">
-  <div fxFlex.gt-sm="100%">
+  <div fxFlex="100%">
     <mat-card>
       <mat-card-content>
 
-        <form class="example-form" (ngSubmit)="onSubmit()">
-
+        <!-- <form class="example-form" (ngSubmit)="onSubmit()"> -->
+        <form class="example-form">
           <div fxLayout="row">
             <div fxFlex.gt-sm="33.3%">
               <mat-form-field class="p-r-10" appearance="outline">
@@ -28,7 +28,11 @@
 
               <mat-form-field class="p-r-10" appearance="outline">
                 <mat-label>Site type</mat-label>
-                <input matInput name="siteTypeId" [(ngModel)]="site.siteTypeId" #siteTypeId>
+                <mat-select name="siteTypeId" [(ngModel)]="site.siteTypeId">
+                  <mat-option *ngFor="let parameter of parameterList" [value]="parameter.parameterId">
+                    {{ parameter.name }}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
 
               <mat-form-field class="p-r-10" appearance="outline">
@@ -39,43 +43,143 @@
           </div>
 
           <div fxLayout="row">
-            <div fxFlex.gt-sm="33.3%">
+            <div fxFlex="33.3%">
+
               <mat-form-field class="p-r-10" appearance="outline">
                 <mat-label>Country name</mat-label>
-                <input matInput name="countryName" [(ngModel)]="site.countryName">
+                <input type="text" placeholder="Select country" aria-label="Number" matInput [formControl]="myControl"
+                  [matAutocomplete]="auto">
+                <button mat-button matSuffix aria-label="Arrow" *ngIf="!myControl.value" mat-icon-button
+                  class="mat-select-arrow-wrapper">
+                  <div class="mat-select-arrow"></div>
+                </button>
+                <button mat-button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="myControl.setValue('')">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                  (optionSelected)="getGeospatialDataList($event.option.value)">
+                  <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
 
               <mat-form-field class="p-r-10" appearance="outline">
                 <mat-label>First-level administrative division</mat-label>
-                <input matInput name="firstLevel" [(ngModel)]="site.firstLevel">
+                <input type="text" placeholder={{placeholder1}} aria-label="Number" matInput [formControl]="myControl1"
+                  [matAutocomplete]="auto1">
+                <button mat-button matSuffix aria-label="Arrow"
+                  *ngIf="(filteredOptions1| async)?.length > 0 && !myControl1.value" mat-icon-button
+                  class="mat-select-arrow-wrapper">
+                  <div class="mat-select-arrow"></div>
+                </button>
+                <button mat-button *ngIf="myControl1.value" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="myControl1.setValue('')">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete"
+                  (optionSelected)="getGeospatialDataList1($event.option.value)">
+                  <mat-option *ngFor="let option of filteredOptions1 | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
 
               <mat-form-field class="p-r-10" appearance="outline">
                 <mat-label>Second-level administrative division</mat-label>
-                <input matInput name="secondLevel" [(ngModel)]="site.secondLevel">
+                <input type="text" placeholder={{placeholder2}} aria-label="Number" matInput [formControl]="myControl2"
+                  [matAutocomplete]="auto2">
+                <button mat-button matSuffix aria-label="Arrow"
+                  *ngIf="(filteredOptions2| async)?.length > 0 && !myControl2.value" mat-icon-button
+                  class="mat-select-arrow-wrapper">
+                  <div class="mat-select-arrow"></div>
+                </button>
+                <button mat-button *ngIf="myControl2.value" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="myControl2.setValue('')">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete autoActiveFirstOption #auto2="matAutocomplete"
+                  (optionSelected)="getGeospatialDataList2($event.option.value)">
+                  <mat-option *ngFor="let option of filteredOptions2 | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
 
               <mat-form-field class="p-r-10" appearance="outline">
                 <mat-label>Third-level administrative division</mat-label>
-                <input matInput name="thirdLevel" [(ngModel)]="site.thirdLevel">
+                <input type="text" placeholder={{placeholder3}} aria-label="Number" matInput [formControl]="myControl3"
+                  [matAutocomplete]="auto3">
+                <button mat-button matSuffix aria-label="Arrow"
+                  *ngIf="(filteredOptions3| async)?.length > 0 && !myControl3.value" mat-icon-button
+                  class="mat-select-arrow-wrapper">
+                  <div class="mat-select-arrow"></div>
+                </button>
+                <button mat-button *ngIf="myControl3.value" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="myControl3.setValue('')">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete autoActiveFirstOption #auto3="matAutocomplete"
+                  (optionSelected)="getGeospatialDataList3($event.option.value)">
+                  <mat-option *ngFor="let option of filteredOptions3 | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
 
               <mat-form-field class="p-r-10" appearance="outline">
                 <mat-label>Fourth-level administrative division</mat-label>
-                <input matInput name="fourthLevel" [(ngModel)]="site.fourthLevel">
+                <input type="text" placeholder={{placeholder4}} aria-label="Number" matInput [formControl]="myControl4"
+                  [matAutocomplete]="auto4">
+
+
+
+                <button mat-button matSuffix aria-label="Arrow"
+                  *ngIf="(filteredOptions4| async)?.length > 0 && !myControl4.value" mat-icon-button
+                  class="mat-select-arrow-wrapper">
+                  <div class="mat-select-arrow"></div>
+                </button>
+
+                <button mat-button *ngIf="myControl4.value" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="myControl4.setValue('')">
+                  <mat-icon>close</mat-icon>
+                </button>
+
+                <mat-autocomplete autoActiveFirstOption #auto4="matAutocomplete"
+                  (optionSelected)="getGeospatialDataList4($event.option.value)">
+                  <mat-option *ngFor="let option of filteredOptions4 | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
 
               <mat-form-field class="p-r-10" appearance="outline">
                 <mat-label>Fifth-level administrative division</mat-label>
-                <input matInput name="fifthLevel" [(ngModel)]="site.fifthLevel">
+                <input type="text" placeholder={{placeholder5}} aria-label="Number" matInput [formControl]="myControl5"
+                  [matAutocomplete]="auto5">
+                <button mat-button matSuffix aria-label="Arrow"
+                  *ngIf="(filteredOptions5| async)?.length > 0 && !myControl5.value" mat-icon-button
+                  class="mat-select-arrow-wrapper">
+                  <div class="mat-select-arrow"></div>
+                </button>
+                <button mat-button *ngIf="myControl5.value" matSuffix mat-icon-button aria-label="Clear"
+                  (click)="myControl5.setValue('')">
+                  <mat-icon>close</mat-icon>
+                </button>
+                <mat-autocomplete autoActiveFirstOption #auto5="matAutocomplete">
+                  <mat-option *ngFor="let option of filteredOptions5 | async" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
               </mat-form-field>
+
             </div>
 
-            <div fxFlex.gt-sm="66.6%" id="map-pad">
-
-              <div id="map" leaflet [leafletOptions]="mapOptions">
+            <div fxFlex="66.6%" id="map-pad">
+              <div id="map" [leafletOptions]="mapOptions" leaflet (leafletMapReady)="onMapReady($event)"
+                (leafletClick)="onMapClick($event)">
               </div>
-
             </div>
           </div>
 
@@ -108,16 +212,56 @@
                 <mat-label>Site elevation (meters)</mat-label>
                 <input matInput name="elevation" [(ngModel)]="site.elevation">
               </mat-form-field>
-
               <p>
                 <button mat-raised-button (click)="back()">Cancel</button>&nbsp;
-                <button mat-raised-button color="primary" type="submit">Create</button>
+                <button mat-raised-button (click)="post()" color="primary" type="submit">Create</button>
               </p>
-
             </div>
           </div>
 
         </form>
+        <!-- <br>
+        <br>
+        <hr>
+        <br>
+        <br>
+        <div fxLayout="row">
+          <mat-form-field class="p-r-10" appearance="outline">
+            <mat-label>Location</mat-label>
+            <input matInput name="elevation" [(ngModel)]="address">
+          </mat-form-field>
+          <mat-card-actions>
+            <button mat-raised-button (click)="getLocation(1,address)">GET LOCATION</button>
+          </mat-card-actions>
+        </div>
+
+        <div *ngIf="geomap">
+          <div>
+            <h3> {{geomap.formatted_address}}</h3>
+          </div>
+          <div *ngFor="let address_component of geomap.address_components; let i=index">
+            {{i+1}} |
+            <span>
+              {{address_component.short_name}}
+            </span> |
+            <span>
+              {{address_component.long_name}}
+            </span>
+          </div>
+          <div>
+            <h4>Latitude: </h4> {{geomap.geometry.location.lat}}
+            <h4>Longitude: </h4> {{geomap.geometry.location.lng}}
+          </div>
+        </div> -->
+
+        <!-- <div *ngIf="geomap">
+          <h4>northeast: </h4>
+          {{geomap.geometry.bounds.northeast.lat.toFixed(5)}}|{{geomap.geometry.bounds.northeast.lng.toFixed(5)}}
+
+          <h4>southwest: </h4>
+          {{geomap.geometry.bounds.southwest.lat.toFixed(5)}}|{{geomap.geometry.bounds.southwest.lng.toFixed(5)}}
+        </div> -->
+
 
       </mat-card-content>
     </mat-card>

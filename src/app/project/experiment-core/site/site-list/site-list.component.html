@@ -22,53 +22,45 @@
           </button>
         </p>
 
-        <table mat-table [dataSource]="site" class="mat-elevation-z8" style="width: 100%;">
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;">
 
           <ng-container matColumnDef="#">
-            <th mat-header-cell *matHeaderCellDef> # </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
             <td mat-cell *matCellDef="let ndx = index"> {{ ndx+1 }} </td>
           </ng-container>
 
           <ng-container matColumnDef="sId">
-            <th mat-header-cell *matHeaderCellDef> Site ID </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Site ID </th>
             <td mat-cell *matCellDef="let element"> {{ element.sId }} </td>
           </ng-container>
 
-          <ng-container matColumnDef="siteTypeId">
-            <th mat-header-cell *matHeaderCellDef> Site Type </th>
-            <td mat-cell *matCellDef="let element"> {{ element.siteTypeId }} </td>
-          </ng-container>
-
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef> Site Name </th>
-            <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Site Name </th>
+            <td mat-cell *matCellDef="let element" title="{{element.name}}">
+              {{  element.name &&  element.name.length>20 ? element.name.substring(0,25) + '...' : element.name}}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="countryName">
-            <th mat-header-cell *matHeaderCellDef> Country name </th>
-            <td mat-cell *matCellDef="let element"> {{ element.countryName }} </td>
-          </ng-container>
-
-          <ng-container matColumnDef="date">
-            <th mat-header-cell *matHeaderCellDef> Date </th>
-            <td mat-cell *matCellDef="let element"> 2020-05-19 21:30:21 </td>
-          </ng-container>
-
-          <!-- <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
-            <td mat-cell *matCellDef="let element" class="action-link">
-              <a [routerLink]="" (click)="editSite(element.siteId)">Edit</a> |
-              <a [routerLink]="" (click)="deleteSite(element)">Delete</a>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Country name </th>
+            <td mat-cell *matCellDef="let element" title="{{element.countryName}}">
+              {{  element.countryName &&  element.countryName.length>20 ? element.countryName.substring(0,25) + '...' : element.countryName}}
             </td>
-          </ng-container> -->
+          </ng-container>
+
+
+          <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <td mat-cell *matCellDef="let element"> {{ element.createdAt}} </td>
+          </ng-container>
 
           <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
             <td mat-cell *matCellDef="let element">
-              <button mat-icon-button color="accent" [routerLink]="" (click)="editSite(element.siteId)">
-                <mat-icon>edit</mat-icon>
+              <button mat-icon-button color="accent" title="view" [routerLink]="" (click)="editSite(element.siteId)">
+                <mat-icon>visibility</mat-icon>
               </button>
-              <button mat-icon-button color="accent" [routerLink]="" (click)="deleteSite(element)">
+              <button mat-icon-button color="warn" title="delete" [routerLink]="" (click)="deleteSite(element)">
                 <mat-icon>delete</mat-icon>
               </button>
             </td>
@@ -78,9 +70,11 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
 
+        <mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>
+
         <mat-card-title>Site map</mat-card-title>
 
-        <div id="map" leaflet [leafletOptions]="mapOptions">
+        <div id="map" [leafletOptions]="mapOptions" leaflet (leafletMapReady)="onMapReady($event)">
         </div>
 
       </mat-card-content>
