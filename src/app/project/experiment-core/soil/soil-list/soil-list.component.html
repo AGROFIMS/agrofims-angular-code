@@ -1,0 +1,34 @@
+<br>
+<div fxLayout="row">
+
+  <mat-form-field fxFlex="33.3" class="p-r-10" appearance="outline">
+    <mat-label>Soil measurement</mat-label>
+    <input type="text" placeholder="Select one..." aria-label="Number" matInput [formControl]="myControl"
+      [matAutocomplete]="auto">
+    <button mat-button matSuffix aria-label="Arrow" *ngIf="!myControl.value" mat-icon-button
+      class="mat-select-arrow-wrapper">
+      <div class="mat-select-arrow"></div>
+    </button>
+    <button mat-button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="Clear"
+      (click)="myControl.setValue('')">
+      <mat-icon>close</mat-icon>
+    </button>
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option" [disabled]="findElement(option)">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-card-actions class="p-l-10">
+    <button mat-raised-button color="primary" (click)="post()">
+      <mat-icon>add_circle_outline</mat-icon> Add measurement
+    </button>
+  </mat-card-actions>
+
+</div>
+
+<form class="form" *ngFor="let soil of soilList ; let i=index">
+  <app-soil-edit [soil]="soil" [index]="i">
+  </app-soil-edit>
+</form>

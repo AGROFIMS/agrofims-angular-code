@@ -13,9 +13,13 @@ export class Site {
         public nearestPopulatedPlace: string,
         public latitude: string,
         public longitude: string,
+        public northeast: string,
+        public southwest: string,
         public elevation: string,
         public status: string,
-        public siteId?: number,
+        public siteId?: string,
+        public createdAt?: string,
+        public emailAddress?: string,
     ) { }
 
 }

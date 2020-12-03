@@ -1,0 +1,152 @@
+<mat-card>
+  <mat-card-header>
+    <h4 class="pull-left">{{this.soil.measurement}}</h4>
+    <button mat-icon-button color="basic" (click)="remove(soil)" title="delete" color="warn" class="pull-right">
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <div fxFlex="50.0" class="b-r">
+
+      <div fxLayout="row">
+        <mat-form-field class="p-r-20" appearance="outline">
+          <mat-label>Unit</mat-label>
+          <mat-select name="unit" [(ngModel)]="soil.unit" (ngModelChange)="put()">
+            <mat-option *ngFor="let measurementVariableUnit of  measurementVariableUnitList"
+              [value]="measurementVariableUnit">
+              {{ measurementVariableUnit }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="row">
+
+        <mat-form-field class="p-r-10" appearance="outline">
+          <mat-label>Depth</mat-label>
+          <mat-chip-list #depthChipList aria-label="Days after planting">
+            <mat-chip *ngFor="let depthItemSelected of depthItemSelectedList" [selectable]="selectable"
+              [removable]="removable" (removed)="removeDepth(depthItemSelected)">
+              {{depthItemSelected}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="depthChipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addDepth($event)">
+          </mat-chip-list>
+        </mat-form-field>
+
+        <mat-form-field class="p-l-10 p-r-20" appearance="outline">
+          <mat-label>Depth Unit</mat-label>
+          <mat-select name="depthUnit" [(ngModel)]="soil.depthUnit" (ngModelChange)="put()">
+            <mat-option *ngFor="let measurementVariableDepthUnit of  measurementVariableDepthUnitList"
+              [value]="measurementVariableDepthUnit">
+              {{ measurementVariableDepthUnit }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      </div>
+
+      <div fxLayout="row">
+
+        <mat-form-field class="p-r-10" appearance="outline">
+          <mat-label>Samples per season</mat-label>
+          <input matInput name="samplesPerSeason" [(ngModel)]="soil.samplesPerSeason" (ngModelChange)="put()">
+        </mat-form-field>
+
+        <mat-form-field class="p-l-10 p-r-20" appearance="outline">
+          <mat-label>Samples per Plot</mat-label>
+          <input matInput name="samplesPerPlot" [(ngModel)]="soil.samplesPerPlot" (ngModelChange)="put()">
+        </mat-form-field>
+
+      </div>
+
+    </div>
+
+    <div fxFlex="50.0">
+
+      <div fxLayout="row">
+        <mat-form-field fxFlex="50.0" class="p-l-20 p-r-10" appearance="outline">
+          <mat-label>Timing</mat-label>
+          <mat-select name="unit" [(ngModel)]="soil.timing" (ngModelChange)="timingChange()">
+            <mat-option *ngFor="let parameter of parameterListI" [value]="parameter.parameterId">
+              {{ parameter.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="p-l-10" *ngIf="soil.timing === '259'" appearance="outline">
+          <mat-label>Days after planting</mat-label>
+          <mat-chip-list #chipList aria-label="Days after planting">
+            <mat-chip *ngFor="let itemOther of itemsSelected" [selectable]="selectable" [removable]="removable"
+              (removed)="removeTiming(itemOther)">
+              {{itemOther}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTiming($event)">
+          </mat-chip-list>
+        </mat-form-field>
+
+        <mat-form-field class="p-l-10" *ngIf="soil.timing == '260'" appearance="outline">
+          <mat-label>Frequency</mat-label>
+          <input matInput name="timingFrequency" [(ngModel)]="soil.timingFrequency" (change)="put()">
+        </mat-form-field>
+
+        <mat-form-field class="p-l-10" *ngIf="soil.timing == '262'" appearance="outline">
+          <mat-label>Growth stage</mat-label>
+          <mat-chip-list #chipList aria-label="Days after planting">
+            <mat-chip *ngFor="let itemOther of itemsSelected" [selectable]="selectable" [removable]="removable"
+              (removed)="removeTiming(itemOther)">
+              {{itemOther}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTiming($event)">
+          </mat-chip-list>
+        </mat-form-field>
+
+        <mat-form-field class="p-l-10" *ngIf="soil.timing == '263'" appearance="outline">
+          <mat-label>Other</mat-label>
+          <mat-chip-list #chipList aria-label="Days after planting">
+            <mat-chip *ngFor="let itemOther of itemsSelected" [selectable]="selectable" [removable]="removable"
+              (removed)="removeTiming(itemOther)">
+              {{itemOther}}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTiming($event)">
+          </mat-chip-list>
+        </mat-form-field>
+
+        <div class="p-l-10" fxFlex="50.0" *ngIf="soil.timing == '261'">
+
+          <div fxLayout="row" *ngFor="let _dateFormControl of dateFormControlList ; let i=index">
+
+            <mat-form-field appearance="outline" fxFlex="85.0">
+              <mat-label>Date #{{i+1}}</mat-label>
+              <input matInput [matDatepicker]="pickerInit" [formControl]="_dateFormControl"
+                (dateChange)="updateDate(i)">
+              <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
+              <mat-datepicker #pickerInit color="primary"></mat-datepicker>
+            </mat-form-field>
+
+            <button mat-icon-button *ngIf="_dateFormControl" (click)="removeDate(i)" fxFlex="15.0">
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+
+          </div>
+
+          <button mat-mini-fab color="primary" (click)="addDate()">
+            <mat-icon>add</mat-icon>
+          </button>
+
+        </div>
+      </div>
+
+    </div>
+
+  </mat-card-content>
+</mat-card>
