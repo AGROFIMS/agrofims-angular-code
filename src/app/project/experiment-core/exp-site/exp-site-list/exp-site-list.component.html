@@ -1,48 +1,57 @@
-<mat-card-title>Manage Sites</mat-card-title>
+<form>
+    <mat-card-title>Fieldbooks</mat-card-title>
+    <p>
+        <button mat-raised-button color="primary" (click)="openDialog()">
+            <mat-icon>add_circle_outline</mat-icon> Add fieldbook
+        </button>
+    </p>
+</form>
 
-<p>
-    <button mat-raised-button color="primary" (click)="openDialog()">
-        <mat-icon>add_circle_outline</mat-icon> Add experiment site
-    </button>
-</p>
-
-<table mat-table [dataSource]="expSiteFullList" class="mat-elevation-z0" style="width: 100%;">
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z0" style="width: 100%;">
 
     <ng-container matColumnDef="#">
-        <th mat-header-cell *matHeaderCellDef> # </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
         <td mat-cell *matCellDef="let ndx = index"> {{ ndx+1 }} </td>
     </ng-container>
 
     <ng-container matColumnDef="countryName">
-        <th mat-header-cell *matHeaderCellDef> Country Name </th>
-        <td mat-cell *matCellDef="let element"> {{ element.countryName }} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Country Name </th>
+        <td mat-cell *matCellDef="let row" title="{{row.countryName}}">
+            {{  row.countryName &&  row.countryName.length>20 ? row.countryName.substring(0,25) + '...' : row.countryName}}
+        </td>
+
     </ng-container>
 
     <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{ element.name+" ("+element.sId+")"}} </td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+        <td mat-cell *matCellDef="let row" title="{{row.name}} ({{row.sId}})">
+            {{  row.name && row.sId &&  (row.name +" ("+row.sId+")").length>20 ? (row.name +" ("+row.sId+")").substring(0,25) + '...' : row.name +" ("+row.sId+")"}}
+        </td>
     </ng-container>
 
-    <ng-container matColumnDef="modifiedAt">
-        <th mat-header-cell *matHeaderCellDef> Date </th>
-        <td mat-cell *matCellDef="let element"> {{ element.modifiedAt }} </td>
+    <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+        <td mat-cell *matCellDef="let row"> {{ row.createdAt }} </td>
     </ng-container>
 
     <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> Action </th>
-        <td mat-cell *matCellDef="let element" class="action-link">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+        <td mat-cell *matCellDef="let row" class="action-link">
             <button mat-icon-button color="accent" aria-label="Example icon button with a vertical three dot icon"
-                [routerLink]="" (click)="editExpSite(element.expSiteId)">
+                [routerLink]="" (click)="editExpSite(row.expSiteId)" title="open">
                 <mat-icon>open_in_new</mat-icon>
             </button>
-            <button mat-icon-button color="accent" aria-label="Example icon button with a vertical three dot icon"
-                [routerLink]="" (click)="deleteExpSite(element.expSiteId)">
+
+            <button mat-icon-button color="warn" aria-label="Example icon button with a vertical three dot icon"
+                [routerLink]="" (click)="popup(row.expSiteId)" title="delete">
                 <mat-icon>delete</mat-icon>
             </button>
         </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumnsI"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumnsI;"></tr>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
 </table>
+
+<mat-paginator class="mat-elevation-z8" [pageSizeOptions]="[10, 25, 100]"></mat-paginator>

@@ -2,28 +2,30 @@
 
   <form>
 
-    <h2 mat-dialog-title>New experiment site</h2>
+    <h2 mat-dialog-title>New fieldbook</h2>
 
     <mat-form-field appearance="outline">
-      <mat-label>Choose country name</mat-label>
-      <mat-select name="countryName" [formControl]="countryName" (selectionChange)="getSiteII()" cdkFocusInitial>
+      <mat-label>Choose country</mat-label>
+      <mat-select name="countryName" [(ngModel)]="countryName" (selectionChange)="getSiteII()" cdkFocusInitial>
         <mat-option *ngFor="let siteI of siteIList" [value]="siteI">{{ siteI}}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Choose name</mat-label>
+      <mat-label>Choose site</mat-label>
       <mat-select name="name" [(ngModel)]="expSite.siteId">
-        <mat-option *ngFor="let siteII of siteIIList" [value]="siteII.siteId">{{ siteII.name}}</mat-option>
+        <mat-option *ngFor="let siteII of siteIIList" [value]="siteII.siteId">{{ siteII.name + ' ('+ siteII.sId +')'}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
+
+    <a routerLink="/sites/add" mat-dialog-close>Create new site</a>
 
   </form>
 
 </mat-dialog-content>
 
-
 <mat-dialog-actions align="end">
   <button mat-raised-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="save()">Create</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="true" (click)="post()">Create</button>
 </mat-dialog-actions>

@@ -7,21 +7,48 @@
 <mat-nav-list>
   <ol>
     <li class="home"><a routerLink="/">Home</a></li>
-    <li class="inactive"><a routerLink="/experiments">Experiments</a></li>
-    <li class="inactive"><a routerLink="/experiments/manage/{{expId}}">Manage experiment: <b>{{expId}}</b>
-      </a> </li>
-    <li class="active">Experiment site: <b>
+
+    <li class="inactive">
+      <a routerLink="/experiments">
+        Experiments
+      </a>
+    </li>
+
+    <li class="inactive">
+      <a routerLink="/experiments/manage/{{expId}}">Manage experiment:
+        <b>{{expId}} ({{experimentId}})</b>
+      </a>
+    </li>
+
+    <li class="active">Location: <b>
         <mat-label>{{expSiteNameId}}</mat-label>
       </b>
     </li>
+
+    <li class="home pull-right">
+      <a (click)="popup()" title="download fieldbook">
+        <mat-icon>
+          cloud_download
+        </mat-icon>
+      </a>
+    </li>
+
   </ol>
 </mat-nav-list>
 
 <div fxLayout="row">
+
   <div fxFlex.gt-sm="100%">
     <mat-card>
       <mat-card-content>
-        <mat-tab-group mat-align-tabs="start">
+
+        <!-- <div *ngFor="let siteFactorItem of siteFactorList">
+
+          {{siteFactorItem.status}}|{{siteFactorItem.levelName}}
+
+        </div> -->
+
+        <mat-tab-group *ngIf="expSite" mat-align-tabs="start" [(selectedIndex)]="demo1TabIndex">
 
           <!-- tab site -->
           <mat-tab label="Site">
@@ -31,7 +58,7 @@
 
               <div fxLayout="row">
                 <mat-form-field class="p-r-10" fxFlex="50" appearance="outline">
-                  <mat-label>Choose country name</mat-label>
+                  <mat-label>Country name</mat-label>
                   <mat-select name="countryName" [formControl]="countryName" (selectionChange)="getSiteII()">
                     <mat-option *ngFor="let siteI of siteIList" [value]="siteI">{{ siteI}}</mat-option>
                   </mat-select>
@@ -40,9 +67,10 @@
 
               <div fxLayout="row">
                 <mat-form-field class="p-r-10" fxFlex="50" appearance="outline">
-                  <mat-label>Choose name</mat-label>
-                  <mat-select name="name" [(ngModel)]="expSite.siteId" (selectionChange)="put()">
-                    <mat-option *ngFor="let siteII of siteIIList" [value]="siteII.siteId">{{ siteII.name}}</mat-option>
+                  <mat-label>Site</mat-label>
+                  <mat-select name="name" [(ngModel)]="expSite.siteId" (selectionChange)="siteChange()">
+                    <mat-option *ngFor="let siteII of siteIIList" [value]="siteII.siteId">
+                      {{ siteII.name + ' ('+ siteII.sId +')'}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
@@ -52,8 +80,9 @@
               <div fxLayout="row">
                 <mat-form-field class="p-r-10" fxFlex="50" appearance="outline">
                   <mat-label>Higher-level landform</mat-label>
-                  <mat-select name="inHighLevelId" [(ngModel)]="expSite.inHighLevelId" (selectionChange)="put()">
-                    <mat-option *ngFor="let par of parameterI" [value]="par.parameterId">
+                  <mat-select name="inHighLevelId" [(ngModel)]="expSite.inHighLevelId"
+                    (selectionChange)="inHighLevelClean()">
+                    <mat-option *ngFor="let par of parameterListI" [value]="par.parameterId">
                       {{ par.name }}
                     </mat-option>
                   </mat-select>
@@ -62,55 +91,70 @@
 
               <div fxLayout="row">
                 <mat-form-field class="p-r-10" fxFlex="50" *ngIf="expSite.inHighLevelId == '174'" appearance="outline">
-                  <mat-label>Other</mat-label>
                   <input matInput name="inHighLevelOther" [(ngModel)]="expSite.inHighLevelOther"
                     (ngModelChange)="put()">
                 </mat-form-field>
               </div>
-
-              <!-- 
-                <mat-form-field *ngIf="this.itemsSelected.includes('Other')" appearance="outline">
-                  <mat-label>Other</mat-label>
-                  <mat-chip-list #chipList aria-label="Fruit selection">
-                    <mat-chip *ngFor="let itemOther of itemsOtherSelected" [selectable]="selectable"
-                      [removable]="removable" (removed)="remove(itemOther)">
-                      {{itemOther}}
-                      <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
-                    </mat-chip>
-                    <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                      [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
-                  </mat-chip-list>
-                </mat-form-field>
-              -->
 
               <div fxLayout="row">
                 <mat-form-field class="p-r-10" fxFlex="50" appearance="outline">
                   <mat-label>Vegetation surrounding the experiment site</mat-label>
                   <mat-select name="inSiteVegetationMulti" [(ngModel)]="itemsSelected"
                     (ngModelChange)="inSiteVegetationClear()" multiple>
-                    <!-- <mat-option *ngFor="let par of parameterII" [value]="par.name">
-                      {{ par.name }}
-                    </mat-option> -->
                     <mat-option *ngFor="let item of items" [value]="item">{{item}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
 
               <div fxLayout="row">
-                <mat-form-field class="p-r-10" *ngIf="this.itemsSelected.includes('Other')" fxFlex="50"
-                  appearance="outline">
+                <mat-form-field class="p-r-10" *ngIf="itemsSelected.includes('Other')" fxFlex="50" appearance="outline">
                   <mat-label>Other</mat-label>
                   <mat-chip-list #chipList aria-label="Fruit selection">
                     <mat-chip *ngFor="let itemOther of itemsOtherSelected" [selectable]="selectable"
-                      [removable]="removable" (removed)="remove(itemOther)">
+                      [removable]="removable" (removed)="removeChip(itemOther)">
                       {{itemOther}}
                       <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
                     </mat-chip>
                     <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                      [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+                      [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addChip($event)">
                   </mat-chip-list>
                 </mat-form-field>
               </div>
+
+              <div fxLayout="row">
+                <mat-form-field fxFlex="50" class="p-r-10" appearance="outline">
+                  <mat-label>Previous crop or fallow</mat-label>
+                  <mat-select name="prevCropNameId" [(ngModel)]="expSite.prevCropNameId"
+                    (selectionChange)="prevCropNameClean()">
+                    <mat-option *ngFor="let par of parameterListVii" [value]="par.parameterId">
+                      {{ par.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="row">
+                <mat-form-field fxFlex="50" class="p-r-10" appearance="outline" *ngIf="expSite.prevCropNameId == '280'">
+                  <input matInput name="prevCropNameOther" [(ngModel)]="expSite.prevCropNameOther"
+                    (ngModelChange)="put()">
+                </mat-form-field>
+              </div>
+
+
+              <div fxLayout="row">
+                <mat-form-field fxFlex="50" class="p-r-10" appearance="outline">
+                  <mat-label>Site orientation</mat-label>
+                  <input matInput name="siteOrientation" [(ngModel)]="expSite.siteOrientation" (ngModelChange)="put()">
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="row">
+                <mat-form-field fxFlex="50" class="p-r-10" appearance="outline">
+                  <mat-label>Site slope %</mat-label>
+                  <input matInput name="siteSlope" [(ngModel)]="expSite.siteSlope" (ngModelChange)="put()">
+                </mat-form-field>
+              </div>
+
 
               <div fxLayout="row">
                 <mat-form-field class="p-r-10" fxFlex="50" appearance="outline">
@@ -128,34 +172,34 @@
                 <mat-form-field class="p-r-10" fxFlex="50" appearance="outline">
                   <mat-label>Soil classification system</mat-label>
                   <mat-select name="soilClassSystemId" [(ngModel)]="expSite.soilClassSystemId"
-                    (selectionChange)="put()">
-                    <mat-option *ngFor="let par of parameterIII" [value]="par.parameterId">
+                    (selectionChange)="soilClassSystemClean()">
+                    <mat-option *ngFor="let par of parameterListIII" [value]="par.parameterId">
                       {{ par.name }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="p-l-10" *ngIf="this.expSite.soilClassSystemId=='182'" fxFlex="50"
+                <mat-form-field class="p-l-10" *ngIf="expSite.soilClassSystemId=='182'" fxFlex="50"
                   appearance="outline">
                   <mat-label>Soil group</mat-label>
                   <mat-select name="soilClassGroupId" [(ngModel)]="expSite.soilClassGroupId" (selectionChange)="put()">
-                    <mat-option *ngFor="let par of parameterIV" [value]="par.parameterId">
+                    <mat-option *ngFor="let par of parameterListIV" [value]="par.parameterId">
                       {{ par.name }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="p-l-10" *ngIf="this.expSite.soilClassSystemId=='183'" fxFlex="50"
+                <mat-form-field class="p-l-10" *ngIf="expSite.soilClassSystemId=='183'" fxFlex="50"
                   appearance="outline">
                   <mat-label>Soil group</mat-label>
                   <mat-select name="soilClassGroupId" [(ngModel)]="expSite.soilClassGroupId" (selectionChange)="put()">
-                    <mat-option *ngFor="let par of parameterV" [value]="par.parameterId">
+                    <mat-option *ngFor="let par of parameterListV" [value]="par.parameterId">
                       {{ par.name }}
                     </mat-option>
                   </mat-select>
                 </mat-form-field>
 
-                <mat-form-field class="p-l-10" *ngIf="this.expSite.soilClassSystemId=='184'" fxFlex="50"
+                <mat-form-field class="p-l-10" *ngIf="expSite.soilClassSystemId=='184'" fxFlex="50"
                   appearance="outline">
                   <mat-label>Soil group</mat-label>
                   <input matInput name="soilClassSystemOther" [(ngModel)]="expSite.soilClassSystemOther"
@@ -170,75 +214,86 @@
           <!-- tab crop -->
           <mat-tab label="Crop">
             <form class="form">
-              <mat-card-title>Fieldbook details</mat-card-title>
-
-              <div fxLayout="row">
-                <mat-form-field fxFlex="50" appearance="outline">
-                  <mat-label>Fieldbook ID</mat-label>
-                  <input matInput name="fieldbookId" [(ngModel)]="expSite.fieldbookId" (ngModelChange)="put()">
-                </mat-form-field>
-              </div>
-
-              <!-- <div fxLayout="row">
-                <mat-form-field fxFlex="50" appearance="outline">
-                  <mat-label>Cropping system</mat-label>
-                  <mat-select name="croppingTypeId" [(ngModel)]="expSite.croppingTypeId"
-                    (selectionChange)="selectCondition()">
-                    <mat-option *ngFor="let par of parameterV" [value]="par.parameterId">
-                      {{ par.name }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div> -->
-
-              <app-site-crop-list [expSite]="expSite" [expSiteId]="expSiteId"
-                (eventEmitterSiteCropList)="catchEmitterSiteCropList($event)">
+              <app-site-crop-list *ngIf="expSite && siteCropList && experimentStartDate && countryName.value"
+                [expSite]="expSite" [siteCropList]="siteCropList" [experimentStartDate]="experimentStartDate"
+                [countryName]="countryName.value">
               </app-site-crop-list>
-              <mat-card-title>Intercrop details</mat-card-title>
-
-              <div fxLayout="row">
-                <mat-form-field fxFlex="50" appearance="outline">
-                  <mat-label>Intercrop arrangement</mat-label>
-                  <mat-select name="intercropArrangementId" [(ngModel)]="expSite.intercropArrangementId"
-                    (selectionChange)="put()">
-                    <mat-option *ngFor="let par of parameterVI" [value]="par.parameterId">
-                      {{ par.name }}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </div>
-
             </form>
           </mat-tab>
 
           <!-- tab design -->
-          <!-- <mat-tab label="Design">
-            <h3>Under construction</h3>
-          </mat-tab>
-          <mat-tab label="M. practices">
-            <h3>Under construction</h3>
-          </mat-tab> -->
-          <mat-tab label="C. measurement">
+          <mat-tab label="Design">
+            <mat-card-title>Experimental design</mat-card-title>
+            <app-site-design-edit *ngIf="siteDesign && siteFactorList" [siteDesign]="siteDesign"
+              [siteFactorList]="siteFactorList">
+            </app-site-design-edit>
 
+            <app-site-factor-list *ngIf="siteDesign && siteFactorList && siteDesign.expDesignId"
+              [siteFactorList]="siteFactorList" [siteDesign]="siteDesign" [expSite]="expSite">
+            </app-site-factor-list>
+          </mat-tab>
+
+          <!-- tab Fertilizer -->
+          <mat-tab label="Fertilizer">
+            <mat-card-title>Fertilizer</mat-card-title>
+            <app-crop-fertilizer-tab-list *ngIf="siteCropList" [siteCropList]="siteCropList" [expSite]="expSite">
+            </app-crop-fertilizer-tab-list>
+          </mat-tab>
+
+          <!-- tab Management practices -->
+          <mat-tab label="Management practices">
+            <mat-card-title>Management practices</mat-card-title>
+            <span>Choose management practices relevant to the experiment from the list below. Then choose more specific
+              practices and assign values to them below as part of the planned protocol (guidelines on how experiment
+              should ideally be managed) and/or actual management (what was actually done in the field/plot). Check one
+              or both of the Planned protocol, Actual management radio buttons as relevant.
+            </span>
+            <app-crop-man-practices-tab-list *ngIf="siteCropList" [siteCropList]="siteCropList" [expSite]="expSite">
+            </app-crop-man-practices-tab-list>
+          </mat-tab>
+
+          <!-- tab Crop Measurement -->
+          <mat-tab label="Crop Measurement">
             <mat-card-title>Crop measurement</mat-card-title>
-            <mat-card-subtitle>Please, select measurement by click.</mat-card-subtitle>
-            <mat-tab-group mat-align-tabs="start">
-              <mat-tab *ngFor="let item of itemList; let index = index" [label]="item.cropLabel">
-                <app-crop-measurement-list [siteCrop]="item"></app-crop-measurement-list>
-              </mat-tab>
-            </mat-tab-group>
+            <app-crop-measurement-tab-list *ngIf="siteCropList && cropMeasurementList"
+              [cropMeasurementList]="cropMeasurementList" [siteCropList]="siteCropList" [expSite]="expSite">
+            </app-crop-measurement-tab-list>
+          </mat-tab>
+          <!-- tab Crop Phenology -->
+          <mat-tab label="Crop Phenology">
+            <mat-card-title>Crop phenology</mat-card-title>
+            <app-crop-phenology-tab-list *ngIf="siteCropList" [siteCropList]="siteCropList" [expSite]="expSite">
+            </app-crop-phenology-tab-list>
+          </mat-tab>
 
-          </mat-tab>
-          <mat-tab label="C. Phenology">
-            <h3>Under construction</h3>
-          </mat-tab>
+          <!-- tab Weather -->
           <mat-tab label="Weather">
-            <h3>Under construction</h3>
+            <mat-card-title>Weather measurement</mat-card-title>
+            <app-weather-list [expSite]="expSite"></app-weather-list>
           </mat-tab>
+
+          <!-- tab Soil -->
+          <!-- <mat-tab label="Soil">
+            <mat-card-title>Soil measurement</mat-card-title>
+            <app-soil-list [expSite]="expSite" [soilList]="soilList"></app-soil-list>
+          </mat-tab> -->
+
+          <!-- tab Crop Soil -->
           <mat-tab label="Soil">
-            <h3>Under construction</h3>
+            <mat-card-title>Soil</mat-card-title>
+            <app-crop-soil-tab-list *ngIf="siteCropList" [siteCropList]="siteCropList" [expSite]="expSite">
+            </app-crop-soil-tab-list>
           </mat-tab>
+
         </mat-tab-group>
+
+        <br>
+        <hr>
+        <p>
+          <button mat-raised-button (click)="next()" *ngIf="demo1TabIndex!==8">
+            Next
+          </button>
+        </p>
 
       </mat-card-content>
     </mat-card>

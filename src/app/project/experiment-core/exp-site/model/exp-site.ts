@@ -14,18 +14,29 @@ export class ExpSite {
         public croppingTypeId: string,
         public prevCropNameId: string,
         public intercropArrangementId: string,
+        public intercropValueRowCrop: string,
         public prevCropNameOther: string,
+
+        public siteOrientation: string,
+        public siteSlope: string,
+
         public fieldbookId: string,
+        public experimentalDesignAbbr: string,
+        public treatment: string,
         public status: string,
-        public expSiteId?: number,
+        public expSiteId?: string,
+        public siteCropsOn?: string,
+        public emailAddress?: string,
     ) { }
 
 
 }
 
+
 export class ExpSiteFull {
 
     constructor(
+        // exp-site
         public inHighLevelId: string,
         public inHighLevelOther: string,
         public inSiteVegetation: string,
@@ -37,10 +48,18 @@ export class ExpSiteFull {
         public croppingTypeId: string,
         public prevCropNameId: string,
         public intercropArrangementId: string,
+        public intercropValueRowCrop: string,
         public prevCropNameOther: string,
-        public fieldbookId: string,
-        public modifiedAt: string,
 
+        public siteOrientation: string,
+        public siteSlope: string,
+
+        public fieldbookId: string,
+        public experimentalDesignAbbr: string,
+        public treatment: string,
+        public siteCropsOn: string,
+        public modifiedAt: string,
+        // experiment
         public expId: string,
         public experimentName: string,
         public experimentProjectName: string,
@@ -51,7 +70,7 @@ export class ExpSiteFull {
         public experimentObj: string,
         public experimentGrantNumber: string,
         public experimentGrantId: string,
-
+        // site
         public sId: string,
         public siteTypeId: string,
         public name: string,
@@ -66,7 +85,12 @@ export class ExpSiteFull {
         public longitude: string,
         public elevation: string,
 
-        public experimentId?: number,
+        public experimentId?: string,
+        public expSiteId?: string,
+        public siteId?: string,
+        public createdAt?: string,
+        public status?: string,
+        public emailAddress?: string, // from experiment
 
     ) { }
 }
