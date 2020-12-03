@@ -1,0 +1,29 @@
+<div fxLayout="row" class="p-l-20">
+  <div fxFlex="50.0" class="p-r-10">
+
+    <div fxLayout="row" *ngFor="let _dateFormControl of dateFormControlList; let i=index">
+      <mat-form-field fxFlex="90" appearance="outline">
+        <mat-label>#{{i+1}} {{siteFactor.factorName}}</mat-label>
+        <input matInput [matDatepicker]="pickerInit" [formControl]="_dateFormControl" (dateChange)="updateDate(i)">
+        <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
+        <mat-datepicker #pickerInit color="primary"></mat-datepicker>
+      </mat-form-field>
+      <button mat-icon-button *ngIf="_dateFormControl && i>1" (click)=" removeDate(i)" fxFlex="10">
+        <mat-icon>remove_circle</mat-icon>
+      </button>
+    </div>
+
+    <button mat-mini-fab color="primary" (click)="addDate()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>
+<br>
+<div fxLayout="row" class="p-l-20">
+  <mat-form-field appearance="outline">
+    <mat-label>Notes</mat-label>
+    <textarea matInput name="levelNameNote" [(ngModel)]="siteFactor.levelNameNote" placeholder="Enter..."
+      (ngModelChange)="put()">
+    </textarea>
+  </mat-form-field>
+</div>

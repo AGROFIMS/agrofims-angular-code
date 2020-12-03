@@ -1,0 +1,75 @@
+<div class="p-l-20">
+
+  <div fxLayout="row">
+
+    <mat-form-field *ngIf="(siteFactor.levelNameList)" appearance="outline">
+      <mat-label>Type of input</mat-label>
+      <mat-select name="factorType" [(ngModel)]="siteFactor.factorType" (ngModelChange)="factorTypeChange($event)">
+        <mat-option *ngFor="let factorType of siteFactor.levelNameList.split('|')" [value]="factorType">
+          {{ factorType }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+
+
+  <div fxLayout="row">
+
+    <mat-form-field [ngClass]="{'p-r-10':siteFactor.factorType === 'levels + units' }" appearance="outline"
+      *ngIf="siteFactor.factorType === 'levels' || siteFactor.factorType === 'levels + units'">
+      <mat-label>Enter levels</mat-label>
+      <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip *ngFor="let  levelName of levelNameSelected" [selectable]="selectable" [removable]="removable"
+          (removed)="removeChip( levelName)">
+          {{ levelName}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addChip($event)">
+      </mat-chip-list>
+    </mat-form-field>
+
+    <mat-form-field class="p-l-10" appearance="outline" *ngIf="siteFactor.factorType === 'levels + units'">
+      <mat-label>Unit</mat-label>
+      <mat-select name="factorUnit" [(ngModel)]="siteFactor.factorUnit" (ngModelChange)="factorUnitChange($event)">
+        <mat-option *ngFor="let factorUnit of siteFactor.factorUnitList.split('|')" [value]="factorUnit">
+          {{ factorUnit }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div fxFlex="50.0" class="p-r-10" *ngIf="siteFactor.factorType === 'date'">
+      <div fxLayout="row" *ngFor="let _dateFormControl of dateFormControlList; let i=index">
+        <mat-form-field fxFlex="90" appearance="outline">
+          <mat-label>#{{i+1}} {{siteFactor.factorName}}</mat-label>
+          <input matInput [matDatepicker]="pickerInit" [formControl]="_dateFormControl" (dateChange)="updateDate(i)">
+          <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
+          <mat-datepicker #pickerInit color="primary"></mat-datepicker>
+        </mat-form-field>
+        <button mat-icon-button *ngIf="_dateFormControl && i>1" (click)=" removeDate(i)" fxFlex="10">
+          <mat-icon>remove_circle</mat-icon>
+        </button>
+      </div>
+      <button mat-mini-fab color="primary" (click)="addDate()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+  </div>
+
+
+  <br>
+
+
+  <div fxLayout="row">
+    <mat-form-field appearance="outline">
+      <mat-label>Notes</mat-label>
+      <textarea matInput name="levelNameNote" [(ngModel)]="siteFactor.levelNameNote" placeholder="Enter..."
+        (ngModelChange)="put()">
+    </textarea>
+    </mat-form-field>
+  </div>
+
+
+</div>

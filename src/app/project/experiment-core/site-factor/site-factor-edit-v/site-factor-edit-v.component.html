@@ -1,0 +1,96 @@
+<div fxLayout="row" class="p-l-20">
+
+  <mat-form-field fxFlex="50" class="p-r-10" appearance="outline">
+    <mat-label>Timing</mat-label>
+    <mat-select name="unit" [(ngModel)]="siteFactor.timing" (ngModelChange)="timingChange()">
+      <mat-option *ngFor="let factorLevelName of siteFactor.levelNameList.split('|')" [value]="factorLevelName.trim()">
+        {{ factorLevelName.trim() }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="50" class="p-l-10" *ngIf="siteFactor.timing === 'Days after planting'" appearance="outline">
+    <mat-label>Days after planting</mat-label>
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let itemSelected of itemSelectedList" [selectable]="selectable" [removable]="removable"
+        (removed)="removeTiming(itemSelected)">
+        {{itemSelected}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTiming($event)">
+    </mat-chip-list>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="50" class="p-l-10" *ngIf="siteFactor.timing == 'Frequency'" appearance="outline">
+    <mat-label>Frequency</mat-label>
+    <input matInput name="timingFrequency" [(ngModel)]="siteFactor.timingFrequency" (change)="addTiming($event)">
+  </mat-form-field>
+
+  <mat-form-field fxFlex="50" class="p-l-10" *ngIf="siteFactor.timing == 'Growth stage'" appearance="outline">
+    <mat-label>Growth stage</mat-label>
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let itemSelected of itemSelectedList" [selectable]="selectable" [removable]="removable"
+        (removed)="removeTiming(itemSelected)">
+        {{itemSelected}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTiming($event)">
+    </mat-chip-list>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="50" class="p-l-10" *ngIf="siteFactor.timing == 'Other'" appearance="outline">
+    <mat-label>Other</mat-label>
+    <mat-chip-list #chipList>
+      <mat-chip *ngFor="let itemSelected of itemSelectedList" [selectable]="selectable" [removable]="removable"
+        (removed)="removeTiming(itemSelected)">
+        {{itemSelected}}
+        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+      </mat-chip>
+      <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addTiming($event)">
+    </mat-chip-list>
+  </mat-form-field>
+
+  <div fxFlex="50.0" class="p-l-10" *ngIf="siteFactor.timing == 'Date'">
+
+    <div fxLayout="row" *ngFor="let _dateFormControl of dateFormControlList ; let i=index">
+
+      <mat-form-field fxFlex="90.0" appearance="outline">
+        <mat-label>Date #{{i+1}}</mat-label>
+        <input matInput [matDatepicker]="pickerInit" [formControl]="_dateFormControl" (dateChange)="updateDate(i)">
+        <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
+        <mat-datepicker #pickerInit color="primary"></mat-datepicker>
+      </mat-form-field>
+
+      <button mat-icon-button *ngIf="_dateFormControl && i>0" (click)="removeDate(i)" fxFlex="10.0">
+        <mat-icon>remove_circle</mat-icon>
+      </button>
+
+    </div>
+
+    <button mat-mini-fab color="primary" (click)="addDate()">
+      <mat-icon>add</mat-icon>
+    </button>
+
+  </div>
+
+
+</div>
+
+
+
+<br>
+
+
+
+
+
+<div fxLayout="row" class="p-l-20">
+  <mat-form-field appearance="outline">
+    <mat-label>Notes</mat-label>
+    <textarea matInput name="levelNameNote" [(ngModel)]="siteFactor.levelNameNote" placeholder="Enter..."
+      (ngModelChange)="put()"></textarea>
+  </mat-form-field>
+</div>

@@ -1,0 +1,51 @@
+<form *ngIf="siteDesign.experimentalDesignId === crd && siteFactorList && siteDesign.crd_ntrt">
+  <app-site-factor-list-i [siteFactorList]="siteFactorList" [experimentalDesignNumber]="siteDesign.crd_ntrt"
+    [expSite]=" expSite">
+  </app-site-factor-list-i>
+</form>
+
+<form *ngIf="siteDesign.experimentalDesignId === rcbd && siteFactorList && siteDesign.rcbd_ntrt">
+  <app-site-factor-list-i [siteFactorList]="siteFactorList" [experimentalDesignNumber]="siteDesign.rcbd_ntrt"
+    [expSite]=" expSite">
+  </app-site-factor-list-i>
+</form>
+
+
+
+
+<form *ngIf="siteDesign.experimentalDesignId === fcrd && siteFactorList && siteDesign.fcrd_nrep">
+  <app-site-factor-list-ii [siteFactorList]="siteFactorList" [experimentalDesignNumber]="siteDesign.fcrd_nrep"
+    [expSite]=" expSite">
+  </app-site-factor-list-ii>
+</form>
+
+<form *ngIf=" siteDesign.experimentalDesignId===frcbd && siteFactorList && siteDesign.frcbd_nblock">
+  <app-site-factor-list-ii [siteFactorList]="siteFactorList" [experimentalDesignNumber]="siteDesign.frcbd_nblock"
+    [expSite]=" expSite">
+  </app-site-factor-list-ii>
+</form>
+
+
+
+
+<form *ngIf=" siteDesign.experimentalDesignId===sprcbd && siteFactorList && siteDesign.sprcbd_nblock">
+  <app-site-factor-list-iii [siteFactorList]="siteFactorList" [experimentalDesignNumber]="siteDesign.sprcbd_nblock"
+    [expSite]=" expSite">
+  </app-site-factor-list-iii>
+</form>
+
+
+
+<form *ngIf=" siteDesign.experimentalDesignId===spsp && siteFactorList && siteDesign.spsp_nblock">
+  <app-site-factor-list-iv [siteFactorList]="siteFactorList" [experimentalDesignNumber]="siteDesign.spsp_nblock"
+    [expSite]=" expSite">
+  </app-site-factor-list-iv>
+</form>
+
+
+
+<form *ngIf=" siteDesign.experimentalDesignId===strip && siteFactorList && siteDesign.strip_nblock">
+  <app-site-factor-list-iii [siteFactorList]="siteFactorList" [experimentalDesignNumber]="siteDesign.strip_nblock"
+    [expSite]=" expSite">
+  </app-site-factor-list-iii>
+</form>

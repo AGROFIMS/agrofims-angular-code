@@ -1,0 +1,34 @@
+<div class="p-l-20">
+  <div fxLayout="row">
+
+    <mat-form-field appearance="outline">
+      <mat-label>Enter levels</mat-label>
+      <mat-chip-list #chipList aria-label="Fruit selection">
+        <mat-chip *ngFor="let  levelName of levelNameSelected" [selectable]="selectable" [removable]="removable"
+          (removed)="removeChip( levelName)">
+          {{ levelName}}
+          <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+        </mat-chip>
+        <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+          [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addChip($event)">
+      </mat-chip-list>
+    </mat-form-field>
+
+    <mat-form-field class="p-l-20" appearance="outline" *ngIf="siteFactor.factorUnitList">
+      <mat-label>Unit</mat-label>
+      <mat-select name="factorUnit" [(ngModel)]="siteFactor.factorUnit" (ngModelChange)="put()">
+        <mat-option *ngFor="let factorUnit of factorUnitList" [value]="factorUnit">
+          {{ factorUnit }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </div>
+</div>
+
+<mat-form-field appearance="outline" class="p-l-20">
+  <mat-label>Notes</mat-label>
+  <textarea matInput name="levelNameNote" [(ngModel)]="siteFactor.levelNameNote" placeholder="Enter..."
+    (ngModelChange)="put()">
+  </textarea>
+</mat-form-field>

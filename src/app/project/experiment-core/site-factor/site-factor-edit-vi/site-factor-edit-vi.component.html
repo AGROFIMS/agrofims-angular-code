@@ -1,0 +1,65 @@
+<mat-card class="mat-card mat-focus-indicator">
+
+  <mat-card-header>
+    <button mat-icon-button *ngIf="index>0" (click)="remove(siteFactor)" color="basic" title="delete" class="pull-right"
+      fxFlex="10">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content class="mat-card-content">
+    <div fxLayout="row">
+      <mat-form-field *ngIf="(siteFactor.levelNameList)" appearance="outline">
+        <mat-label>Type</mat-label>
+        <mat-select name="factorType" [(ngModel)]="siteFactor.factorType" (ngModelChange)="factorTypeChange($event)">
+          <mat-option *ngFor="let factorType of siteFactor.levelNameList.split('|')" [value]="factorType">
+            {{ factorType }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" *ngIf="siteFactor.factorType === 'Other'">
+      <mat-form-field appearance="outline">
+        <mat-label>Other</mat-label>
+        <input matInput name="factorOther" [(ngModel)]="siteFactor.levelNameOther" (ngModelChange)="put()">
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row">
+
+      <mat-form-field fxFlex="33.3" appearance="outline">
+        <mat-label>Enter levels</mat-label>
+        <mat-chip-list #chipList aria-label="Fruit selection">
+          <mat-chip *ngFor="let  levelName of levelNameSelected" [selectable]="selectable" [removable]="removable"
+            (removed)="removeChip(levelName)">
+            {{ levelName}}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="addChip($event)">
+        </mat-chip-list>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="(siteFactor.factorUnitList)" appearance="outline" fxFlex="33.3" class="p-l-10">
+        <mat-label>Unit</mat-label>
+        <mat-select name="factorUnit" [(ngModel)]="siteFactor.factorUnit" (ngModelChange)="unitChange($event)">
+          <mat-option *ngFor="let factorUnit of siteFactor.factorUnitList.split('|')" [value]="factorUnit">
+            {{ factorUnit }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" fxFlex="33.3" class="p-l-10">
+        <mat-label>Number of splits</mat-label>
+        <mat-select name="numberOfSplits" [(ngModel)]="siteFactor.numberOfSplits"
+          (ngModelChange)="numberOfSplitsChange($event)">
+          <mat-option *ngFor="let numberOfSplits of numberOfSplitsList" [value]="numberOfSplits">
+            {{ numberOfSplits }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+
+  </mat-card-content>
+</mat-card>

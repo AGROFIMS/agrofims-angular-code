@@ -1,0 +1,36 @@
+<form class="example-form" *ngFor="let itemGroup of itemGroupList; let i=index">
+  <app-site-factor-edit *ngIf="factorList.length>0" [expSite]=" expSite" [itemGroup]="itemGroup" [indexIG]="i"
+    [minFactor]="1" [factorListComponent]="1" [factorList]="factorList"
+    (eventEmitterSiteFactorEditRemove)="catchEmitterSiteFactorList($event)"
+    (eventEmitterSiteFactorEditOptionSelected)="getTreatmentRowList()">
+  </app-site-factor-edit>
+</form>
+
+<mat-card-actions>
+  <button mat-raised-button color="primary" (click)="post()">
+    <mat-icon>add_circle_outline</mat-icon> Add factor
+  </button>
+</mat-card-actions>
+
+<mat-card-title>Treatment</mat-card-title>
+
+<div fxLayout="row" *ngFor="let treatmentRow of treatmentRowList; let y_Index=index">
+
+  <div fxFlex="25">
+    <mat-form-field appearance="outline">
+      <mat-label>Treatment</mat-label>
+      <input matInput name="factorOther" [ngModel]="expSite.treatment.split('|')[y_Index]" disabled>
+    </mat-form-field>
+  </div>
+
+  <div fxFlex="15" class="p-l-10" *ngFor="let itemGroup of itemGroupList; let x_Index=index">
+    <mat-form-field *ngIf="(itemGroup.treatmentList)" appearance="outline">
+      <mat-label>{{itemGroup.factorNameMain}}</mat-label>
+      <mat-select name="fundAgencyTypeCenterId" [(ngModel)]="treatmentRowList[y_Index].value[x_Index]"
+        (ngModelChange)="putTreatment()">
+        <mat-option *ngFor="let levelName of itemGroup.treatmentList" [value]="levelName">{{levelName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+</div>

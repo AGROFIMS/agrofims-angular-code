@@ -1,0 +1,6 @@
+<form class="example-form" *ngFor="let itemGroup of itemGroupList; let i=index">
+  <app-site-factor-edit *ngIf="factorList.length>0" [expSite]=" expSite" [itemGroup]="itemGroup" [indexIG]="i"
+    [minFactor]="2" [factorListComponent]="1" [factorList]="factorList"
+    (eventEmitterSiteFactorEditRemove)="catchEmitterSiteFactorList($event)">
+  </app-site-factor-edit>
+</form>
