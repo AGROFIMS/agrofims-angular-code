@@ -1,0 +1,46 @@
+<h2 mat-dialog-title align="center">Login to AgroFIMS</h2>
+<div>
+  <mat-form-field appearance="outline">
+    <mat-label>Enter your email</mat-label>
+    <input matInput placeholder="pat@example.com" [formControl]="username" type="email" autocomplete="off" required>
+    <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Enter your password</mat-label>
+    <input matInput [formControl]="password" [type]="hide ? 'password' : 'text'" autocomplete="off" required>
+    <button mat-icon-button matSuffix (click)="hide = !hide">
+      <mat-icon> {{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    </button>
+  </mat-form-field>
+  <div class="actions">
+    <div fxFlex="50">
+      <section class="example-section">
+        <mat-checkbox [(ngModel)]="remember">
+          Remember me
+        </mat-checkbox>
+      </section>
+    </div>
+    <div fxFlex="50" align="end">
+      <button mat-button color="primary" (click)="forgotPassword()">Forgot pwd?</button>
+    </div>
+  </div>
+  <div class="actions">
+    <button fxFlex="100" mat-raised-button color="primary" (click)="login()"
+      [disabled]="!username.valid || !password.valid">Login</button>
+  </div>
+  <div fxLayout="row">
+    <mat-label [ngClass]="{
+    'text-black': colorMessage ==='black',
+    'text-green': colorMessage ==='green',
+    'text-red': colorMessage ==='red',
+    'text-blue': colorMessage ==='blue'
+  }" *ngIf="messageShow">{{notification}}</mat-label>
+  </div>
+  <div class="actions" align="center">
+    <mat-label>Don't have an account? </mat-label>
+    <button mat-button color="primary" (click)="register()">Register</button>
+  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</div>

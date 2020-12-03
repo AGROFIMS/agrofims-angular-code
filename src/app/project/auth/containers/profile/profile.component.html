@@ -1,0 +1,73 @@
+<h2 mat-dialog-title align="center">My profile</h2>
+
+<mat-form-field appearance="outline">
+  <mat-label>Email Address</mat-label>
+  <input matInput [ngModel]='profile.emailAddress' disabled>
+</mat-form-field>
+
+
+<mat-form-field appearance="outline">
+  <mat-label>First Name</mat-label>
+  <input matInput [ngModel]='profile.firstName' disabled>
+</mat-form-field>
+
+
+<mat-form-field appearance="outline">
+  <mat-label>Last Name</mat-label>
+  <input matInput [ngModel]='profile.lastName' disabled>
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline" title={{affiliationName}}>
+  <mat-label>Affiliation</mat-label>
+  <input matInput [ngModel]='affiliationName' disabled>
+</mat-form-field>
+<!-- <mat-form-field appearance="outline" class="mat-form-field-class">
+  <mat-label>Affiliation</mat-label>
+  <mat-select [(ngModel)]="profile.affiliationId" disabled>
+    <mat-option *ngFor="let par of parameterAffiliation" [value]="par.parameterId">
+      {{ par.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field> -->
+
+<mat-form-field *ngIf="profile.affiliationId != '129' && profile.affiliationId != '137'" appearance="outline"
+  title={{profile.affiliationName}}>
+  <input matInput [ngModel]="profile.affiliationName" disabled>
+</mat-form-field>
+
+<mat-form-field *ngIf="profile.affiliationId == '129'" appearance="outline" title={{affiliationCenter}}>
+  <mat-label>CGIAR center</mat-label>
+  <input matInput [ngModel]='affiliationCenter' disabled>
+</mat-form-field>
+<!-- <mat-form-field *ngIf="affiliationId.value ==='129'" appearance="outline">
+  <mat-label>Choose CGIAR center</mat-label>
+  <mat-select [formControl]="affiliationCenterId">
+    <mat-option *ngFor="let par of parameterCgiarCenter" [value]="par.parameterId">
+      {{ par.name }}
+    </mat-option>
+  </mat-select>
+</mat-form-field> -->
+
+<mat-form-field *ngIf="profile.affiliationId == '137'" appearance="outline" title={{profile.affiliationNameOther}}>
+  <input matInput [ngModel]="profile.affiliationNameOther" disabled>
+</mat-form-field>
+
+
+
+<mat-form-field appearance="outline">
+  <mat-label>ORCID</mat-label>
+  <input matInput [ngModel]='profile.orcid' disabled>
+</mat-form-field>
+
+
+<mat-form-field appearance="outline">
+  <mat-label>Country</mat-label>
+  <input matInput [ngModel]='profile.country' disabled>
+</mat-form-field>
+
+
+<div mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Close</button>
+</div>

@@ -1,0 +1,31 @@
+.example-section {
+  margin: 6px 0;
+}
+ 
+.mat-form-field{
+  margin-bottom: 10.5px;
+}
+
+.text-black{
+  margin: auto;
+  color: #000000;
+  font-weight:bold;
+}
+
+.text-green{
+  margin: auto;  
+  color: #28a745;
+  font-weight:bold;
+}
+
+.text-red{
+  margin: auto; 
+  color: #dc3545;
+  font-weight:bold;
+}
+
+.text-blue{
+  margin: auto; 
+  color: #007bff;
+  font-weight:bold;
+}
