@@ -1,0 +1,27 @@
+<mat-card>
+  <mat-card-content>
+
+    <div fxLayout="row">
+
+      <h5 fxFlex="40" class="m-auto" style="white-space:nowrap">
+        {{this.cropPhenology.measurement}}
+      </h5>
+
+
+
+      <mat-form-field class="p-l-10 p-t-10" appearance="outline">
+        <mat-label>TraitUnit</mat-label>
+        <input disabled matInput name="samplesPerSeason" [(ngModel)]="cropPhenology.unit">
+      </mat-form-field>
+
+
+      <mat-card-actions>
+        <button mat-icon-button color="basic" (click)="remove(cropPhenology)" title="delete" color="warn" align="end">
+          <mat-icon>highlight_off</mat-icon>
+        </button>
+      </mat-card-actions>
+
+
+    </div>
+  </mat-card-content>
+</mat-card>

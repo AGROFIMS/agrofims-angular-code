@@ -1,0 +1,118 @@
+<div fxLayout="row" fxFlex="90.0">
+  <!-- LABEL -->
+  <mat-card-subtitle class="m-t-12-a">{{application}}</mat-card-subtitle>
+
+  <!-- DATE -->
+  <mat-form-field *ngIf="variableDataType == 'DATE'" class="p-l-10" appearance="outline">
+    <mat-label>Value</mat-label>
+    <input matInput name="value" [matDatepicker]="pickerInit" [formControl]="dateValue" (dateChange)="dateChange()">
+    <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
+    <mat-datepicker #pickerInit color="primary"></mat-datepicker>
+  </mat-form-field>
+
+  <!-- INTEGER -->
+  <mat-form-field *ngIf="variableDataType == 'INTEGER'" class="p-l-10" appearance="outline">
+    <mat-label>Value</mat-label>
+    <input matInput name="value" [(ngModel)]="cropManPractices.value" (change)="put()">
+  </mat-form-field>
+  <mat-form-field *ngIf="variableDataType == 'INTEGER' && variableUnitList.length > 0" class="p-l-10"
+    appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="unit" [(ngModel)]="cropManPractices.unit" (ngModelChange)="put()">
+      <mat-option *ngFor="let variableUnit of variableUnitList" [value]="variableUnit">
+        {{ variableUnit }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- CATEGORICAL -->
+  <mat-form-field *ngIf="variableDataType == 'CATEGORICAL'" class="p-l-10" appearance="outline">
+    <mat-label>Value</mat-label>
+    <mat-select name="value" [(ngModel)]="cropManPractices.value" (ngModelChange)="put()">
+      <mat-option *ngFor="let variableCategory of variableCategoryList" [value]="variableCategory">
+        {{ variableCategory }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="cropManPractices.value == 'Other'" class="p-l-10" appearance="outline">
+    <mat-label>Other</mat-label>
+    <input matInput name="value" [(ngModel)]="cropManPractices.valueOther" (ngModelChange)="put()">
+  </mat-form-field>
+
+  <!-- TEXT -->
+  <mat-form-field *ngIf="variableDataType == 'TEXT'" class="p-l-10" appearance="outline">
+    <mat-label>Value</mat-label>
+    <input matInput name="value" [(ngModel)]="cropManPractices.value" (change)="put()">
+  </mat-form-field>
+
+  <!-- DECIMAL -->
+  <mat-form-field *ngIf="variableDataType == 'DECIMAL'" class="p-l-10" appearance="outline">
+    <mat-label>Value</mat-label>
+    <input matInput name="value" [(ngModel)]="cropManPractices.value" (change)="put()">
+  </mat-form-field>
+  <mat-form-field *ngIf="variableDataType == 'DECIMAL'" class="p-l-10" appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="unit" [(ngModel)]="cropManPractices.unit" (ngModelChange)="put()">
+      <mat-option *ngFor="let variableUnit of variableUnitList" [value]="variableUnit">
+        {{ variableUnit }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+
+
+
+
+
+  <!-- OTHER -->
+  <mat-form-field *ngIf="variableDataType == 'OTHER'" class="p-l-10" appearance="outline">
+    <mat-label>Type</mat-label>
+    <mat-select name="manPracticeType" [(ngModel)]="cropManPractices.manPracticeType"
+      (ngModelChange)="manPracticeTypeChange()">
+      <mat-option *ngFor="let manPracticeType of manPracticeTypeList" [value]="manPracticeType">
+        {{ manPracticeType }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field
+    *ngIf="cropManPractices.manPracticeType == 'numeric value' || cropManPractices.manPracticeType == 'numeric value + date'"
+    class="p-l-10" appearance="outline">
+    <mat-label>Value</mat-label>
+    <input matInput name="value" [formControl]="otherValue" (change)="otherChange()">
+  </mat-form-field>
+
+  <mat-form-field
+    *ngIf="cropManPractices.manPracticeType == 'numeric value' || cropManPractices.manPracticeType == 'numeric value + date'"
+    class="p-l-10" appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="unit" [(ngModel)]="cropManPractices.unit" (ngModelChange)="put()">
+      <mat-option *ngFor="let variableUnit of variableUnitList" [value]="variableUnit">
+        {{ variableUnit }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field
+    *ngIf="cropManPractices.manPracticeType == 'numeric value + date' || cropManPractices.manPracticeType == 'date'"
+    class="p-l-10" appearance="outline">
+    <mat-label>Date</mat-label>
+    <input matInput name="value" [matDatepicker]="pickerInit" [formControl]="dateValue" (dateChange)="dateChange()">
+    <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
+    <mat-datepicker #pickerInit color="primary"></mat-datepicker>
+  </mat-form-field>
+</div>
+
+
+
+
+
+
+<div fxFlex="5.0">
+  <!-- ACTION -->
+  <mat-card-actions>
+    <button mat-icon-button (click)="remove(cropManPractices)" *ngIf="index>0">
+      <mat-icon>remove_circle</mat-icon>
+    </button>
+  </mat-card-actions>
+</div>

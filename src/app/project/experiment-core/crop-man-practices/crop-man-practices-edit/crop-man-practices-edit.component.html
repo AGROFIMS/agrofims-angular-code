@@ -1,0 +1,46 @@
+<mat-card>
+
+  <mat-card-header>
+    <h4 *ngIf="cropManPracticesGroup.measurement!=='Other'" class=" pull-left"> {{cropManPracticesGroup.measurement}}
+    </h4>
+    <mat-form-field class="pull-left" style="margin-top: -12px;" fxFlex="250px" appearance="outline"
+      *ngIf="cropManPracticesGroup.measurement==='Other'">
+      <mat-label>Other</mat-label>
+      <input matInput [(ngModel)]="cropManPracticesGroup.attrOthNnm" (change)="putOthNnm()">
+    </mat-form-field>
+    <button mat-icon-button color="basic" (click)="removeItemList()" title="delete" color="warn" class="pull-right">
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div fxFlex="60.0">
+      <div class="div-values">
+        <div *ngFor="let cropManPractices  of cropManPracticesGroup.cropManPracticesList; let _index=index">
+          <app-crop-man-practices-edit-row [cropManPractices]="cropManPractices" [index]="_index"
+            [application]="'Application ' + (_index+1)">
+          </app-crop-man-practices-edit-row>
+        </div>
+      </div>
+      <button mat-mini-fab color="primary" (click)="post()" title="Add another application">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+    <div fxFlex="40.0">
+      <div class="div-toggle">
+        <div style="text-align: center; margin: 20px auto;">
+          <mat-slide-toggle [(ngModel)]="cropManPracticesGroup.attrPrtcl" (ngModelChange)="putPrtcl($event)">
+            Planned protocol
+          </mat-slide-toggle>
+        </div>
+        <div style="text-align: center; margin: 20px auto;">
+          <mat-slide-toggle [(ngModel)]="cropManPracticesGroup.attrMnMsr" (ngModelChange)="putMnMsr($event)">
+            Actual management
+          </mat-slide-toggle>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+
+</mat-card>

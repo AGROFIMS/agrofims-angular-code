@@ -12,7 +12,7 @@ export class CropListComponent implements OnInit {
 
   cropList: Crop[] = [];
 
-  displayedColumns: string[] = ['cropCommonName', 'fatherCropId', 'isFather', 'locked', 'modifiedAt', 'action'];
+  displayedColumns: string[] = ['numOrder', 'cropCommonName', 'fatherCropId', 'isFather', 'locked', 'modifiedAt', 'action'];
 
 
   constructor(

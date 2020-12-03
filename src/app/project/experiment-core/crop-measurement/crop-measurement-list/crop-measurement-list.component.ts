@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { SiteCrop } from '../../site-crop/model/site-crop';
 import { CropMeasurement } from '../model/crop-measurement';
 import { CropMeasurementService } from '../service/crop-measurement.service';
-import { ParameterService } from '../../parameter/service/parameter.service';
 import { StudyVariableService } from '../../study-variable/service/study-variable.service';
 import { StudyVariable } from '../../study-variable/model/study-variable';
 import { FormControl } from '@angular/forms';
-import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-crop-measurement-list',
@@ -14,66 +14,147 @@ import { ValueConverter } from '@angular/compiler/src/render3/view/template';
   styleUrls: ['./crop-measurement-list.component.css']
 })
 export class CropMeasurementListComponent implements OnInit {
-  @Input() siteCrop: SiteCrop;
 
-  itemList: any[] = [];
-  item: any;
-  measurementList: any[] = [];
-  studyVariable = new FormControl();
+  @Input() siteCropId: string;
+  @Input() cropId: string;
+  @Input() cropCommonName: string;
+  @Input() expSiteId: string;
+  @Input() cropMeasurementList: CropMeasurement[];
+
+
+  cropMeasurementListFilter: CropMeasurement[] = [];
+
+  myControl = new FormControl();
+  filteredOptions: Observable<string[]>;
+  measurementList: {
+    index: string,
+    value: string,
+    unit: string,
+    group: string,
+  }[] = [];
 
   constructor(
     private cropMeasurementService: CropMeasurementService,
-    private parameterService: ParameterService,
     private studyVariableService: StudyVariableService,
   ) { }
 
   ngOnInit(): void {
-    this.getAll(this.siteCrop.siteCropId);
-
     this.getMeasurementList();
-  }
-
-  getAll(siteCropId: any) {
-    return this.cropMeasurementService
-      .getById(siteCropId)
-      .subscribe(
-        (_itemList: CropMeasurement[]) => {
-          this.itemList = _itemList;
-        }
+    this.getAll(this.siteCropId, this.cropId);
+    this.filteredOptions = this.myControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(value => this._filter(value))
       );
   }
 
-  remove(index: number) {
-    this.itemList.splice(index, 1);
-  }
-
-  post() {
-    const _studyVariableId = this.studyVariable.value.studyVariableId;
-    const _measurement = this.studyVariable.value.measurement;
-
-    this.item = new CropMeasurement(this.siteCrop.siteCropId, this.siteCrop.expSiteId, this.siteCrop.experimentId, this.siteCrop.siteId,
-      _studyVariableId, null, null, null, null, null, null, null, null, null, null, 'on', null, _measurement);
-
-    this.cropMeasurementService.post(this.item)
-      .subscribe(
-        (val) => {
-          this.item.cropMeasurementId = val['result'];
-
-          this.itemList.push(this.item);
-        }
-      );
+  getAll(siteCropId: any, cropId: any) {
+    if (this.cropMeasurementList) {
+      this.cropMeasurementListFilter = this.cropMeasurementList
+        .filter(obj => obj.siteCropId === siteCropId);
+    }
   }
 
   getMeasurementList() {
-    return this.studyVariableService
-      .getById('crop_measurement')
+    if (this.cropCommonName && this.cropCommonName.substring(0, 5).toLowerCase() === 'other') {
+      return this.studyVariableService
+        .getById('crop_measurement')
+        .subscribe(
+          (_measurementList: StudyVariable[]) => {
+            _measurementList
+              .filter(
+                item => item.cropName.trim().toLowerCase() === 'other'
+              )
+              .forEach(element => {
+                const index = element.studyVariableId;
+                const value = element.measurement;
+                const unit = element.defaultVariableValue;
+                const defaultGroup = element.group.split('|').length === 1 ? (element.group.split('|')[0]) : (null);
+                const group = defaultGroup;
+                const measurement: { index: string, value: string, unit: string, group: string } = { index, value, unit, group };
+                this.measurementList.push(measurement);
+              });
+            this.myControl.setValue('');
+          }
+        );
+    } else {
+      return this.studyVariableService
+        .getById('crop_measurement')
+        .subscribe(
+          (_measurementList: StudyVariable[]) => {
+            _measurementList
+              .filter(
+                item => item.cropName.trim() === this.cropCommonName ? this.cropCommonName.trim() : ''
+              )
+              .forEach(element => {
+                const index = element.studyVariableId;
+                const value = element.measurement;
+                const unit = element.defaultVariableValue;
+                const defaultGroup = element.group.split('|').length === 1 ? (element.group.split('|')[0]) : (null);
+                const group = defaultGroup;
+                const measurement: { index: string, value: string, unit: string, group: string } = { index, value, unit, group };
+                this.measurementList.push(measurement);
+              });
+            this.myControl.setValue('');
+          }
+        );
+    }
+  }
+
+  remove(index: number) {
+    this.deleteObjFromList(this.cropMeasurementListFilter[index], this.cropMeasurementList);
+    this.cropMeasurementListFilter.splice(index, 1);
+  }
+
+  deleteObjFromList(obj: any, objList: any[]) {
+    const index: number = objList.indexOf(obj);
+    if (index !== -1) {
+      objList.splice(index, 1);
+    }
+  }
+
+  post() {
+    const _value = this.myControl.value;
+    const _index = this.measurementList.find(element => element.value === _value.toString()).index;
+    const _unit = this.measurementList.find(element => element.value === _value.toString()).unit;
+    const _group = this.measurementList.find(element => element.value === _value.toString()).group;
+
+    const _cropMeasurement = new CropMeasurement(
+      this.siteCropId,
+      this.expSiteId,
+      _index,
+      this.cropId,
+      _group, _unit, '1', '1',
+      null, null, null, null,
+      null, null, 'on', null,
+      _value);
+
+    this.cropMeasurementService.post(_cropMeasurement)
       .subscribe(
-        (_measurementList: StudyVariable[]) => {
-          this.measurementList = _measurementList.filter(
-            item => item.cropName.trim() === this.siteCrop.cropCommonName.trim()
-          );
+        (val) => {
+          _cropMeasurement.cropMeasurementId = val['result'];
+
+          this.cropMeasurementList.push(_cropMeasurement);
+          this.cropMeasurementListFilter.push(_cropMeasurement);
+          this.myControl.setValue('');
         }
       );
   }
 
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    const optionList: string[] = [];
+    this.measurementList.forEach(element => {
+      optionList.push(element.value);
+    });
+    return optionList.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  findElement(option: any): boolean {
+    // if (this.cropMeasurementListFilter.find(element => element.measurement === option)) {
+    //   return true;
+    // } else {
+    return false;
+    // }
+  }
 }

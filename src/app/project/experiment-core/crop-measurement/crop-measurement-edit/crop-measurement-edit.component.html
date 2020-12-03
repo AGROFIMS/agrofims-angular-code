@@ -1,16 +1,19 @@
 <mat-card>
+
   <mat-card-header>
+
     <h4 class="pull-left">{{this.cropMeasurement.measurement}}</h4>
-    <button mat-icon-button color="basic" (click)="remove(cropMeasurement)" title="remove" class="pull-right">
+    <button mat-icon-button color="basic" (click)="remove(cropMeasurement)" title="delete" color="warn"
+      class="pull-right">
       <mat-icon>highlight_off</mat-icon>
     </button>
+
   </mat-card-header>
 
   <mat-card-content>
-    <div fxLayout="row">
 
-
-      <div fxFlex="88.0">
+    <div fxFlex="50.0" class="b-r">
+      <div fxLayout="row">
 
         <mat-form-field class="p-r-10" appearance="outline">
           <mat-label>Parameter measured</mat-label>
@@ -21,7 +24,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="15.0" class="p-l-10 p-r-10" appearance="outline">
+        <mat-form-field class="p-l-10 p-r-20" appearance="outline">
           <mat-label>Unit</mat-label>
           <mat-select name="unit" [(ngModel)]="cropMeasurement.unit" (ngModelChange)="put()">
             <mat-option *ngFor="let measurementVariableUnit of  measurementVariableUnitList"
@@ -31,31 +34,36 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field fxFlex="15.0" class="p-l-10 p-r-10" appearance="outline">
-          <mat-label>Samples Per season</mat-label>
-          <input matInput name="samplesPerSeason" [(ngModel)]="cropMeasurement.samplesPerSeason" (change)="put()">
+      </div>
+      <div fxLayout="row">
+
+        <mat-form-field class="p-r-10" appearance="outline">
+          <mat-label>Samples per season</mat-label>
+          <input matInput name="samplesPerSeason" [(ngModel)]="cropMeasurement.samplesPerSeason"
+            (ngModelChange)="put()">
         </mat-form-field>
 
-        <mat-form-field fxFlex="15.0" class="p-l-10 p-r-10" appearance="outline">
-          <mat-label>Samples Per plot</mat-label>
-          <input matInput name="samplesPerPlot" [(ngModel)]="cropMeasurement.samplesPerPlot" (change)="put()">
+        <mat-form-field class="p-l-10 p-r-20" appearance="outline">
+          <mat-label>Samples per plot</mat-label>
+          <input matInput name="samplesPerPlot" [(ngModel)]="cropMeasurement.samplesPerPlot" (ngModelChange)="put()">
         </mat-form-field>
 
-        <mat-form-field class="p-l-10 p-r-10" appearance="outline">
+      </div>
+    </div>
+
+    <div fxFlex="50.0">
+      <div fxLayout="row">
+
+        <mat-form-field fxFlex="50.0" class="p-l-20 p-r-10" appearance="outline">
           <mat-label>Timing</mat-label>
-          <mat-select name="unit" [(ngModel)]="cropMeasurement.timing" (ngModelChange)="timingClear()">
+          <mat-select name="unit" [(ngModel)]="cropMeasurement.timing" (ngModelChange)="timingChange()">
             <mat-option *ngFor="let parameter of parameterListI" [value]="parameter.parameterId">
               {{ parameter.name }}
             </mat-option>
           </mat-select>
         </mat-form-field>
 
-      </div>
-
-
-      <div fxFlex="12.0">
-
-        <mat-form-field class="p-l-10" *ngIf="cropMeasurement.timing === '259'" appearance="outline">
+        <mat-form-field fxFlex="50.0" class="p-l-10" *ngIf="cropMeasurement.timing === '259'" appearance="outline">
           <mat-label>Days after planting</mat-label>
           <mat-chip-list #chipList aria-label="Days after planting">
             <mat-chip *ngFor="let itemOther of itemsSelected" [selectable]="selectable" [removable]="removable"
@@ -68,25 +76,12 @@
           </mat-chip-list>
         </mat-form-field>
 
-        <mat-form-field class="p-l-10" *ngIf="cropMeasurement.timing == '260'" appearance="outline">
+        <mat-form-field fxFlex="50.0" class="p-l-10" *ngIf="cropMeasurement.timing == '260'" appearance="outline">
           <mat-label>Frequency</mat-label>
           <input matInput name="timingFrequency" [(ngModel)]="cropMeasurement.timingFrequency" (change)="put()">
         </mat-form-field>
 
-        <form class="example-form p-l-10" *ngIf="cropMeasurement.timing == '261'">
-          <mat-form-field *ngFor="let date of dateList ; let i=index" appearance="outline">
-            <mat-label>Date #{{i+1}}</mat-label>
-            <input matInput [name]="i" [value]="date" (change)="updateDate()">
-            <button mat-button *ngIf="date" matSuffix mat-icon-button aria-label="Clear" (click)="removeDate(i)">
-              <mat-icon>close</mat-icon>
-            </button>
-          </mat-form-field>
-          <button mat-mini-fab color="primary" (click)="addDate()">
-            <mat-icon>add</mat-icon>
-          </button>
-        </form>
-
-        <mat-form-field class="p-l-10 " *ngIf="cropMeasurement.timing == '262'" appearance="outline">
+        <mat-form-field fxFlex="50.0" class="p-l-10" *ngIf="cropMeasurement.timing == '262'" appearance="outline">
           <mat-label>Growth stage</mat-label>
           <mat-chip-list #chipList aria-label="Days after planting">
             <mat-chip *ngFor="let itemOther of itemsSelected" [selectable]="selectable" [removable]="removable"
@@ -99,7 +94,7 @@
           </mat-chip-list>
         </mat-form-field>
 
-        <mat-form-field class="p-l-10" *ngIf="cropMeasurement.timing == '263'" appearance="outline">
+        <mat-form-field fxFlex="50.0" class="p-l-10" *ngIf="cropMeasurement.timing == '263'" appearance="outline">
           <mat-label>Other</mat-label>
           <mat-chip-list #chipList aria-label="Days after planting">
             <mat-chip *ngFor="let itemOther of itemsSelected" [selectable]="selectable" [removable]="removable"
@@ -112,11 +107,29 @@
           </mat-chip-list>
         </mat-form-field>
 
+        <div fxFlex="50.0" class="p-l-10" *ngIf="cropMeasurement.timing == '261'">
+          <div fxLayout="row" *ngFor="let _dateFormControl of dateFormControlList ; let i=index">
+
+            <mat-form-field fxFlex="85.0" appearance="outline">
+              <mat-label>Date #{{i+1}}</mat-label>
+              <input matInput [matDatepicker]="pickerInit" [formControl]="_dateFormControl"
+                (dateChange)="updateDate(i)">
+              <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
+              <mat-datepicker #pickerInit color="primary"></mat-datepicker>
+            </mat-form-field>
+            <button mat-icon-button *ngIf="_dateFormControl" (click)="removeDate(i)" fxFlex="15.0">
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+
+          </div>
+          <button mat-mini-fab color="primary" (click)="addDate()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div>
+
       </div>
-
-
     </div>
-  </mat-card-content>
 
+  </mat-card-content>
 
 </mat-card>

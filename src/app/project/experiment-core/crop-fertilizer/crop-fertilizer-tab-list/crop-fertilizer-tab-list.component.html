@@ -1,0 +1,29 @@
+<mat-tab-group mat-align-tabs="start" *ngIf="expSite.siteCropsOn.split('|').length > 2">
+
+  <mat-tab *ngFor="let tab of expSite.siteCropsOn.split('|'); let indexCrop = index"
+    [label]="tab.split('.')[3] !== 'null' ? tab.split('.')[3] : ''">
+
+    <app-crop-fertilizer-list *ngIf="unitList" [siteCropList]="siteCropList" [expSite]="expSite"
+      [siteCropId]="tab.split('.')[1]" [cropId]="tab.split('.')[2]" [cropCommonName]="tab.split('.')[3]"
+      [expSiteId]="expSite.expSiteId" [indexCrop]="indexCrop" [unitList]="unitList">
+    </app-crop-fertilizer-list>
+
+  </mat-tab>
+
+</mat-tab-group>
+
+<mat-tab-group mat-align-tabs="start" *ngIf="expSite.siteCropsOn.split('|').length === 2">
+
+  <mat-tab
+    [label]="expSite.siteCropsOn.split('|')[1].split('.')[3] !== 'null' ? expSite.siteCropsOn.split('|')[1].split('.')[3] : ''">
+
+    <app-crop-fertilizer-list *ngIf="unitList" [siteCropList]="siteCropList" [expSite]="expSite"
+      [siteCropId]="expSite.siteCropsOn.split('|')[1].split('.')[1]"
+      [cropId]="expSite.siteCropsOn.split('|')[1].split('.')[2]"
+      [cropCommonName]="expSite.siteCropsOn.split('|')[1].split('.')[3]" [expSiteId]="expSite.expSiteId" [indexCrop]="1"
+      [unitList]="unitList">
+    </app-crop-fertilizer-list>
+
+  </mat-tab>
+
+</mat-tab-group>

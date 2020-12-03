@@ -10,7 +10,7 @@ import { Crop } from '../model/crop';
 })
 export class CropEditComponent implements OnInit {
 
-  crop: Crop = new Crop('', '', '', '', 'on');
+  crop: Crop = new Crop('', '', '', '', '', 'on');
 
   constructor(
     private cropService: CropService,

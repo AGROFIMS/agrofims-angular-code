@@ -1,0 +1,231 @@
+<mat-card>
+
+  <mat-card-header>
+    <h4 class="pull-left"> Split application #{{cropFertilizerGroup.indexOrderTitle+1}}</h4>
+    <button mat-icon-button color="basic" (click)="removeGroup()" title="delete" color="warn" class="pull-right">
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content *ngIf="cropFertilizerGroup.typeFertilizer === 'Nutrient'">
+    <div fxFlex="10.0"></div>
+    <div fxFlex="80.0" class="div-table">
+      <table class="table nutrient-table">
+        <tr>
+          <th fxFlex="7.14" class="text-center  b-r">N</th>
+          <th fxFlex="7.14" class="text-center  b-r">P</th>
+          <th fxFlex="7.14" class="text-center  b-r">K</th>
+          <th fxFlex="7.14" class="text-center  b-r">Ca</th>
+          <th fxFlex="7.14" class="text-center  b-r">Mg</th>
+          <th fxFlex="7.14" class="text-center  b-r">S</th>
+          <th fxFlex="7.14" class="text-center  b-r">Mb</th>
+          <th fxFlex="7.14" class="text-center  b-r">Zn</th>
+          <th fxFlex="7.14" class="text-center  b-r">B</th>
+          <th fxFlex="7.14" class="text-center  b-r">Cu</th>
+          <th fxFlex="7.14" class="text-center  b-r">Fe</th>
+          <th fxFlex="7.14" class="text-center  b-r">Mn</th>
+          <th fxFlex="7.14" class="text-center  b-r">Ni</th>
+          <th fxFlex="7.18" class="text-center ">Cl</th>
+        </tr>
+        <tr>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementN"
+              [(ngModel)]="nutrientElementN" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementP"
+              [(ngModel)]="nutrientElementP" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementK"
+              [(ngModel)]="nutrientElementK" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementCa"
+              [(ngModel)]="nutrientElementCa" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementMg"
+              [(ngModel)]="nutrientElementMg" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementS"
+              [(ngModel)]="nutrientElementS" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementMb"
+              [(ngModel)]="nutrientElementMb" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementZn"
+              [(ngModel)]="nutrientElementZn" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementB"
+              [(ngModel)]="nutrientElementB" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementCu"
+              [(ngModel)]="nutrientElementCu" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementFe"
+              [(ngModel)]="nutrientElementFe" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementMn"
+              [(ngModel)]="nutrientElementMn" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+          <td fxFlex="7.14" class="text-center  b-r">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementNi"
+              [(ngModel)]="nutrientElementNi" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+          <td fxFlex="7.18" class="text-center ">
+            <input class="nutrient-element text-center" type="number" contenteditable="true" name="nutrientElementCl"
+              [(ngModel)]="nutrientElementCl" (ngModelChange)="updateTable()" placeholder="0.0">
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div fxFlex="10.0"></div>
+  </mat-card-content>
+
+  <hr *ngIf="cropFertilizerGroup.typeFertilizer === 'Nutrient'">
+  <br *ngIf="cropFertilizerGroup.typeFertilizer === 'Nutrient'">
+
+
+
+
+
+  <mat-card-content>
+
+    <table class="dist-table">
+      <tr>
+        <td style="width: 27%;">
+        </td>
+        <td>
+          <div style="text-align: center;">Nutrient content in product (%)</div>
+        </td>
+      </tr>
+    </table>
+
+
+    <div *ngFor="let cropFertilizer  of cropFertilizerGroup.cropFertilizerList; let _index=index">
+      <app-crop-fertilizer-edit-row [cropFertilizer]="cropFertilizer" [index]="_index"
+        [typeFertilizer]="cropFertilizerGroup.typeFertilizer" [productList]="productList"
+        (eventEmitterCropFertilizerEditRowRemove)="remove(_index)">
+      </app-crop-fertilizer-edit-row>
+    </div>
+    <button mat-mini-fab color="primary" (click)="post()" title="Add another application">
+      <mat-icon>add</mat-icon>
+    </button>
+  </mat-card-content>
+
+  <mat-card-content>
+    <div fxLayout="row" class="div-toggle">
+
+      <div fxFlex="33.33" class="b-r">
+        <div fxLayout="row">
+
+          <mat-form-field fxFlex="auto" class="p-r-10" appearance="outline">
+            <mat-label>Timing</mat-label>
+            <mat-select name="unit" [(ngModel)]="timing" (ngModelChange)="timingChange()">
+              <mat-option *ngFor="let timingOption of timingOptionList" [value]="timingOption.name">
+                {{ timingOption.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="50.0" class="p-r-10" *ngIf="timing === 'Days after planting'" appearance="outline">
+            <mat-label>Days after planting</mat-label>
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let formControlItem of formControlListDAP" [selectable]="selectable"
+                [removable]="removable" (removed)="removeTiming(formControlItem)">
+                {{formControlItem}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="updateTiming($event)">
+            </mat-chip-list>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="50.0" class="p-r-10" *ngIf="timing === 'Frequency'" appearance="outline">
+            <mat-label>Frequency</mat-label>
+            <input matInput name="timingFrequency" [(ngModel)]="formControlFrequency"
+              (ngModelChange)="updateTiming($event)">
+          </mat-form-field>
+
+          <mat-form-field fxFlex="50.0" class="p-r-10" *ngIf="timing === 'Growth stage'" appearance="outline">
+            <mat-label>Growth stage</mat-label>
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let formControlItem of formControlListGS" [selectable]="selectable"
+                [removable]="removable" (removed)="removeTiming(formControlItem)">
+                {{formControlItem}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="updateTiming($event)">
+            </mat-chip-list>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="50.0" class="p-r-10" *ngIf="timing === 'Other'" appearance="outline">
+            <mat-label>Other</mat-label>
+            <mat-chip-list #chipList>
+              <mat-chip *ngFor="let formControlItem of formControlListO" [selectable]="selectable"
+                [removable]="removable" (removed)="removeTiming(formControlItem)">
+                {{formControlItem}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="updateTiming($event)">
+            </mat-chip-list>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="50.0" class="p-r-10" *ngIf="timing === 'Date'" appearance="outline">
+            <mat-label>Date</mat-label>
+            <input matInput [matDatepicker]="pickerInit" [(formControl)]="formControlDate"
+              (dateChange)="updateTiming($event)">
+            <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
+            <mat-datepicker #pickerInit color="primary"></mat-datepicker>
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <div fxFlex="33.33" class="b-r">
+        <div fxLayout="row">
+          <mat-form-field fxFlex="auto" class="p-l-10 p-r-10" appearance="outline">
+            <mat-label>Technique</mat-label>
+            <mat-select name="unit" [(ngModel)]="techniqueId" (ngModelChange)="techniqueChange()">
+              <mat-option *ngFor="let technique of techniqueList" [value]="technique.parameterId">
+                {{ technique.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="50.0" class="p-r-10" *ngIf="techniqueId === '337'" appearance="outline">
+            <input matInput name="techniqueOther" [(ngModel)]="techniqueOther" (change)="techniqueChangeOther()">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxFlex="33.33">
+        <div fxLayout="row">
+          <mat-form-field fxFlex="auto" class="p-l-10" appearance="outline">
+            <mat-label>Traction</mat-label>
+            <mat-select name="unit" [(ngModel)]="tractionId" (ngModelChange)="tractionChange()">
+              <mat-option *ngFor="let traction of tractionList" [value]="traction.parameterId">
+                {{ traction.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field fxFlex="50.0" class="p-l-10" *ngIf="tractionId === '342'" appearance="outline">
+            <input matInput name="tractionOther" [(ngModel)]="tractionOther" (change)="tractionChangeOther()">
+          </mat-form-field>
+        </div>
+      </div>
+
+    </div>
+  </mat-card-content>
+
+</mat-card>

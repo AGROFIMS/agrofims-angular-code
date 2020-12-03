@@ -1,0 +1,36 @@
+.mat-select-arrow-wrapper{
+  top: -.5em !important;
+  padding: 9px;
+}
+
+.mat-button-toggle-group{
+  margin: auto;
+}
+
+.proportion-25 {
+  width:100%;
+}
+.proportion-25 > tr > td{
+  width:25% !important;
+}
+ 
+
+.class-table > tr > th {
+  border: 1px solid #ccc!important;
+  text-justify: auto;
+  text-align: center;
+ }
+
+.class-table > tr > td {
+  border: 1px solid #ccc!important;
+  text-justify: auto;
+  text-align: center;
+}
+
+.class-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  display: table;
+}  

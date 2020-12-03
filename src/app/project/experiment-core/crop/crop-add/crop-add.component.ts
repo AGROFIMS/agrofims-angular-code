@@ -10,7 +10,7 @@ import { Crop } from '../model/crop';
 })
 export class CropAddComponent implements OnInit {
 
-  crop = new Crop(null, null, 'on', 'off', 'on');
+  crop = new Crop(null, null, null, 'on', 'off', 'on');
 
   constructor(
     private cropService: CropService,

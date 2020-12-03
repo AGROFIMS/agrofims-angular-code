@@ -1,0 +1,114 @@
+<mat-card>
+
+  <mat-card-header>
+
+    <h4 class="pull-left"> {{this.measurement}} </h4>
+    <button mat-icon-button color="basic" (click)="removeItemList()" title="delete" color="warn" class="pull-right">
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+
+  </mat-card-header>
+
+  <mat-card-content>
+
+    <div fxFlex="100.0">
+      <form *ngFor="let item of itemList; let index=index">
+
+
+        <div fxLayout="row">
+
+          <div fxFlex="2.0" class="p-t-10" fxLayout="row">
+            <span>
+              {{index+1}}
+            </span>
+          </div>
+
+          <div fxFlex="95.0" fxLayout="row">
+
+            <!-- DATE -->
+            <mat-form-field *ngIf="variableDataType == 'DATE'" class="p-r-10" appearance="outline">
+              <mat-label>Value</mat-label>
+              <input matInput name="value" [matDatepicker]="pickerInit" [formControl]="getDateInit(item)"
+                (dateChange)="dateChange(item,$event)">
+              <mat-datepicker-toggle matSuffix [for]="pickerInit"></mat-datepicker-toggle>
+              <mat-datepicker #pickerInit color="primary"></mat-datepicker>
+            </mat-form-field>
+
+            <!-- INTEGER -->
+            <mat-form-field *ngIf="variableDataType == 'INTEGER'" class="p-r-10" appearance="outline">
+              <mat-label>Value</mat-label>
+              <input matInput name="value" [(ngModel)]="item.value" (change)="put(item)">
+            </mat-form-field>
+
+            <mat-form-field *ngIf="variableDataType == 'INTEGER' && variableUnitList.length > 0" class="p-l-10"
+              appearance="outline">
+              <mat-label>Unit</mat-label>
+              <mat-select name="unit" [(ngModel)]="item.unit" (ngModelChange)="put(item)">
+                <mat-option *ngFor="let variableUnit of variableUnitList" [value]="variableUnit">
+                  {{ variableUnit }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- CATEGORICAL -->
+            <mat-form-field *ngIf="variableDataType == 'CATEGORICAL'" class="p-r-10" appearance="outline">
+              <mat-label>Value</mat-label>
+              <mat-select name="value" [(ngModel)]="item.value" (ngModelChange)="put(item)">
+                <mat-option *ngFor="let variableCategory of variableCategoryList" [value]="variableCategory">
+                  {{ variableCategory }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- TEXT -->
+            <mat-form-field *ngIf="variableDataType == 'TEXT'" appearance="outline">
+              <mat-label>Value</mat-label>
+              <input matInput name="value" [(ngModel)]="item.value" (change)="put(item)">
+            </mat-form-field>
+
+            <!-- DECIMAL -->
+            <mat-form-field *ngIf="variableDataType == 'DECIMAL'" class="p-r-10" appearance="outline">
+              <mat-label>Value</mat-label>
+              <input matInput name="value" [(ngModel)]="item.value" (change)="put(item)">
+            </mat-form-field>
+
+            <mat-form-field *ngIf="variableDataType == 'DECIMAL'" class="p-l-10" appearance="outline">
+              <mat-label>Unit</mat-label>
+              <mat-select name="unit" [(ngModel)]="item.unit" (ngModelChange)="put(item)">
+                <mat-option *ngFor="let variableUnit of variableUnitList" [value]="variableUnit">
+                  {{ variableUnit }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </div>
+
+          <div fxFlex="3.0" fxLayout="row">
+            <button mat-icon-button (click)="remove(item, index)" *ngIf="index>0">
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+          </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+      </form>
+      <br>
+      <button mat-mini-fab color="primary" (click)="post()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+
+  </mat-card-content>
+
+</mat-card>

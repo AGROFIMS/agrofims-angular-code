@@ -2,9 +2,8 @@ export class CropMeasurement {
   constructor(
     public siteCropId: string,
     public expSiteId: string,
-    public experimentId: string,
-    public siteId: string,
     public studyVariableId: string,
+    public cropId: string,
     public parameterMeasured: string,
     public unit: string,
     public samplesPerSeason: string,

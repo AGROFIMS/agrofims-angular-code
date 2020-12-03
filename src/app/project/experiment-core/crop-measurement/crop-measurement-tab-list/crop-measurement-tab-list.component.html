@@ -1,0 +1,8 @@
+<mat-tab-group mat-align-tabs="start">
+  <mat-tab *ngFor="let tab of expSite.siteCropsOn.split('|').slice(1); let indexCrop = index"
+    [label]="tab.split('.')[3] !== 'null' ? tab.split('.')[3] : ''">
+    <app-crop-measurement-list [siteCropId]="tab.split('.')[1]" [cropId]="tab.split('.')[2]"
+      [cropCommonName]="tab.split('.')[3]" [expSiteId]="expSite.expSiteId" [cropMeasurementList]="cropMeasurementList">
+    </app-crop-measurement-list>
+  </mat-tab>
+</mat-tab-group>

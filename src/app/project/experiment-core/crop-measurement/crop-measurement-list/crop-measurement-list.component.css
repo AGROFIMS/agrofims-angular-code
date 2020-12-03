@@ -1,0 +1,11 @@
+.form{
+  min-width: 925px;;
+}
+.my-class-selected{
+  background-color: #87d3ff;
+}
+
+.mat-select-arrow-wrapper{
+  top: -.5em !important;
+  padding: 9px;
+}

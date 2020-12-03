@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SiteCrop } from '../../site-crop/model/site-crop';
 import { CropMeasurement } from '../model/crop-measurement';
 import { CropMeasurementService } from '../service/crop-measurement.service';
 import { CropMeasurementListComponent } from '../crop-measurement-list/crop-measurement-list.component';
@@ -9,11 +8,18 @@ import { ParameterService } from '../../parameter/service/parameter.service';
 import { Parameter } from '../../parameter/model/parameter';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatChipInputEvent } from '@angular/material/chips';
+import { FormControl } from '@angular/forms';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { AppDateAdapter, APP_DATE_FORMATS } from './format-datepicker';
 
 @Component({
   selector: 'app-crop-measurement-edit',
   templateUrl: './crop-measurement-edit.component.html',
-  styleUrls: ['./crop-measurement-edit.component.css']
+  styleUrls: ['./crop-measurement-edit.component.css'],
+  providers: [
+    { provide: DateAdapter, useClass: AppDateAdapter },
+    { provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS }
+  ]
 })
 export class CropMeasurementEditComponent implements OnInit {
   @Input() id: any;
@@ -21,14 +27,16 @@ export class CropMeasurementEditComponent implements OnInit {
   @Input() studyVariableId: any;
 
   cropMeasurement: CropMeasurement = new CropMeasurement(
-    null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'on');
+    null, null, null, null, null, null, null, null, null, null, null, null, null, null, 'on');
+
   measurement: StudyVariable = new StudyVariable(
     null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,
     null, null, null, null, null, null, null, null, null, null, null, 'on');
+
   measurementGroupList: string[];
   measurementVariableUnitList: string[];
   parameterListI: Parameter[] = [];
-  dateList: string[] = [];
+
 
   visible = true;
   selectable = true;
@@ -36,6 +44,8 @@ export class CropMeasurementEditComponent implements OnInit {
   addOnBlur = true;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   itemsSelected: string[] = [];
+
+  dateFormControlList = [];
 
   constructor(
     private cropMeasurementService: CropMeasurementService,
@@ -55,7 +65,6 @@ export class CropMeasurementEditComponent implements OnInit {
       .get(id)
       .subscribe(
         (_cropMeasurement: CropMeasurement) => {
-
           try {
             this.itemsSelected = _cropMeasurement.timingDaysAfterPlanting.split('|');
           } catch (error) {
@@ -71,19 +80,20 @@ export class CropMeasurementEditComponent implements OnInit {
                   try {
                     this.itemsSelected = _cropMeasurement.timingOther.split('|');
                   } catch (error) {
-
                   }
                 }
               }
             }
           }
-
           try {
-            this.dateList = _cropMeasurement.timingDate.split('|');
+            const timingDateList: string[] = _cropMeasurement.timingDate.split('|');
+            timingDateList.forEach(timingDate => {
+              const _timingDate = new Date(timingDate).toISOString();
+              const dateFormControl = new FormControl(_timingDate);
+              this.dateFormControlList.push(dateFormControl);
+            });
           } catch (error) {
-
           }
-
           this.cropMeasurement = _cropMeasurement;
         });
   }
@@ -102,7 +112,7 @@ export class CropMeasurementEditComponent implements OnInit {
 
   getParameterListI() {
     return this.parameterService
-      .getAll('crop_measurement', 'timing')
+      .getAll('multiple_measurement', 'timing')
       .subscribe((_parameterListI: Parameter[]) => this.parameterListI = _parameterListI);
   }
 
@@ -120,13 +130,27 @@ export class CropMeasurementEditComponent implements OnInit {
       .subscribe();
   }
 
+  timingChange() {
+    if (this.cropMeasurement.timing === '261') {
+      this.itemsSelected = [];
+      this.cropMeasurement.timingDaysAfterPlanting = null;
+      this.cropMeasurement.timingFrequency = null;
+      this.cropMeasurement.timingGrowthStage = null;
+      this.cropMeasurement.timingOther = null;
+      this.addDate();
+    } else {
+      this.timingClear();
+    }
+  }
+
   timingClear() {
     this.itemsSelected = [];
     this.cropMeasurement.timingDaysAfterPlanting = null;
     this.cropMeasurement.timingFrequency = null;
-    this.cropMeasurement.timingDate = null;
     this.cropMeasurement.timingGrowthStage = null;
     this.cropMeasurement.timingOther = null;
+    this.cropMeasurement.timingDate = null;
+    this.dateFormControlList = [];
     this.put();
   }
 
@@ -176,20 +200,34 @@ export class CropMeasurementEditComponent implements OnInit {
   }
 
   addDate() {
-    this.dateList.push('2020-07-05');
-    this.cropMeasurement.timingDate = this.dateList.join('|');
+    const dateNow: Date = new Date(Date.now());
+    const dateFormControl = new FormControl(dateNow.toISOString());
+    const timingDateList: string[] = [];
+    this.dateFormControlList.push(dateFormControl);
+    this.dateFormControlList.forEach(element => {
+      timingDateList.push(element.value.slice(0, 19).replace('T', ' '));
+    });
+    this.cropMeasurement.timingDate = timingDateList.join('|');
     this.put();
   }
 
   removeDate(i: number) {
-    this.dateList.splice(i, 1);
-    this.cropMeasurement.timingDate = this.dateList.join('|');
+    const timingDateList: string[] = [];
+    this.dateFormControlList.splice(i, 1);
+    this.dateFormControlList.forEach(element => {
+      timingDateList.push(element.value.slice(0, 19).replace('T', ' '));
+    });
+    this.cropMeasurement.timingDate = timingDateList.join('|');
     this.put();
   }
 
-  updateDate() {
-    console.log(this.dateList);
-    this.cropMeasurement.timingDate = this.dateList.join('|');
+  updateDate(i: number) {
+    const timingDateList: string[] = [];
+    this.dateFormControlList[i].setValue(this.dateFormControlList[i].value.toISOString());
+    this.dateFormControlList.forEach(element => {
+      timingDateList.push(element.value.slice(0, 19).replace('T', ' '));
+    });
+    this.cropMeasurement.timingDate = timingDateList.join('|');
     this.put();
   }
 

@@ -1,0 +1,209 @@
+<br>
+
+<div fxLayout="row">
+  <mat-button-toggle-group name="fontStyle" [(ngModel)]="typeFertilizer">
+    <mat-button-toggle value="Product">Product</mat-button-toggle>
+    <mat-button-toggle value="Nutrient">Nutrient</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<br>
+
+<form *ngIf="typeFertilizer==='Product'">
+  <div fxLayout="row">
+    <table class="proportion-25">
+      <tr>
+        <td></td>
+        <td>
+          <mat-form-field class="p-l-20 p-r-10" appearance="outline">
+            <mat-label>Unit</mat-label>
+            <mat-select name="unitIdProduct" [(ngModel)]="unitIdProduct" [disabled]="disableUnit()"
+              (ngModelChange)="unitProductChange($event)">
+              <mat-option *ngFor="let unit of unitList" [value]="unit.parameterId">{{unit.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-card-actions class="p-l-10">
+            <button mat-raised-button color="primary" (click)="post()">
+              <mat-icon>add_circle_outline</mat-icon> Add Application
+            </button>
+          </mat-card-actions>
+        </td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+  <h4 class="text-center"> {{typeFertilizer}} </h4>
+  <div class="form" *ngFor="let cropFertilizerGroup of cropFertilizerGroupList; let _index=index, indexProduct">
+    <app-crop-fertilizer-edit *ngIf="cropFertilizerGroup.typeFertilizer === typeFertilizer && productList.length>0"
+      [cropFertilizerGroup]="cropFertilizerGroup" [index]="_index" [typeFertilizer]="typeFertilizer"
+      [productList]="productList" (eventEmitterCropFertilizerEditRemove)="remove(_index)">
+    </app-crop-fertilizer-edit>
+  </div>
+  <hr>
+
+  <br>
+  <div>
+    <mat-card-actions align=center>
+      <button style="margin: auto!important;" mat-raised-button color="primary" (click)="calculateProduct()">
+        <mat-icon>calculate</mat-icon> Calculate
+      </button>
+    </mat-card-actions>
+  </div>
+
+
+
+
+  <br>
+  <div *ngIf="resStatusProduct === '200'">
+
+    <div fxLayout="row">
+      <span class="m-auto">
+        Nutrient amount applied ({{unitProduct}})
+      </span>
+    </div>
+
+
+    <table class="class-table">
+      <tr>
+        <th style="width: 30%;">Product</th>
+        <th style="width: 5%;">N</th>
+        <th style="width: 5%;">P</th>
+        <th style="width: 5%;">K</th>
+        <th style="width: 5%;">Ca</th>
+        <th style="width: 5%;">Mg</th>
+        <th style="width: 5%;">S</th>
+        <th style="width: 5%;">Mb</th>
+        <th style="width: 5%;">Zn</th>
+        <th style="width: 5%;">B</th>
+        <th style="width: 5%;">Cu</th>
+        <th style="width: 5%;">Fe</th>
+        <th style="width: 5%;">Mn</th>
+        <th style="width: 5%;">Ni</th>
+        <th style="width: 5%;">Cl</th>
+      </tr>
+      <tr *ngFor="let item of dataTableProduct">
+        <td>{{item.productvalue}}</td>
+        <td>{{item.N}}</td>
+        <td>{{item.P}}</td>
+        <td>{{item.K}}</td>
+        <td>{{item.Ca}}</td>
+        <td>{{item.Mg}}</td>
+        <td>{{item.S}}</td>
+        <td>{{item.Mb}}</td>
+        <td>{{item.Zn}}</td>
+        <td>{{item.B}}</td>
+        <td>{{item.Cu}}</td>
+        <td>{{item.Fe}}</td>
+        <td>{{item.Mn}}</td>
+        <td>{{item.Ni}}</td>
+        <td>{{item.Cl}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div *ngIf="resStatusProduct === '400'" fxLayout="row">
+    <h3 class="m-auto">{{resMsgProduct}}</h3>
+  </div>
+</form>
+
+<form *ngIf="typeFertilizer==='Nutrient'">
+  <div>
+    <mat-card-actions align=center>
+      <button style="margin: auto!important;" mat-raised-button color="primary" (click)="post()">
+        <mat-icon>add_circle_outline</mat-icon> Add Application
+      </button>
+    </mat-card-actions>
+  </div>
+  <h4 class="text-center"> {{typeFertilizer}} </h4>
+  <div class="form" *ngFor="let cropFertilizerGroup of cropFertilizerGroupList; let _index=index">
+    <app-crop-fertilizer-edit *ngIf="cropFertilizerGroup.typeFertilizer === typeFertilizer && productList.length>0"
+      [cropFertilizerGroup]="cropFertilizerGroup" [index]="_index" [typeFertilizer]="typeFertilizer"
+      [productList]="productList" (eventEmitterCropFertilizerEditRemove)="remove(_index)">
+    </app-crop-fertilizer-edit>
+  </div>
+  <hr>
+
+  <br>
+  <div fxLayout="row">
+    <table class="proportion-25">
+      <tr>
+        <td></td>
+        <td>
+          <mat-form-field class="p-l-20 p-r-10" appearance="outline">
+            <mat-label>Unit</mat-label>
+            <mat-select name="unitIdNutrient" [(ngModel)]="unitIdNutrient" (ngModelChange)="unitNutrientChange()">
+              <mat-option *ngFor="let unit of unitList" [value]="unit.parameterId">{{unit.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+        <td>
+          <mat-card-actions>
+            <button mat-raised-button color="primary" (click)="calculateNutrient()">
+              <mat-icon>calculate</mat-icon> Calculate
+            </button>
+          </mat-card-actions>
+        </td>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+
+  <br>
+  <div *ngIf="resStatusNutrient === '200'">
+
+    <div fxLayout="row">
+      <span class="m-auto">
+        Product amount applied ({{unitNutrient}})
+      </span>
+    </div>
+
+    <table class="class-table">
+      <tr>
+        <th style="width: 30%;">Product</th>
+        <th style="width: 5%;">N</th>
+        <th style="width: 5%;">P</th>
+        <th style="width: 5%;">K</th>
+        <th style="width: 5%;">Ca</th>
+        <th style="width: 5%;">Mg</th>
+        <th style="width: 5%;">S</th>
+        <th style="width: 5%;">Mb</th>
+        <th style="width: 5%;">Zn</th>
+        <th style="width: 5%;">B</th>
+        <th style="width: 5%;">Cu</th>
+        <th style="width: 5%;">Fe</th>
+        <th style="width: 5%;">Mn</th>
+        <th style="width: 5%;">Ni</th>
+        <th style="width: 5%;">Cl</th>
+      </tr>
+      <tr *ngFor="let item of dataTableNutrient">
+        <td>{{item.productvalue}}</td>
+        <td>{{item.N}}</td>
+        <td>{{item.P}}</td>
+        <td>{{item.K}}</td>
+        <td>{{item.Ca}}</td>
+        <td>{{item.Mg}}</td>
+        <td>{{item.S}}</td>
+        <td>{{item.Mb}}</td>
+        <td>{{item.Zn}}</td>
+        <td>{{item.B}}</td>
+        <td>{{item.Cu}}</td>
+        <td>{{item.Fe}}</td>
+        <td>{{item.Mn}}</td>
+        <td>{{item.Ni}}</td>
+        <td>{{item.Cl}}</td>
+      </tr>
+    </table>
+  </div>
+
+  <div *ngIf="resStatusNutrient === '400'" fxLayout="row">
+    <h3 class="m-auto">{{resMsgNutrient}}</h3>
+  </div>
+</form>
+
+<br>
+
+<div fxLayout="row">
+  <h3 class="m-auto" @load *ngIf="showMessage">{{calculateMessage}}</h3>
+</div>

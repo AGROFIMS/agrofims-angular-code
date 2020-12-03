@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-header>
+    <h4 class="pull-left"> {{this.measurement}} </h4>
+    <button mat-icon-button color="basic" (click)="removeItemList()" title="delete" color="warn" class="pull-right">
+      <mat-icon>highlight_off</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div fxFlex="100.0">
+      <form *ngFor="let item of itemList; let index=index">
+        <div fxLayout="row">
+          <mat-form-field class="p-r-10" appearance="outline">
+            <mat-label>Unit</mat-label>
+            <mat-select name="unit" [(ngModel)]="item.unit" (ngModelChange)="put(item)">
+              <mat-option *ngFor="let variableUnit of variableUnitList" [value]="variableUnit">
+                {{ variableUnit }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="p-l-10" appearance="outline">
+            <mat-label>Number of evaluations</mat-label>
+            <input matInput name="value" [(ngModel)]="item.value" (change)="put(item)">
+          </mat-form-field>
+        </div>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>

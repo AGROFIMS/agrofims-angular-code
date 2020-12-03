@@ -1,0 +1,27 @@
+<br>
+<div fxLayout="row">
+
+  <mat-form-field fxFlex="33.3" class="p-r-10" appearance="outline">
+    <mat-label>Management measurement</mat-label>
+    <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl"
+      [matAutocomplete]="auto">
+    <mat-icon matSuffix>arrow_drop_down</mat-icon>
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-card-actions class="p-l-10">
+    <button mat-raised-button color="primary" (click)="post()">
+      <mat-icon>add_circle_outline</mat-icon> Add measurement
+    </button>
+  </mat-card-actions>
+
+</div>
+
+<form class="form" *ngFor="let itemGroup of itemGroupList; let i=index">
+  <app-crop-man-measurement-edit [itemGroup]="itemGroup" [indexGroup]="i">
+  </app-crop-man-measurement-edit>
+</form>

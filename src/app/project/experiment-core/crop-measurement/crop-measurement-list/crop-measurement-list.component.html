@@ -3,11 +3,24 @@
 
   <mat-form-field fxFlex="33.3" class="p-r-10" appearance="outline">
     <mat-label>Crop measurement</mat-label>
-    <mat-select name="studyVariableId" [formControl]="studyVariable">
-      <mat-option *ngFor="let measurement of measurementList" [value]="measurement">
-        {{ measurement.measurement }}
+    <input type="text" placeholder="Select one..." aria-label="Number" matInput [formControl]="myControl"
+      [matAutocomplete]="auto">
+
+    <button mat-button matSuffix aria-label="Arrow" *ngIf="!myControl.value" mat-icon-button
+      class="mat-select-arrow-wrapper">
+      <div class="mat-select-arrow"></div>
+    </button>
+
+    <button mat-button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="Clear"
+      (click)="myControl.setValue('')">
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option" [disabled]="findElement(option)">
+        {{option}}
       </mat-option>
-    </mat-select>
+    </mat-autocomplete>
   </mat-form-field>
 
   <mat-card-actions class="p-l-10">
@@ -18,7 +31,7 @@
 
 </div>
 
-<form class="example-form" *ngFor="let item of itemList ; let i=index">
+<form class="form" *ngFor="let item of cropMeasurementListFilter ; let i=index">
   <app-crop-measurement-edit [id]="item.cropMeasurementId" [index]="i" [studyVariableId]="item.studyVariableId">
   </app-crop-measurement-edit>
 </form>

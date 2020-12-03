@@ -11,8 +11,9 @@
   margin: 0px 24px;
 }
 
-
-
+.b-r {
+  border-right: 1px solid #bac8d6 !important;
+}
 
 .mat-card{
   padding:  12px !important;
@@ -24,8 +25,10 @@
   padding: 12px 12px 42px 12px;
 }
 
-  .mat-card-content{
-    padding: 0px 12px;
-  }
+.mat-card-content{
+  padding: 0px 12px;
+}
 
   
+
+
