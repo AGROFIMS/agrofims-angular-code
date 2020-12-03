@@ -5,7 +5,9 @@ export class Parameter {
         public singularity: string,
         public subSingularity: string,
         public name: string,
+        public parameterCode: string,
         public parameterId?: number,
+
     ) { }
 
 }

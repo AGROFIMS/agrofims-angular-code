@@ -107,7 +107,12 @@
 }
 
 /*padding tab reduce*/
-.mat-tab-label {
+/* .mat-tab-label {
   padding: 0 20px !important;
   min-width: 110px !important;
+} */
+
+.mat-tab-label {
+  padding: 0 10px !important;
+  min-width: 90px !important;
 }
