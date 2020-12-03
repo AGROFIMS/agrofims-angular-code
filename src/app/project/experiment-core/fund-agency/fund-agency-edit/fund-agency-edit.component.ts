@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { FundAgencyService } from '../service/fund-agency.service';
 import { FundAgency } from '../model/fund-agency';
 import { ParameterService } from '../../parameter/service/parameter.service';
@@ -12,6 +12,9 @@ import { FundAgencyListComponent } from '../fund-agency-list/fund-agency-list.co
 export class FundAgencyEditComponent implements OnInit {
   @Input() id: any;
   @Input() index: any;
+
+  @ViewChild('other') nameFiled: ElementRef;
+
   fundAgency: FundAgency = new FundAgency('', '', '', '', '', 'on');
   parameter: Parameter[] = [];
   parameter2: Parameter[] = [];
@@ -55,6 +58,8 @@ export class FundAgencyEditComponent implements OnInit {
     this.fundAgency.fundAgencyTypeOther = null;
     this.fundAgency.fundAgencyTypeCenterId = null;
     this.put();
+
+    this.nameFiled.nativeElement.focus();
   }
 
   getParameterAll() {

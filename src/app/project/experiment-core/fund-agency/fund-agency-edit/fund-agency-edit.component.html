@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-header>
-    <button mat-icon-button color="basic" (click)="remove(fundAgency)" title="remove">
+    <button mat-icon-button color="basic" (click)="remove(fundAgency)" title="delete" color="warn">
       <mat-icon>highlight_off</mat-icon>
     </button>
   </mat-card-header>
@@ -37,7 +37,7 @@
     <div fxLayout="row">
       <mat-form-field fxFlex="50" class="p-r-10" *ngIf="fundAgency.fundAgencyTypeId == '16'" appearance="outline">
         <mat-label>Other</mat-label>
-        <input matInput name="fundAgencyTypeOther" [(ngModel)]="fundAgency.fundAgencyTypeOther" (change)="put()">
+        <input #other matInput name="fundAgencyTypeOther" [(ngModel)]="fundAgency.fundAgencyTypeOther" (change)="put()">
       </mat-form-field>
     </div>
   </mat-card-content>
