@@ -1,0 +1,120 @@
+<mat-card-title>Experimental unit</mat-card-title>
+<div fxLayout="row">
+  <mat-form-field class="p-r-10" fxFlex="50" appearance="outline">
+    <mat-select name="rcbd_variable" [(ngModel)]="siteDesign.rcbd_variable" (selectionChange)="put()">
+      <mat-option *ngFor="let variable of variableList" [value]="variable">
+        {{ variable }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div fxLayout="row" *ngIf="siteDesign.rcbd_variable === 'plot'">
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Length</mat-label>
+    <input matInput name="rcbd_length_p" [(ngModel)]="siteDesign.rcbd_length_p" (ngModelChange)="put()">
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="rcbd_length_unit_p" [(ngModel)]="siteDesign.rcbd_length_unit_p" (selectionChange)="put()">
+      <mat-option *ngFor="let variable of variableList_plot" [value]="variable">
+        {{ variable }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Width</mat-label>
+    <input matInput name="rcbd_width_p" [(ngModel)]="siteDesign.rcbd_width_p" (ngModelChange)="put()">
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="rcbd_width_unit_p" [(ngModel)]="siteDesign.rcbd_width_unit_p" (selectionChange)="put()">
+      <mat-option *ngFor="let variable of variableList_plot" [value]="variable">
+        {{ variable }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div fxLayout="row" *ngIf="siteDesign.rcbd_variable === 'field'">
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Length</mat-label>
+    <input matInput name="rcbd_length_f" [(ngModel)]="siteDesign.rcbd_length_f" (ngModelChange)="put()">
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="rcbd_length_unit_f" [(ngModel)]="siteDesign.rcbd_length_unit_f" (selectionChange)="put()">
+      <mat-option *ngFor="let variable of variableList_field" [value]="variable">
+        {{ variable }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Width</mat-label>
+    <input matInput name="rcbd_width_f" [(ngModel)]="siteDesign.rcbd_width_f" (ngModelChange)="put()">
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="rcbd_width_unit_f" [(ngModel)]="siteDesign.rcbd_width_unit_f" (selectionChange)="put()">
+      <mat-option *ngFor="let variable of variableList_field" [value]="variable">
+        {{ variable }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<div fxLayout="row" *ngIf="siteDesign.rcbd_variable === 'pot'">
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Diameter</mat-label>
+    <input matInput name="rcbd_diameter" [(ngModel)]="siteDesign.rcbd_diameter" (ngModelChange)="put()">
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="rcbd_diameter_unit" [(ngModel)]="siteDesign.rcbd_diameter_unit" (selectionChange)="put()">
+      <mat-option *ngFor="let variable of variableList_pot" [value]="variable">
+        {{ variable }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Depth</mat-label>
+    <input matInput name="rcbd_depth" [(ngModel)]="siteDesign.rcbd_depth" (ngModelChange)="put()">
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="rcbd_depth_unit" [(ngModel)]="siteDesign.rcbd_depth_unit" (selectionChange)="put()">
+      <mat-option *ngFor="let variable of variableList_pot" [value]="variable">
+        {{ variable }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<mat-card-title>Treatment description</mat-card-title>
+<div fxLayout="row">
+  <mat-form-field class="p-r-10" fxFlex="50" appearance="outline">
+    <mat-label>Number of treatments</mat-label>
+    <mat-select name="rcbd_ntrt" [(ngModel)]="siteDesign.rcbd_ntrt" (selectionChange)="put()">
+      <mat-option *ngFor="let number of numberList" [value]="number">
+        {{ number }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="p-l-10" fxFlex="50" appearance="outline">
+    <mat-label>Block</mat-label>
+    <mat-select name="rcbd_nblock" [(ngModel)]="siteDesign.rcbd_nblock" (selectionChange)="put()">
+      <mat-option *ngFor="let number of numberList" [value]="number">
+        {{ number }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

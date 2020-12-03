@@ -1,0 +1,89 @@
+<mat-card-title>Experimental unit</mat-card-title>
+
+<mat-card-subtitle>
+  Main plot
+</mat-card-subtitle>
+
+<div fxLayout="row">
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Length</mat-label>
+    <input matInput name="strip_main_exp_plot_length" [(ngModel)]="siteDesign.strip_main_exp_plot_length"
+      (ngModelChange)="put()">
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="strip_main_exp_plot_length_unit" [(ngModel)]="siteDesign.strip_main_exp_plot_length_unit"
+      (selectionChange)="put()">
+      <mat-option *ngFor="let variable of variableList_plot" [value]="variable">
+        {{ variable }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Width</mat-label>
+    <input matInput name="strip_main_exp_plot_width" [(ngModel)]="siteDesign.strip_main_exp_plot_width"
+      (ngModelChange)="put()">
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="strip_main_exp_plot_width_unit" [(ngModel)]="siteDesign.strip_main_exp_plot_width_unit"
+      (selectionChange)="put()">
+      <mat-option *ngFor="let variable of variableList_plot" [value]="variable">
+        {{ variable }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<mat-card-subtitle>
+  Sub plot
+</mat-card-subtitle>
+
+<div fxLayout="row">
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Length</mat-label>
+    <input matInput name="strip_sub_exp_plot_length" [(ngModel)]="siteDesign.strip_sub_exp_plot_length"
+      (ngModelChange)="put()">
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="strip_sub_exp_plot_length_unit" [(ngModel)]="siteDesign.strip_sub_exp_plot_length_unit"
+      (selectionChange)="put()">
+      <mat-option *ngFor="let variable of variableList_plot" [value]="variable">
+        {{ variable }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Width</mat-label>
+    <input matInput name="strip_sub_exp_plot_width" [(ngModel)]="siteDesign.strip_sub_exp_plot_width"
+      (ngModelChange)="put()">
+  </mat-form-field>
+
+  <mat-form-field class="p-r-10" fxFlex="12.5" appearance="outline">
+    <mat-label>Unit</mat-label>
+    <mat-select name="strip_sub_exp_plot_width_unit" [(ngModel)]="siteDesign.strip_sub_exp_plot_width_unit"
+      (selectionChange)="put()">
+      <mat-option *ngFor="let variable of variableList_plot" [value]="variable">
+        {{ variable }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<mat-card-title>Treatment description</mat-card-title>
+<div fxLayout="row">
+  <mat-form-field class="p-r-10" fxFlex="50" appearance="outline">
+    <mat-label>Block</mat-label>
+    <mat-select name="strip_nblock" [(ngModel)]="siteDesign.strip_nblock" (selectionChange)="put()">
+      <mat-option *ngFor="let number of numberList" [value]="number">
+        {{ number }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

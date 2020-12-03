@@ -1,0 +1,42 @@
+<form class="form">
+  <div fxLayout="row">
+    <mat-form-field class="p-r-10" fxFlex="50" appearance="outline">
+      <mat-label>Experiment design</mat-label>
+      <mat-select name="experimentalDesignId" [(ngModel)]="siteDesign.experimentalDesignId"
+        (selectionChange)="selectExperimentDesignAbbr($event)">
+        <mat-option *ngFor="let par of parameterI" [value]="par.parameterId">
+          {{ par.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <form *ngIf="siteDesign.experimentalDesignId == '264'">
+    <app-site-design-edit-i [siteDesign]="siteDesign" [numberList]="numberList"></app-site-design-edit-i>
+  </form>
+
+  <form *ngIf="siteDesign.experimentalDesignId == '265'">
+    <app-site-design-edit-ii [siteDesign]="siteDesign" [numberList]="numberList"></app-site-design-edit-ii>
+  </form>
+
+  <form *ngIf="siteDesign.experimentalDesignId == '266'">
+    <app-site-design-edit-iii [siteDesign]="siteDesign" [numberList]="numberList"></app-site-design-edit-iii>
+  </form>
+
+  <form *ngIf="siteDesign.experimentalDesignId == '267'">
+    <app-site-design-edit-iv [siteDesign]="siteDesign" [numberList]="numberList"></app-site-design-edit-iv>
+  </form>
+
+  <form *ngIf="siteDesign.experimentalDesignId == '268'">
+    <app-site-design-edit-v [siteDesign]="siteDesign" [numberList]="numberList"></app-site-design-edit-v>
+  </form>
+
+  <form *ngIf="siteDesign.experimentalDesignId == '269'">
+    <app-site-design-edit-vi [siteDesign]="siteDesign" [numberList]="numberList"></app-site-design-edit-vi>
+  </form>
+
+  <form *ngIf="siteDesign.experimentalDesignId == '270'">
+    <app-site-design-edit-vii [siteDesign]="siteDesign" [numberList]="numberList"></app-site-design-edit-vii>
+  </form>
+
+</form>
