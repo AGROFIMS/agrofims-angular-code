@@ -14,6 +14,7 @@ export class Personnel {
     public personOrcid: string,
     public status: string,
     public personId?: number,
+    public fromProfile?: string,
   ) { }
 
 }

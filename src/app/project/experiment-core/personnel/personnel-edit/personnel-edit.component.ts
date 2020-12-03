@@ -1,41 +1,50 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { PersonnelService } from '../service/personnel.service';
 import { Personnel } from '../model/personnel';
 import { ParameterService } from '../../parameter/service/parameter.service';
 import { Parameter } from '../../parameter/model/parameter';
 import { PersonnelListComponent } from '../personnel-list/personnel-list.component';
+// import { AuthService } from '../../../auth/services/auth.service';
+// import { RespProfile } from '../../../auth/models/resp';
+
 @Component({
   selector: 'app-personnel-edit',
   templateUrl: './personnel-edit.component.html',
   styleUrls: ['./personnel-edit.component.css']
 })
-export class PersonnelEditComponent implements OnInit {
-  @Input() id: any;
+export class PersonnelEditComponent implements OnInit, OnChanges {
   @Input() index: any;
-  personnel: Personnel = new Personnel('', '', '', '', '', '', '', '', '', '', '', 'on');
-  parameter: Parameter[] = [];
-  parameter2: Parameter[] = [];
-  parameter3: Parameter[] = [];
+
+  @Input() item: {
+    personnel: Personnel,
+    ppAffiliationValue: string,
+    ppAffiliationCgiar: string,
+    fromProfile: string,
+  };
+
+  @Input() parameter: {
+    parameterId: string
+    name: string
+  }[];
+  @Input() parameter2: {
+    parameterId: string
+    name: string
+  }[];
+  @Input() parameter3: {
+    parameterId: string
+    name: string
+  }[];
+
   constructor(
     private personnelService: PersonnelService,
     private compPersonnelList: PersonnelListComponent,
-    private parameterService: ParameterService
   ) { }
 
-  ngOnInit(): void {
-    this.get(this.id);
-    this.getParameterAll();
-    this.getParameterAll2();
-    this.getParameterAll3();
+  ngOnChanges(changes: SimpleChanges): void {
   }
 
-  get(id: string) {
-    return this.personnelService
-      .get(id)
-      .subscribe(
-        (_personnel: Personnel) => {
-          this.personnel = _personnel;
-        });
+  ngOnInit(): void {
+
   }
 
   remove(personnel: Personnel): void {
@@ -48,38 +57,36 @@ export class PersonnelEditComponent implements OnInit {
 
   put() {
     this.personnelService
-      .put(this.personnel)
+      .put(this.item.personnel)
       .subscribe();
   }
 
   cleanPersonType() {
-    this.personnel.personTypeOther = null;
+    this.item.personnel.personTypeOther = null;
     this.put();
   }
 
   cleanPersonAffiliation() {
-    this.personnel.personAffiliationCenterId = null;
-    this.personnel.personAffiliationName = null;
-    this.personnel.personAffiliationNameOther = null;
+    this.item.personnel.personAffiliationCenterId = null;
+    this.item.personnel.personAffiliationName = null;
+    this.item.personnel.personAffiliationNameOther = null;
     this.put();
   }
 
-  getParameterAll() {
-    return this.parameterService
-      .getAll('personnel', 'type')
-      .subscribe((_parameter: Parameter[]) => this.parameter = _parameter);
-  }
+  refresh() {
+    const personAffiliationId = this.item.personnel.personAffiliationId;
 
-  getParameterAll2() {
-    return this.parameterService
-      .getAll('personnel', 'affiliation')
-      .subscribe((_parameter2: Parameter[]) => this.parameter2 = _parameter2);
-  }
+    this.item.personnel.personAffiliationId = '137';
 
-  getParameterAll3() {
-    return this.parameterService
-      .getAll('personnel', 'cgiar_center')
-      .subscribe((_parameter3: Parameter[]) => this.parameter3 = _parameter3);
+
+    console.log(this.item.personnel.personAffiliationId);
+    console.log(personAffiliationId);
+
+    // console.log(155);
+    // console.log('155');
+
+    this.item.personnel.personAffiliationId = personAffiliationId;
+
   }
 
 }

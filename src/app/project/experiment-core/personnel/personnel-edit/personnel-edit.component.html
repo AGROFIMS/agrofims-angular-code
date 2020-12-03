@@ -1,91 +1,91 @@
 <mat-card>
-  <mat-card-header>
 
-    <button mat-icon-button color="basic" (click)="remove(personnel)" title="remove">
+  <mat-card-header>
+    <button mat-icon-button color="basic" (click)="remove(item.personnel)" title="delete" color="warn">
       <mat-icon>highlight_off</mat-icon>
     </button>
-
   </mat-card-header>
 
   <mat-card-content>
-
     <div fxFlex="50">
-
       <mat-form-field class="p-r-10" appearance="outline">
         <mat-label>Person type</mat-label>
-        <mat-select name="personTypeId" [(ngModel)]="personnel.personTypeId" (ngModelChange)="cleanPersonType()">
+        <mat-select name="personTypeId" [(ngModel)]="item.personnel.personTypeId" (ngModelChange)="cleanPersonType()">
           <mat-option *ngFor="let par of parameter" [value]="par.parameterId">
             {{ par.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field class="p-r-10" *ngIf="personnel.personTypeId == '126'" appearance="outline">
-        <mat-label>Other</mat-label>
-        <input matInput name="personTypeOther" [(ngModel)]="personnel.personTypeOther" (change)="put()">
+      <mat-form-field class="p-r-10" *ngIf="item.personnel.personTypeId == '126'" appearance="outline">
+        <input matInput name="personTypeOther" [(ngModel)]="item.personnel.personTypeOther" (change)="put()">
       </mat-form-field>
 
       <mat-form-field class="p-r-10" appearance="outline">
         <mat-label>First name</mat-label>
-        <input matInput name="personFirstName" [(ngModel)]="personnel.personFirstName" (change)="put()">
+        <input matInput name="personFirstName" [(ngModel)]="item.personnel.personFirstName"
+          [disabled]="item.fromProfile === 'on'" (change)="put()">
       </mat-form-field>
 
       <mat-form-field class="p-r-10" appearance="outline">
         <mat-label>Last name</mat-label>
-        <input matInput name="personLastName" [(ngModel)]="personnel.personLastName" (change)="put()">
+        <input matInput name="personLastName" [(ngModel)]="item.personnel.personLastName"
+          [disabled]="item.fromProfile === 'on'" (change)="put()">
       </mat-form-field>
-
     </div>
 
     <div fxFlex="50">
-
       <mat-form-field class="p-l-10" appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput name="personEmailAddress" [(ngModel)]="personnel.personEmailAddress" (change)="put()">
+        <input matInput name="personEmailAddress" [(ngModel)]="item.personnel.personEmailAddress" (change)="put()"
+          [disabled]="item.fromProfile === 'on'">
       </mat-form-field>
 
-      <mat-form-field class="p-l-10" appearance="outline">
+      <mat-form-field class="p-l-10" appearance="outline" *ngIf="item.fromProfile !== 'on'">
         <mat-label>Affiliation</mat-label>
-        <mat-select name="personAffiliationId" [(ngModel)]="personnel.personAffiliationId"
-          (ngModelChange)="cleanPersonAffiliation()">
+        <mat-select name="personAffiliationId" [(ngModel)]="item.personnel.personAffiliationId"
+          (selectionChange)="cleanPersonAffiliation()">
           <mat-option *ngFor="let par of parameter2" [value]="par.parameterId">
             {{ par.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
-
-      <mat-form-field class="p-l-10"
-        *ngIf="personnel.personAffiliationId !='129' && personnel.personAffiliationId !='137' && personnel.personAffiliationId !=null"
-        appearance="outline">
-        <mat-label>Affiliation name</mat-label>
-        <input matInput name="personAffiliationName" [(ngModel)]="personnel.personAffiliationName" (change)="put()">
+      <mat-form-field class="p-l-10" appearance="outline" *ngIf="item.ppAffiliationValue && item.fromProfile === 'on'">
+        <input matInput name="ppAffiliationValue" [(ngModel)]="item.ppAffiliationValue" disabled>
       </mat-form-field>
 
-      <mat-form-field class="p-l-10" *ngIf="personnel.personAffiliationId == '129'" appearance="outline">
+      <mat-form-field class=" p-l-10"
+        *ngIf="item.personnel.personAffiliationId !='129' && item.personnel.personAffiliationId !='137' && item.personnel.personAffiliationId !=null"
+        appearance="outline">
+        <input matInput name="personAffiliationName" [(ngModel)]="item.personnel.personAffiliationName"
+          (change)="put()">
+      </mat-form-field>
+
+      <mat-form-field class="p-l-10" *ngIf="item.personnel.personAffiliationId == '129' && item.fromProfile !== 'on'"
+        appearance="outline">
         <mat-label>Choose CGIAR center</mat-label>
-        <mat-select name="personAffiliationCenterId" [(ngModel)]="personnel.personAffiliationCenterId"
-          (ngModelChange)="put()">
+        <mat-select name="personAffiliationCenterId" [(ngModel)]="item.personnel.personAffiliationCenterId"
+          (selectionChange)="put()">
           <mat-option *ngFor="let par of parameter3" [value]="par.parameterId">
             {{ par.name }}
           </mat-option>
         </mat-select>
       </mat-form-field>
+      <mat-form-field class="p-l-10" appearance="outline" *ngIf="item.ppAffiliationCgiar  && item.fromProfile === 'on'">
+        <input matInput name="ppAffiliationCgiar" [(ngModel)]="item.ppAffiliationCgiar" disabled>
+      </mat-form-field>
 
-      <mat-form-field class="p-l-10" *ngIf="personnel.personAffiliationId == '137'" appearance="outline">
-        <mat-label>Other</mat-label>
-        <input matInput name="personAffiliationNameOther" [(ngModel)]="personnel.personAffiliationNameOther"
+      <mat-form-field class=" p-l-10" *ngIf="item.personnel.personAffiliationId == '137'" appearance="outline">
+        <input matInput name="personAffiliationNameOther" [(ngModel)]="item.personnel.personAffiliationNameOther"
           (change)="put()">
       </mat-form-field>
 
       <mat-form-field class="p-l-10" appearance="outline">
-        <mat-label>ORCID if available *</mat-label>
-        <input matInput name="personOrcid" [(ngModel)]="personnel.personOrcid" (change)="put()">
+        <mat-label>ORCID</mat-label>
+        <input matInput name="personOrcid" [(ngModel)]="item.personnel.personOrcid" (change)="put()"
+          [disabled]="item.fromProfile === 'on'">
       </mat-form-field>
-
-      <span class="p-l-10">* if not consider <a href="https://orcid.org/register" target="_blank">
-          registering!</a></span>
     </div>
-
   </mat-card-content>
 
 </mat-card>
