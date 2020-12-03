@@ -1,0 +1,32 @@
+.main-notification{
+  position: fixed;
+  z-index: 999999;
+  top: 75px;
+  right: 30px;
+  background-color: #00c851;
+  width: 300px;
+}
+
+.main-notification>div{
+  position: relative;
+  width: 18.75rem;
+  padding: 15px 15px 15px 30px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+}
+
+.main-notification>div>.mat-icon{
+  margin-right: 10px;
+  color: #ffffff;
+}
+
+.main-notification>div>.mat-label{
+  padding-top: 2.5px;
+  color: #ffffff;
+}
+ 
+.mat-menu-trigger{
+  padding: 0 6px !important;
+}
+
