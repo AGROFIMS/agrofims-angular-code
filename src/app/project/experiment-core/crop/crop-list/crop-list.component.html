@@ -1,7 +1,5 @@
 <mat-card-header>
-  <mat-card-title>
-    Crops
-  </mat-card-title>
+  <mat-card-title> Crops </mat-card-title>
 </mat-card-header>
 
 <mat-nav-list>
@@ -15,47 +13,54 @@
   <div fxFlex.gt-sm="100%">
     <mat-card>
       <mat-card-content>
-
         <p>
           <button mat-raised-button color="primary" (click)="addCrop()">
             <mat-icon>add_circle_outline</mat-icon> New crop
           </button>
         </p>
 
-        <table mat-table [dataSource]="cropList" class="mat-elevation-z8" style="width: 100%;">
-
+        <table
+          mat-table
+          [dataSource]="cropList"
+          class="mat-elevation-z8"
+          style="width: 100%"
+        >
           <ng-container matColumnDef="numOrder">
-            <th mat-header-cell *matHeaderCellDef> numOrder </th>
-            <td mat-cell *matCellDef="let element"> {{ element.numOrder }} </td>
+            <th mat-header-cell *matHeaderCellDef>numOrder</th>
+            <td mat-cell *matCellDef="let element">{{ element.numOrder }}</td>
           </ng-container>
 
           <ng-container matColumnDef="cropCommonName">
-            <th mat-header-cell *matHeaderCellDef> cropCommonName </th>
-            <td mat-cell *matCellDef="let element"> {{ element.cropCommonName }} </td>
+            <th mat-header-cell *matHeaderCellDef>cropCommonName</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.cropCommonName }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="fatherCropId">
-            <th mat-header-cell *matHeaderCellDef> fatherCropId </th>
-            <td mat-cell *matCellDef="let element"> {{ element.fatherCropId }} </td>
+            <th mat-header-cell *matHeaderCellDef>fatherCropId</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.fatherCropId }}
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="isFather">
-            <th mat-header-cell *matHeaderCellDef> isFather </th>
-            <td mat-cell *matCellDef="let element"> {{ element.isFather }} </td>
+            <th mat-header-cell *matHeaderCellDef>isFather</th>
+            <td mat-cell *matCellDef="let element">{{ element.isFather }}</td>
           </ng-container>
 
           <ng-container matColumnDef="locked">
-            <th mat-header-cell *matHeaderCellDef> locked </th>
-            <td mat-cell *matCellDef="let element"> {{ element.locked }} </td>
+            <th mat-header-cell *matHeaderCellDef>locked</th>
+            <td mat-cell *matCellDef="let element">{{ element.locked }}</td>
           </ng-container>
 
           <ng-container matColumnDef="modifiedAt">
-            <th mat-header-cell *matHeaderCellDef> modifiedAt </th>
-            <td mat-cell *matCellDef="let element"> {{ element.modifiedAt }} </td>
+            <th mat-header-cell *matHeaderCellDef>modifiedAt</th>
+            <td mat-cell *matCellDef="let element">{{ element.modifiedAt }}</td>
           </ng-container>
 
           <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef> Action </th>
+            <th mat-header-cell *matHeaderCellDef>Action</th>
             <td mat-cell *matCellDef="let element" class="action-link">
               <a [routerLink]="" (click)="editCrop(element.cropId)">Edit</a> |
               <a [routerLink]="" (click)="deleteCrop(element)">Delete</a>
@@ -63,9 +68,8 @@
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
-
       </mat-card-content>
     </mat-card>
   </div>

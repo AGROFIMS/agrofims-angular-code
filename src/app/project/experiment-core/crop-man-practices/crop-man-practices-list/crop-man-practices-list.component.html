@@ -9,27 +9,19 @@
   </mat-form-field>
 
   <mat-form-field fxFlex="30" class="p-r-10" appearance="outline">
-
     <mat-label>Select specific practices</mat-label>
-    <input type="text" placeholder="Select one..." aria-label="Number" matInput [formControl]="myControl"
-      [matAutocomplete]="auto">
-
-    <button mat-button matSuffix aria-label="Arrow" *ngIf="!myControl.value" mat-icon-button
-      class="mat-select-arrow-wrapper">
+    <input type="text" placeholder="Select one..." aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+    <button mat-button matSuffix aria-label="Arrow" *ngIf="!myControl.value" mat-icon-button class="mat-select-arrow-wrapper">
       <div class="mat-select-arrow"></div>
     </button>
-
-    <button mat-button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="Clear"
-      (click)="myControl.setValue('')">
+    <button mat-button *ngIf="myControl.value" matSuffix mat-icon-button aria-label="Clear" (click)="myControl.setValue('')">
       <mat-icon>close</mat-icon>
     </button>
-
     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
       <mat-option *ngFor="let item_2 of itemList_2 | async" [value]="item_2" [disabled]="findElement(item_2)">
         {{item_2}}
       </mat-option>
     </mat-autocomplete>
-
   </mat-form-field>
 
   <mat-card-actions class="p-l-10">

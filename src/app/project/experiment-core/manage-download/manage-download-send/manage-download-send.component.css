@@ -4,7 +4,6 @@
   border-radius: 5px;
   border: 2px dashed #ada9a9;
   padding: 10px;
-  /* margin-bottom: 20px; */
 } 
  
 .mat-dialog-actions{
@@ -31,7 +30,15 @@
   color: #007bff;
 }
 
-
 .icon-disabled{
   opacity: 0.4;
 }
+
+.help-class{
+  margin-top: 23px;
+}
+
+.mat-card-title{
+  margin-left: -18px;
+}
+

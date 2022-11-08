@@ -4,7 +4,7 @@ import { CropMeasurement } from '../model/crop-measurement';
 import { CropMeasurementService } from '../service/crop-measurement.service';
 import { StudyVariableService } from '../../study-variable/service/study-variable.service';
 import { StudyVariable } from '../../study-variable/model/study-variable';
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
 
@@ -24,7 +24,11 @@ export class CropMeasurementListComponent implements OnInit {
 
   cropMeasurementListFilter: CropMeasurement[] = [];
 
-  myControl = new FormControl();
+
+
+  myControl = new FormControl('', [Validators.required]);
+
+  // myControl = new FormControl();
   filteredOptions: Observable<string[]>;
   measurementList: {
     index: string,

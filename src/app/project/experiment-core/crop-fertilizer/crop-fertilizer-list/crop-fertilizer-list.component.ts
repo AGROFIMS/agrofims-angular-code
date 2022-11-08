@@ -331,27 +331,27 @@ export class CropFertilizerListComponent implements OnInit, OnChanges {
     // }, 3000);
 
     // version
-    const param1 = '0345';
+    const param1 = '0291';
 
     // env
-    const param2 = 'prod';
+    const param2 = 'dev';
 
     // crop
-    const param3 = this.cropCommonName;
+    // const param3 = this.cropCommonName;
     // const param3 = 'Banana';
-    // const param3 = 'Common bean';
+    const param3 = 'Common bean';
 
     // type
     const param4 = this.typeFertilizer;
     // const param4 = 'Product';
 
     // expSiteId
-    const param5 = this.expSiteId;
-    // const param5 = '20';
+    // const param5 = this.expSiteId;
+    const param5 = '20';
 
     // experimentId
-    const param6 = this.expSite.experimentId;
-    // const param6 = '20';
+    // const param6 = this.expSite.experimentId;
+    const param6 = '20';
 
 
     console.log(
@@ -400,27 +400,27 @@ export class CropFertilizerListComponent implements OnInit, OnChanges {
       // }, 3000);
 
       // version
-      const param1 = '0345';
+      const param1 = '0291';
 
       // env
-      const param2 = 'prod';
+      const param2 = 'dev';
 
       // crop
-      const param3 = this.cropCommonName;
+      // const param3 = this.cropCommonName;
       // const param3 = 'Banana';
-      // const param3 = 'Common bean';
+      const param3 = 'Common bean';
 
       // type
       const param4 = this.typeFertilizer;
       // const param4 = 'Product';
 
       // expSiteId
-      const param5 = this.expSiteId;
-      // const param5 = '20';
+      // const param5 = this.expSiteId;
+      const param5 = '20';
 
       // experimentId
-      const param6 = this.expSite.experimentId;
-      // const param6 = '20';
+      // const param6 = this.expSite.experimentId;
+      const param6 = '20';
 
 
       console.log(

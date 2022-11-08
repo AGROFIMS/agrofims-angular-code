@@ -1,8 +1,14 @@
 <div align="right">
+    <button mat-icon-button (click)="help()" *ngIf="!isLoggedIn()">
+        <mat-icon>help</mat-icon>
+    </button>
     <button mat-raised-button color="primary" *ngIf="!isLoggedIn()" (click)="login()" class="m-l-85_">LOGIN</button>
 </div>
 
 <div align="right">
+    <button mat-icon-button (click)="help()" *ngIf="isLoggedIn() && initials && name">
+        <mat-icon>help</mat-icon>
+    </button>
     <button [matMenuTriggerFor]="profile" mat-button *ngIf="isLoggedIn() && initials && name">
         <button mat-mini-fab [ngStyle]="{'background-color': backgroundColor}" class="shadow-none">{{initials}}</button>
         <span class="m-l-10">{{name}}</span>
@@ -14,9 +20,15 @@
     <button mat-menu-item (click)="profiles()" *ngIf="isLoggedIn">
         <mat-icon>account_box</mat-icon> Profile
     </button>
+
     <button mat-menu-item (click)="authentication()" *ngIf="isLoggedIn">
         <mat-icon>vpn_key</mat-icon> Authentication
     </button>
+
+    <!-- <button mat-menu-item (click)="help()" *ngIf="isLoggedIn">
+        <mat-icon>help</mat-icon> Help
+    </button> -->
+
     <button mat-menu-item (click)="logout()" *ngIf="isLoggedIn">
         <mat-icon>exit_to_app</mat-icon> Log Out
     </button>

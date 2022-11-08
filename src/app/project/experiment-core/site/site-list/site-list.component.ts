@@ -128,6 +128,10 @@ export class SiteListComponent implements OnInit {
     this.siteMarkerList.push(siteMarker);
   }
 
+  help() {
+    window.open("https://agrofims.github.io/helpdocs/creatingasite/site/", "_blank");
+  }
+
   addSite() {
     this.router.navigate(['/sites/add']);
   }

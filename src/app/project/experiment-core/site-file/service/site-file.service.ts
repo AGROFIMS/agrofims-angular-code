@@ -26,6 +26,10 @@ export class SiteFileService {
     return this.http.get(`${this.baseUrl}/site-file/getById.php?id=${id}`);
   }
 
+  getByUser(id: string) {
+    return this.http.get(`${this.baseUrl}/site-file/getByUser.php?id=${id}`);
+  }
+
   put(siteFile: SiteFile) {
     return this.http.put(`${this.baseUrl}/site-file/put.php`, siteFile);
   }

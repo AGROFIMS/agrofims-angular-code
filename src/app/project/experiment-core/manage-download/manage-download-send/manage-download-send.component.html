@@ -1,4 +1,9 @@
-<h2 mat-dialog-title>Download format</h2>
+<mat-card-header>
+  <mat-card-title>Download fieldbook</mat-card-title>
+  <button mat-icon-button color="primary" class="help-class" (click)="help()">
+    <mat-icon>help_outline</mat-icon>
+  </button>
+</mat-card-header>
 
 <div mat-dialog-content class="mat-typography">
   <div class="div-toggle">
@@ -33,8 +38,7 @@
         <ng-container matColumnDef="#">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
           <td mat-cell *matCellDef="let row; let ndx = index">
-            <mat-label style="margin-left: 0px;"
-              [ngClass]="{'text-blue': row.siteFileId === newSiteFileId && messageShow}">{{ ndx+1 }}
+            <mat-label style="margin-left: 0px;" [ngClass]="{'text-blue': row.siteFileId === newSiteFileId && messageShow}">{{ ndx+1 }}
             </mat-label>
           </td>
         </ng-container>
@@ -42,9 +46,9 @@
         <ng-container matColumnDef="fileName">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Fieldbook name </th>
           <td mat-cell *matCellDef="let row" title="{{row.fileName}}">
-            <mat-label style="margin-left: 0px;"
-              [ngClass]="{'text-blue': row.siteFileId === newSiteFileId && messageShow}">
-              {{row.fileName &&  row.fileName.length>33 ? row.fileName.substring(0,15) + '...'  +row.fileName.substring(row.fileName.length-15) : row.fileName}}
+            <mat-label style="margin-left: 0px;" [ngClass]="{'text-blue': row.siteFileId === newSiteFileId && messageShow}">
+              {{row.fileName && row.fileName.length>33 ? row.fileName.substring(0,13) + '...' +row.fileName.substring(row.fileName.length-13) :
+              row.fileName}}
             </mat-label>
           </td>
         </ng-container>
@@ -52,8 +56,7 @@
         <ng-container matColumnDef="createdAt">
           <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
           <td mat-cell *matCellDef="let row">
-            <mat-label style="margin-left: 0px;"
-              [ngClass]="{'text-blue': row.siteFileId === newSiteFileId && messageShow}">{{ row.createdAt}}
+            <mat-label style="margin-left: 0px;" [ngClass]="{'text-blue': row.siteFileId === newSiteFileId && messageShow}">{{ row.createdAt}}
             </mat-label>
           </td>
         </ng-container>
@@ -67,18 +70,18 @@
 
             <button mat-button color="primary" title="download field book app" (click)="downloadFileZip(row.siteFileId)"
               [disabled]="row.fbappDisabled">
-              <img width="16px" src="assets/images/manage_download/fba_64.png"
-                [class.icon-disabled]="row.fbappDisabled === 'true'"> Field Book
-              App
+              <img width="16px" src="assets/images/manage_download/fba_64.png" [class.icon-disabled]="row.fbappDisabled === 'true'"> Field Book App
             </button>
 
-            <button mat-button color="primary" title="download KDSmart app" (click)="downloadFileKdx(row.siteFileId)"
-              [disabled]="row.kdxDisabled">
-              <img width="16px" src="assets/images/manage_download/kds_64.png"
-                [class.icon-disabled]="row.kdxDisabled === 'true'">
-              KDSmart
-              App
+            <button mat-button color="primary" title="download KDSmart app" (click)="downloadFileKdx(row.siteFileId)" [disabled]="row.kdxDisabled">
+              <img width="16px" src="assets/images/manage_download/kds_64.png" [class.icon-disabled]="row.kdxDisabled === 'true'"> KDSmart App
             </button>
+
+
+            <button mat-button color="primary" title="download ODK" (click)="downloadFileOdk(row.siteFileId)" [disabled]="row.odkDisabled">
+              <img width="16px" src="assets/images/manage_download/odk_64.png" [class.icon-disabled]="row.odkDisabled === 'true'"> ODK
+            </button>
+
 
           </td>
         </ng-container>

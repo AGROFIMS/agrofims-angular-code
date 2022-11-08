@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges, DoCheck } from '@angular/core';
 import { SiteFactorService } from '../service/site-factor.service';
 import { SiteFactor } from '../model/site-factor';
 import { Factor } from '../../factor/model/factor';
 import { FactorService } from '../../factor/service/factor.service';
-import { FormControl } from '@angular/forms';
 import { Observable, Subject, Subscription } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { FormControl, Validators } from '@angular/forms';
 import { SiteCrop } from '../../site-crop/model/site-crop';
 import { ExpSite } from '../../exp-site/model/exp-site';
 import { ExpSiteService } from '../../exp-site/service/exp-site.service';
@@ -19,7 +19,7 @@ import { FactorFertilizer } from '../../factor-fertilizer/model/factor-fertilize
   templateUrl: './site-factor-edit.component.html',
   styleUrls: ['./site-factor-edit.component.css']
 })
-export class SiteFactorEditComponent implements OnInit, OnChanges {
+export class SiteFactorEditComponent implements OnInit, OnChanges, DoCheck {
 
   @Input() expSite: ExpSite;
   @Input() itemGroup: {
@@ -39,7 +39,11 @@ export class SiteFactorEditComponent implements OnInit, OnChanges {
     multiCrop: string
   }[] = [];
 
-  formControlFactorName = new FormControl();
+  // formControlFactorName = new FormControl();
+
+  formControlFactorName = new FormControl('', [Validators.required]);
+
+
   filteredOptions: Observable<string[]>;
   factorTitle: string;
   factorName: string;
@@ -52,7 +56,8 @@ export class SiteFactorEditComponent implements OnInit, OnChanges {
   factorFertilizerList: FactorFertilizer[] = [];
   varFactorNameOld: string;
 
-  diffUnit: false;
+  diffUnit = false;
+  unit: string;
 
   @Output() eventEmitterSiteFactorEditRemove = new EventEmitter<any>();
   @Output() eventEmitterSiteFactorEditOptionSelected = new EventEmitter();
@@ -75,6 +80,18 @@ export class SiteFactorEditComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.getAllFiltered();
+  }
+
+  ngDoCheck(): void {
+    const unitList = this.factorFertilizerList
+      .map(item => item.unit)
+      .filter((value, index, self) => self.indexOf(value) === index);
+    if (unitList.length > 1) {
+      this.diffUnit = true;
+    } else {
+      this.unit = unitList[0];
+      this.diffUnit = false;
+    }
   }
 
   getAllFiltered() {
@@ -162,7 +179,6 @@ export class SiteFactorEditComponent implements OnInit, OnChanges {
   removeSiteFactorList() {
     this.itemGroup.siteFactorList
       .forEach(siteFactor => {
-
         this.siteFactorService.delete(siteFactor.siteFactorId)
           .subscribe(
             () => {
@@ -170,26 +186,25 @@ export class SiteFactorEditComponent implements OnInit, OnChanges {
               this.eventEmitterSiteFactorEditRemove.emit(this.indexIG);
             }
           );
-
       });
+  }
+
+  removeFactorFertilizer(siteFactor: SiteFactor) {
+    const factorFertilizerList = this.factorFertilizerList.filter(obj1 => obj1.siteFactorId === siteFactor.siteFactorId);
+    factorFertilizerList.forEach(obj2 => {
+      this.deleteObjFromList(obj2, this.factorFertilizerList);
+    });
   }
 
   // delete site - factor x
   catchEmitterSiteFactorEdit($event: number) {
-
     this.removeFactorFertilizer(this.itemGroup.siteFactorList[$event]);
     this.itemGroup.siteFactorList.splice($event, 1);
-
-    const val = this.itemGroup.siteFactorList;
-    console.log(val);
-
   }
-
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
     const optionList: string[] = [];
-
     this.factorList.forEach(element => {
       optionList.push(element.value);
     });
@@ -360,12 +375,6 @@ export class SiteFactorEditComponent implements OnInit, OnChanges {
 
   }
 
-  removeFactorFertilizer(siteFactor: SiteFactor) {
-    const factorFertilizerList = this.factorFertilizerList.filter(obj1 => obj1.siteFactorId === siteFactor.siteFactorId);
-    factorFertilizerList.forEach(obj2 => {
-      this.deleteObjFromList(obj2, this.factorFertilizerList);
-    });
-  }
 
   deleteObjFromList(obj: any, objList: any[]) {
     const index: number = objList.indexOf(obj);
@@ -376,9 +385,6 @@ export class SiteFactorEditComponent implements OnInit, OnChanges {
 
 
   popup() {
-
-    // factorName === 'Fertilizer type and amount' || factorName === 'Nutrient element type and amount'
-
     const type_factor = (this.factorName === 'Fertilizer type and amount') ? 'Product' : 'Nutrient';
     const expsiteId = this.expSite.expSiteId;
     const dialogRef = this.dialog.open(FactorFertilizerListComponent, {
@@ -388,10 +394,9 @@ export class SiteFactorEditComponent implements OnInit, OnChanges {
         factorFertilizerList: this.factorFertilizerList,
         type_factor: type_factor,
         expsiteId: expsiteId,
+        unit: this.unit,
       },
-      // height: '80%',
       width: '80%',
-      // maxWidth: '1280px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

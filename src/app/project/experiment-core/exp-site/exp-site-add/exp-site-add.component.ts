@@ -86,7 +86,7 @@ export class ExpSiteAddComponent implements OnInit {
         this.siteCropService.post(siteCrop).subscribe(
           (val_2) => {
 
-            this.expSite.siteCropsOn = siteCropOn + ec1 + '.' + val_2['result'].toString();
+            this.expSite.siteCropsOn = siteCropOn + ec1 + '.' + val_2['result'].toString() + '.' + null + '.' + null;
             this.expSiteService.put(this.expSite).subscribe();
 
             siteCrop.croppingTypeId = ec2;

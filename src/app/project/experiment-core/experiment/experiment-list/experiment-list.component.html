@@ -1,7 +1,9 @@
 <mat-card-header>
-  <mat-card-title>
-    Experiments
-  </mat-card-title>
+  <mat-card-title>Experiments</mat-card-title>
+  <button mat-icon-button color="primary" class="help-class" (click)="help()">
+    <mat-icon>help_outline</mat-icon>
+  </button>
+
 </mat-card-header>
 
 <mat-nav-list>
@@ -42,14 +44,15 @@
           <ng-container matColumnDef="experimentName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Experiment name </th>
             <td mat-cell *matCellDef="let row" title="{{row.experimentName}}">
-              {{  row.experimentName &&  row.experimentName.length>20 ? row.experimentName.substring(0,25) + '...' : row.experimentName}}
+              {{ row.experimentName && row.experimentName.length>20 ? row.experimentName.substring(0,25) + '...' : row.experimentName}}
             </td>
           </ng-container>
 
           <ng-container matColumnDef="experimentProjectName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Experiment project name </th>
             <td mat-cell *matCellDef="let row" title="{{row.experimentProjectName}}">
-              {{ row.experimentProjectName && row.experimentProjectName.length>20 ? row.experimentProjectName.substring(0,25) + '...' : row.experimentProjectName}}
+              {{ row.experimentProjectName && row.experimentProjectName.length>20 ? row.experimentProjectName.substring(0,25) + '...' :
+              row.experimentProjectName}}
             </td>
           </ng-container>
 
@@ -62,13 +65,13 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
             <td mat-cell *matCellDef="let row">
 
-              <button mat-icon-button color="accent" aria-label="Example icon button with a vertical three dot icon"
-                [routerLink]="" (click)="editExperiment(row.expId)" title="open">
+              <button mat-icon-button color="accent" aria-label="Example icon button with a vertical three dot icon" [routerLink]=""
+                (click)="editExperiment(row.expId)" title="open">
                 <mat-icon>open_in_new</mat-icon>
               </button>
 
-              <button mat-icon-button color="warn" aria-label="Example icon button with a vertical three dot icon"
-                [routerLink]="" (click)="popup(row.experimentId)" title="delete">
+              <button mat-icon-button color="warn" aria-label="Example icon button with a vertical three dot icon" [routerLink]=""
+                (click)="popup(row.experimentId)" title="delete">
                 <mat-icon>delete</mat-icon>
               </button>
 

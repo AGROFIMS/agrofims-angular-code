@@ -21,46 +21,58 @@
     <mat-card>
       <mat-card-content>
 
-        <!-- <h3>Under construction - coming soon!</h3> -->
-
-        <p><b>AgroFIMS</b> has just been migrated to a new, more flexible framework. Some functionalities are still
-          being
-          developed, such as the ability to set up your private account so that only you can see the fieldbooks that you
-          create. This - and other nifty features will be available soon - but in the meanwhile you can test AgroFIMS
-          and create fieldbooks that will remain available, but will also be visible to others. More detailed
-          documentation will be available by the end of 2020, but here is some general guidance to help you use
-          AgroFIMS.</p>
+        <p><b>General guidance to help you use AgroFIMS</b></p>
 
         <ol>
-          <li>Set up your experimental site (“Sites”).</li>
-          <li>Add a new experiment (“Experiments”) and give it a name before creating it.</li>
-          <li>Under ‘Experiment description”, specify what the experiment is about, and indicated the personnel,
-            organizations, and funding agencies involved (via the “About the Experiment” and “Personnel” tabs). This is
-            the metadata about the dataset.</li>
-          <li>Add a fieldbook (via “Fieldbooks” tab under Experiment description), choosing the country and experimental
-            site you created earlier.</li>
-          <li>Add details on the site, crop, and statistical design of the experiment, choosing treatments and factors
-            from the drop-down lists.</li>
+          <li>Set up your experimental site (in “Sites”).</li>
+
+          <li>Add a new experiment (in “Experiments”).</li>
+
+          <li>Then specify what the experiment is about, and indicated the personnel, organizations, and funding agencies involved (in ''Experiment''
+            and “Personnel” tabs). This is the metadata about the dataset.</li>
+
+          <li>Add a fieldbook (in “Fieldbooks” tab), choosing the country and experimental site you created earlier.</li>
+
+          <li>Add details on the site, crop, and statistical design of the experiment, choosing treatments and factors from the drop-down lists.</li>
+
           <li>Go through the “Management practices” to specify how you want the experiment to be managed.</li>
+
           <li>Specify crop, phenological, weather, and soil measurements that you would like to make.</li>
-          <li>Once you are done, you can download the fieldbook you have created via the cloud icon at the top right.
-          </li>
-          <li>Your fieldbook will be created as an xlxs file that you can save to your computer.</li>
-          <li>The fieldbook file can be exported from your computer to the <a href="http://www.kddart.org/kdsmart.html"
-              target="_blank">KDSmart</a> application for digital data collection. <a
-              href="http://www.kddart.org/kdsmart.html" target="_blank">KDSmart</a> is available for Android devices.
-            Stay tuned -
-            AgroFIMS will soon be available for use via the Open Data Kit (ODK) and Fieldbook applications!</li>
-          <li>Once data is collected via <a href="http://www.kddart.org/kdsmart.html" target="_blank">KDSmart</a>, you
-            can send it back
-            to AgroFIMS for statistical analysis. This module will be available later in 2020, and includes a
-            statistical report with graphs.</li>
+
+          <li>Once you are done, you can download the fieldbook you have created via the cloud icon at the top right. The fieldbook file can be
+            downloaded as an Excel file or as a KDSmart or Field Book compatible files for digital data collection. KDSmart and Field Book are
+            available for Android devices. S
+            Once data is collected via KDSmart, you can send it back to AgroFIMS for statistical analysis. This module will soone be available and
+            includes a statistical report with graphs.</li>
         </ol>
 
-        <p>In 2021 <b>AgroFIMS</b> will allow you to set up agronomic survey questionnaires, for data collection via
-          ODK. It
-          will also allow easy upload of your “born FAIR” data to Dataverse repository platforms with Dublin
-          Core-compliant metadata schemas.</p>
+        <p>For further guidance, please visit the following websites:</p>
+
+        <p>
+          <b>User manual</b><br>
+          An online version of the user manual can be found here: <a href="https://agrofims.github.io/helpdocs/"
+            target="_blank">https://agrofims.github.io/helpdocs/</a><br>
+          A PDF of this user manual is also available <a href="../../../../assets/docs/AgroFIMS_UserManual_2019.pdf" target="_blank">here</a>.
+        </p>
+
+
+        <p><b>AgrAPI</b><br>
+          We have made available the Agronomy API or AgrAPI, which is a RESTful web service API specification to enable access, exchange, and
+          integration of agronomic data across systems and applications. You can use the API to retrieve research management information, experimental
+          designs, crop measurements, and environmental variables from AgroFIMS. The AgrAPI blueprint can be implemented in different programming
+          languages. Currently, AgrAPI is implemented in the R statistical programming language allowing you to analyze your data with the R
+          statistical packages and graphics of your choice.
+          <a href="https://con.agrofims.org/agrofims/report/api.html" target="_blank">https://con.agrofims.org/agrofims/report/api.html</a>
+        </p>
+
+        <p><b>Interface development</b><br>
+          The development history of AgroFIMS, with the different development versions of the interface is available here:
+          <a href="https://con.agrofims.org/agrofims/report/documentation.html"
+            target="_blank">https://con.agrofims.org/agrofims/report/documentation.html</a>
+        </p>
+
+
+
 
       </mat-card-content>
     </mat-card>

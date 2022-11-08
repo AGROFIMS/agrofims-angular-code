@@ -32,8 +32,8 @@ export class SiteCropListComponent implements OnInit, OnChanges {
   ec3 = '164';
 
   // siteCrop: SiteCrop;
-  parameterVI: Parameter[] = [];
 
+  intercropArrangementList: Parameter[] = [];
 
   formControlList = [];
 
@@ -45,7 +45,7 @@ export class SiteCropListComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.getParameterList();
-    this.getParameterVI();
+    this.getIntercropArrangementList();
   }
 
   ngOnChanges() {
@@ -94,6 +94,9 @@ export class SiteCropListComponent implements OnInit, OnChanges {
     }
     this.putExpSiteCropsOn(this.siteCropList);
   }
+
+
+
 
   putExpSiteCropsOn(siteCropList: SiteCrop[]) {
     this.expSite.siteCropsOn = siteCropList
@@ -152,10 +155,10 @@ export class SiteCropListComponent implements OnInit, OnChanges {
       .getAll('expSite', 'cropping_type')
       .subscribe((_parameter: Parameter[]) => this.parameterList = _parameter);
   }
-  getParameterVI() {
+  getIntercropArrangementList() {
     return this.parameterService
       .getAll('expSite', 'intercrop_arrangement')
-      .subscribe((_parameter: Parameter[]) => this.parameterVI = _parameter);
+      .subscribe((_parameter: Parameter[]) => this.intercropArrangementList = _parameter);
   }
 
   updateFormControl(i: number) {
@@ -180,6 +183,10 @@ export class SiteCropListComponent implements OnInit, OnChanges {
     } else {
       return true;
     }
+  }
+
+  help() {
+    window.open('https://agrofims.github.io/helpdocs/creatingafieldbook/crop/', '_blank');
   }
 }
 

@@ -1,9 +1,8 @@
 <form class="form">
   <div fxLayout="row">
     <mat-form-field class="p-r-10" fxFlex="50" appearance="outline">
-      <mat-label>Experiment design</mat-label>
-      <mat-select name="experimentalDesignId" [(ngModel)]="siteDesign.experimentalDesignId"
-        (selectionChange)="selectExperimentDesignAbbr($event)">
+      <mat-label>Experiment design *</mat-label>
+      <mat-select name="experimentalDesignId" [(ngModel)]="siteDesign.experimentalDesignId" (selectionChange)="selectExperimentDesignAbbr($event)">
         <mat-option *ngFor="let par of parameterI" [value]="par.parameterId">
           {{ par.name }}
         </mat-option>

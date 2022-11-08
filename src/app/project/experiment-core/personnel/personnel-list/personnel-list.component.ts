@@ -91,6 +91,10 @@ export class PersonnelListComponent implements OnInit {
       );
   }
 
+  help() {
+    window.open("https://agrofims.github.io/helpdocs/creatingafieldbook/personnel/", "_blank");
+  }
+
   post(personnel: Personnel = null) {
 
     let _personnel: Personnel;

@@ -126,7 +126,8 @@ export class ManageDownloadSendComponent implements OnInit {
         (val_1) => {
 
           if (val_1['result']) {
-            // console.log(val_1['result']);
+            console.log(val_1['result']);
+
             const siteFile = new SiteFile(
               this.data.expSiteId,
               this.data.param1 + '_' + this.randNumber,
@@ -134,6 +135,7 @@ export class ManageDownloadSendComponent implements OnInit {
               'xlsx',
               (val_1['result']['mob_status_fbapp'][0] === '200' ? false : true).toString(),
               (val_1['result']['mob_status_kdsmart'][0] === '200' ? false : true).toString(),
+              (val_1['result']['mob_status_odk'][0] === '200' ? false : true).toString(),
               'off');
             this.siteFileService.post(siteFile).subscribe(
               (val_2) => {
@@ -158,7 +160,7 @@ export class ManageDownloadSendComponent implements OnInit {
   downloadFileExcel(siteFileId: string) {
     this.siteFileService.get(siteFileId).subscribe(
       (_siteFileList: SiteFile) => {
-        location.href = 'https://research.cip.cgiar.org/RAngular/xlsx/' + _siteFileList.fileName + '.xlsx';
+        location.href = 'https://con.agrofims.org/RAngular/xlsx/' + _siteFileList.fileName + '.xlsx';
       }
     );
   }
@@ -166,7 +168,7 @@ export class ManageDownloadSendComponent implements OnInit {
   downloadFileZip(siteFileId: string) {
     this.siteFileService.get(siteFileId).subscribe(
       (_siteFileList: SiteFile) => {
-        location.href = 'https://research.cip.cgiar.org/RAngular/fbapp/' + _siteFileList.fileName + '.zip';
+        location.href = 'https://con.agrofims.org/RAngular/fbapp/' + _siteFileList.fileName + '.zip';
       }
     );
   }
@@ -174,7 +176,15 @@ export class ManageDownloadSendComponent implements OnInit {
   downloadFileKdx(siteFileId: string) {
     this.siteFileService.get(siteFileId).subscribe(
       (_siteFileList: SiteFile) => {
-        location.href = 'https://research.cip.cgiar.org/RAngular/kdsmart/' + _siteFileList.fileName + '.kdx';
+        location.href = 'https://con.agrofims.org/RAngular/kdsmart/' + _siteFileList.fileName + '.kdx';
+      }
+    );
+  }
+
+  downloadFileOdk(siteFileId: string) {
+    this.siteFileService.get(siteFileId).subscribe(
+      (_siteFileList: SiteFile) => {
+        location.href = 'https://con.agrofims.org/RAngular/odk/' + _siteFileList.fileName + '.xml';
       }
     );
   }
@@ -228,5 +238,8 @@ export class ManageDownloadSendComponent implements OnInit {
     }, 5000);
   }
 
+  help() {
+    window.open("https://agrofims.github.io/helpdocs/collect/", "_blank");
+  }
 }
 

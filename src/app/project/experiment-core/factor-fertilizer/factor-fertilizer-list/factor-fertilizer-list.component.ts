@@ -143,22 +143,22 @@ export class FactorFertilizerListComponent implements OnInit, OnChanges {
     }, 3000);
 
     // version
-    const param1 = '0345';
+    const param1 = '0291';
 
     // env
-    const param2 = 'prod';
+    const param2 = 'dev';
 
     // group
-    const param3 = this.data.itemGroup.indexOrder;
-    // const param3 = '3';
+    // const param3 = this.data.itemGroup.indexOrder;
+    const param3 = '3';
 
     // type_factor
-    const param4 = this.data.type_factor;
-    // const param4 = 'Product';
+    // const param4 = this.data.type_factor;
+    const param4 = 'Product';
 
     // expsiteId
-    const param5 = this.data.expsiteId;
-    // const param5 = '25';
+    // const param5 = this.data.expsiteId;
+    const param5 = '25';
 
     console.log(
       {

@@ -335,7 +335,12 @@ export class CropManPracticesListComponent implements OnInit, OnChanges {
 
   findElement(option: any): boolean {
     if (this.cropManPracticesGroupList.map(obj => obj.measurement).find(element => element === option)) {
-      return true;
+      if (option === 'Other') {
+        return false;
+      } else {
+        return true;
+      }
+
     } else {
       return false;
     }

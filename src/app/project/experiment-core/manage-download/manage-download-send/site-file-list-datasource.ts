@@ -4,7 +4,6 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { SiteFile } from '../../site-file/model/site-file';
-// import { SiteFile } from '../model/experiment';
 
 export class ExperimentListDataSource extends DataSource<SiteFile> {
   data: SiteFile[];

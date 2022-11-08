@@ -23,14 +23,12 @@
 
       <mat-form-field class="p-r-10" appearance="outline">
         <mat-label>First name</mat-label>
-        <input matInput name="personFirstName" [(ngModel)]="item.personnel.personFirstName"
-          [disabled]="item.fromProfile === 'on'" (change)="put()">
+        <input matInput name="personFirstName" [(ngModel)]="item.personnel.personFirstName" [disabled]="item.fromProfile === 'on'" (change)="put()">
       </mat-form-field>
 
       <mat-form-field class="p-r-10" appearance="outline">
         <mat-label>Last name</mat-label>
-        <input matInput name="personLastName" [(ngModel)]="item.personnel.personLastName"
-          [disabled]="item.fromProfile === 'on'" (change)="put()">
+        <input matInput name="personLastName" [(ngModel)]="item.personnel.personLastName" [disabled]="item.fromProfile === 'on'" (change)="put()">
       </mat-form-field>
     </div>
 
@@ -43,8 +41,7 @@
 
       <mat-form-field class="p-l-10" appearance="outline" *ngIf="item.fromProfile !== 'on'">
         <mat-label>Affiliation</mat-label>
-        <mat-select name="personAffiliationId" [(ngModel)]="item.personnel.personAffiliationId"
-          (selectionChange)="cleanPersonAffiliation()">
+        <mat-select name="personAffiliationId" [(ngModel)]="item.personnel.personAffiliationId" (selectionChange)="cleanPersonAffiliation()">
           <mat-option *ngFor="let par of parameter2" [value]="par.parameterId">
             {{ par.name }}
           </mat-option>
@@ -57,15 +54,13 @@
       <mat-form-field class=" p-l-10"
         *ngIf="item.personnel.personAffiliationId !='129' && item.personnel.personAffiliationId !='137' && item.personnel.personAffiliationId !=null"
         appearance="outline">
-        <input matInput name="personAffiliationName" [(ngModel)]="item.personnel.personAffiliationName"
-          (change)="put()">
+        <input matInput name="personAffiliationName" [(ngModel)]="item.personnel.personAffiliationName" (change)="put()"
+          [disabled]="item.fromProfile === 'on'">
       </mat-form-field>
 
-      <mat-form-field class="p-l-10" *ngIf="item.personnel.personAffiliationId == '129' && item.fromProfile !== 'on'"
-        appearance="outline">
+      <mat-form-field class="p-l-10" *ngIf="item.personnel.personAffiliationId == '129' && item.fromProfile !== 'on'" appearance="outline">
         <mat-label>Choose CGIAR center</mat-label>
-        <mat-select name="personAffiliationCenterId" [(ngModel)]="item.personnel.personAffiliationCenterId"
-          (selectionChange)="put()">
+        <mat-select name="personAffiliationCenterId" [(ngModel)]="item.personnel.personAffiliationCenterId" (selectionChange)="put()">
           <mat-option *ngFor="let par of parameter3" [value]="par.parameterId">
             {{ par.name }}
           </mat-option>
@@ -76,14 +71,13 @@
       </mat-form-field>
 
       <mat-form-field class=" p-l-10" *ngIf="item.personnel.personAffiliationId == '137'" appearance="outline">
-        <input matInput name="personAffiliationNameOther" [(ngModel)]="item.personnel.personAffiliationNameOther"
-          (change)="put()">
+        <input matInput name="personAffiliationNameOther" [(ngModel)]="item.personnel.personAffiliationNameOther" (change)="put()"
+          [disabled]="item.fromProfile === 'on'">
       </mat-form-field>
 
       <mat-form-field class="p-l-10" appearance="outline">
         <mat-label>ORCID</mat-label>
-        <input matInput name="personOrcid" [(ngModel)]="item.personnel.personOrcid" (change)="put()"
-          [disabled]="item.fromProfile === 'on'">
+        <input matInput name="personOrcid" [(ngModel)]="item.personnel.personOrcid" (change)="put()" [disabled]="item.fromProfile === 'on'">
       </mat-form-field>
     </div>
   </mat-card-content>

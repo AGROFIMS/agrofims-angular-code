@@ -3,8 +3,7 @@
 
 
     <h4 class="pull-left">{{factorTitle}}</h4>
-    <button mat-icon-button *ngIf="indexIG>=minFactor" color="basic" title="delete" color="warn" class="pull-right"
-      (click)="removeSiteFactorList()">
+    <button mat-icon-button *ngIf="indexIG>=minFactor" color="basic" title="delete" color="warn" class="pull-right" (click)="removeSiteFactorList()">
       <mat-icon>highlight_off</mat-icon>
     </button>
 
@@ -16,11 +15,10 @@
 
       <div fxLayout="row">
         <mat-form-field class="p-r-20" fxFlex="75" appearance="outline">
-          <input [formControl]="formControlFactorName" type="text" placeholder="Select one..." aria-label="Factor"
-            matInput [matAutocomplete]="auto" (blur)="blurInput($event)">
+          <input [formControl]="formControlFactorName" type="text" placeholder="Select one..." aria-label="Factor" matInput [matAutocomplete]="auto"
+            (blur)="blurInput($event)">
 
-          <button mat-button matSuffix aria-label="Arrow" mat-icon-button class="mat-select-arrow-wrapper"
-            (click)="optionRemoved($event)">
+          <button mat-button matSuffix aria-label="Arrow" mat-icon-button class="mat-select-arrow-wrapper" (click)="optionRemoved($event)">
             <div class="mat-select-arrow"></div>
           </button>
 
@@ -47,8 +45,7 @@
           *ngIf="expSite.croppingTypeId && expSite.croppingTypeId !== '162' && multiCrop === 'yes'">
           <mat-label>Crop</mat-label>
           <mat-select name="crop" [(ngModel)]="crop" (ngModelChange)="putCrop()">
-            <mat-option *ngFor="let siteCropsOnRow of  expSite.siteCropsOn.split('|').slice(1)"
-              [value]="siteCropsOnRow.split('.')[3]">
+            <mat-option *ngFor="let siteCropsOnRow of  expSite.siteCropsOn.split('|').slice(1)" [value]="siteCropsOnRow.split('.')[3]">
               {{siteCropsOnRow.split('.')[3]}}
             </mat-option>
           </mat-select>
@@ -69,69 +66,68 @@
 
       <div *ngIf="adInfo == 'nc' &&  form == 'combo box'">
         <div *ngFor="let siteFactor of itemGroup.siteFactorList; let i=index">
-          <app-site-factor-edit-i [itemGroup]="itemGroup" [siteFactor]="siteFactor" [indexIG]="indexIG" [index]="i"
-            [expSite]="expSite">
+          <app-site-factor-edit-i [itemGroup]="itemGroup" [siteFactor]="siteFactor" [indexIG]="indexIG" [index]="i" [expSite]="expSite">
           </app-site-factor-edit-i>
         </div>
       </div>
 
       <div *ngIf="adInfo == 'nc' &&  form == 'text input'">
         <div *ngFor="let siteFactor of itemGroup.siteFactorList; let i=index">
-          <app-site-factor-edit-ii [itemGroup]="itemGroup" [siteFactor]="siteFactor" [indexIG]="indexIG" [index]="i"
-            [expSite]="expSite">
+          <app-site-factor-edit-ii [itemGroup]="itemGroup" [siteFactor]="siteFactor" [indexIG]="indexIG" [index]="i" [expSite]="expSite">
           </app-site-factor-edit-ii>
         </div>
       </div>
 
       <div *ngIf="adInfo == 'nc' &&  form == 'date'">
         <div *ngFor="let siteFactor of itemGroup.siteFactorList; let i=index">
-          <app-site-factor-edit-iii [itemGroup]="itemGroup" [siteFactor]="siteFactor" [indexIG]="indexIG" [index]="i"
-            [expSite]="expSite">
+          <app-site-factor-edit-iii [itemGroup]="itemGroup" [siteFactor]="siteFactor" [indexIG]="indexIG" [index]="i" [expSite]="expSite">
           </app-site-factor-edit-iii>
         </div>
       </div>
 
       <div *ngIf="adInfo == 'nc' &&  form == 'other input'">
         <div *ngFor="let siteFactor of itemGroup.siteFactorList; let i=index">
-          <app-site-factor-edit-iv [itemGroup]="itemGroup" [siteFactor]="siteFactor" [indexIG]="indexIG" [index]="i"
-            [expSite]="expSite">
+          <app-site-factor-edit-iv [itemGroup]="itemGroup" [siteFactor]="siteFactor" [indexIG]="indexIG" [index]="i" [expSite]="expSite">
           </app-site-factor-edit-iv>
         </div>
       </div>
 
       <div *ngIf="adInfo == 'yes' &&  form == 'text box or date'">
         <div *ngFor="let siteFactor of itemGroup.siteFactorList; let i=index">
-          <app-site-factor-edit-v [itemGroup]="itemGroup" [siteFactor]="siteFactor" [indexIG]="indexIG" [index]="i"
-            [expSite]="expSite">
+          <app-site-factor-edit-v [itemGroup]="itemGroup" [siteFactor]="siteFactor" [indexIG]="indexIG" [index]="i" [expSite]="expSite">
           </app-site-factor-edit-v>
         </div>
       </div>
 
       <div *ngIf="adInfo == 'yes' &&  form == 'combo box'">
         <div *ngFor="let siteFactor of itemGroup.siteFactorList; let i=index">
-          <app-site-factor-edit-vi [itemGroup]="itemGroup" [siteFactor]="siteFactor" [indexIG]="indexIG" [index]="i"
-            [expSite]="expSite" [factorFertilizerList]="factorFertilizerList"
-            (eventEmitterSiteFactorEditVIRemove)="catchEmitterSiteFactorEdit($event)"
-            (eventEmitterChangeUnit)="diffUnit">
+          <app-site-factor-edit-vi [itemGroup]="itemGroup" [siteFactor]="siteFactor" [indexIG]="indexIG" [index]="i" [expSite]="expSite"
+            [factorFertilizerList]="factorFertilizerList" (eventEmitterSiteFactorEditVIRemove)="catchEmitterSiteFactorEdit($event)">
           </app-site-factor-edit-vi>
         </div>
+
+        <!-- (eventEmitterChangeUnit)="diffUnit" -->
 
         <mat-card-actions class="p-l-20">
           <button mat-mini-fab color="primary" (click)="post()" title="add fertilizer">
             <mat-icon>add</mat-icon>
           </button>
           <button mat-raised-button color="accent" (click)="popup()"
-            *ngIf="factorName === 'Fertilizer type and amount' || factorName === 'Nutrient element type and amount'">
-            <!-- [disabled]="diffUnit" -->
+            *ngIf="factorName === 'Fertilizer type and amount' || factorName === 'Nutrient element type and amount'" [disabled]="diffUnit">
             <mat-icon>calculate</mat-icon> Application details
           </button>
         </mat-card-actions>
+
+
 
         <!-- <div>
           <div *ngFor="let factorFertilizerItem of factorFertilizerList">
             {{factorFertilizerItem.unit}}
           </div>
-        </div> -->
+        </div>
+ -->
+
+
 
         <br>
 
@@ -139,8 +135,7 @@
           <div fxLayout="row">
             <mat-form-field appearance="outline">
               <mat-label>Notes</mat-label>
-              <textarea matInput name="levelNameNote" placeholder="Enter..." [(ngModel)]="factorNote"
-                (ngModelChange)="putNote()">
+              <textarea matInput name="levelNameNote" placeholder="Enter..." [(ngModel)]="factorNote" (ngModelChange)="putNote()">
             </textarea>
             </mat-form-field>
           </div>

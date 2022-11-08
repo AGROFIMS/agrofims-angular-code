@@ -1,1 +1,32 @@
+ .form{
+    min-width: 500px;
+    width: 50%;
+ }
+
+ .mat-card-actions{
+  min-width: 500px;
+  /* width: 50%; */
+}
+
+.text-green{
+   /* margin-left: 10px; */
+   color: #28a745;
+ }
  
+ .text-red{
+   /* margin-left: 10px; */
+   color: #dc3545;
+ }
+
+ .text-black{
+   /* margin-left: 10px; */
+   color: #000000;
+ }
+ 
+ .upload-class{
+   border: solid 1px;
+   border-radius: 4px;
+   padding: 10px;
+   border-color: #ddd;
+   margin-bottom: 10.5px;
+ }

@@ -22,13 +22,13 @@
 
     <div fxLayout="row" *ngIf="data.type_factor === 'Product'">
       <span class="m-auto">
-        Nutrient: amount ...
+        Nutrient: amount {{data.unit}}
       </span>
     </div>
 
     <div fxLayout="row" *ngIf="data.type_factor === 'Nutrient'">
       <span class="m-auto">
-        Amount of product to be added (...)
+        Amount of product to be added ({{data.unit}})
       </span>
     </div>
 

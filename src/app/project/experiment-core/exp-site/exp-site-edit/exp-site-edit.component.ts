@@ -48,9 +48,10 @@ export class ExpSiteEditComponent implements OnInit, OnChanges {
   parameterListI: Parameter[] = [];
   parameterListII: Parameter[] = [];
   parameterListIII: Parameter[] = [];
-  parameterListIV: Parameter[] = [];
-  parameterListV: Parameter[] = [];
-  parameterListVii: Parameter[] = [];
+  faoList: Parameter[] = [];
+  usdaList: Parameter[] = [];
+  wrbList: Parameter[] = [];
+  prevCropList: Parameter[] = [];
 
   /* Components */
   siteCropList: SiteCrop[];
@@ -115,9 +116,10 @@ export class ExpSiteEditComponent implements OnInit, OnChanges {
     this.getParameterListI();
     this.getParameterListII();
     this.getParameterListIII();
-    this.getParameterListIV();
-    this.getParameterListV();
-    this.getParameterVII();
+    this.getFaoList();
+    this.getUsdaList();
+    this.getWrbList();
+    this.getPrevCropList();
     this.getSiteI();
     this.getExpSite();
 
@@ -145,20 +147,25 @@ export class ExpSiteEditComponent implements OnInit, OnChanges {
       .getAll('expSite', 'soil_class_system')
       .subscribe((_parameter: Parameter[]) => this.parameterListIII = _parameter);
   }
-  getParameterListIV() {
+  getFaoList() {
     return this.parameterService
       .getAll('expSite', 'fao_soil_class_group')
-      .subscribe((_parameter: Parameter[]) => this.parameterListIV = _parameter);
+      .subscribe((_parameter: Parameter[]) => this.faoList = _parameter);
   }
-  getParameterListV() {
+  getUsdaList() {
     return this.parameterService
       .getAll('expSite', 'usda_soil_class_group')
-      .subscribe((_parameter: Parameter[]) => this.parameterListV = _parameter);
+      .subscribe((_parameter: Parameter[]) => this.usdaList = _parameter);
   }
-  getParameterVII() {
+  getWrbList() {
+    return this.parameterService
+      .getAll('expSite', 'wrb_soil_class_group')
+      .subscribe((_parameter: Parameter[]) => this.wrbList = _parameter);
+  }
+  getPrevCropList() {
     return this.parameterService
       .getAll('expSite', 'previous_crop_fallow')
-      .subscribe((_parameter: Parameter[]) => this.parameterListVii = _parameter);
+      .subscribe((_parameter: Parameter[]) => this.prevCropList = _parameter);
   }
   getSiteI() {
     return this.siteService
@@ -167,6 +174,9 @@ export class ExpSiteEditComponent implements OnInit, OnChanges {
         this.siteIList = [...new Set(_siteIList.map(item => item.countryName))];
       });
   }
+
+
+
   getExpSite() {
     return this.expSiteService
       .get(this.expSiteId)
@@ -362,9 +372,7 @@ export class ExpSiteEditComponent implements OnInit, OnChanges {
   }
   popup() {
 
-
-    // this.getSiteFactorList();
-
+    // cropSelectionValid
     let _cropSelectionValid = 1;
     this.expSite.siteCropsOn.split('|').forEach(obj_1 => {
       _cropSelectionValid = _cropSelectionValid *
@@ -372,76 +380,51 @@ export class ExpSiteEditComponent implements OnInit, OnChanges {
     });
     this.cropSelectionValid = _cropSelectionValid === 1 ? true : false;
 
-
-
+    // factorSelectionValid levelsSettingValid
     let _factorSelectionValid = 1;
     let _levelsSettingValid = 1;
 
-    const checkList: {
-      index: number,
-      mark: number
+    const tempList: {
+      index: string,
+      levelCount: number,
+      minLevelCount: number,
     }[] = [];
 
-
-
-
-
-
-
-
-
-    // let siteFactorList: SiteFactor[];
-
-    // this.siteFactorService
-    //   .getById(this.expSiteId)
-    //   .subscribe(
-    //     (_siteFactorList: SiteFactor[]) => {
-    //       siteFactorList = _siteFactorList;
-    //     }
-    //   );
-
-
     this.siteFactorList.filter(obj_2 => obj_2.status === 'on').forEach(obj_3 => {
-
-      console.log(obj_3.levelName);
-
       _factorSelectionValid = _factorSelectionValid * (obj_3.factorId ? 1 : 0);
 
-      if (checkList.find(element => element.index === Number(obj_3.indexOrder))) {
+      const indexNew = obj_3.indexOrder;
+      const levelCountNew = obj_3.levelName ? obj_3.levelName.split('|').length : 0;
+      const existIndex = tempList.indexOf(tempList.find(obj_4 => obj_4.index === indexNew));
 
-        // console.log('found');
-        // console.log(obj_3.levelName ? obj_3.levelName : '0');
-
-        checkList.find(element => element.index === Number(obj_3.indexOrder)).mark =
-          checkList.find(element => element.index === Number(obj_3.indexOrder)).mark +
-          (obj_3.levelName ? obj_3.levelName.split('|').length : 0);
+      if (existIndex >= 0) {
+        const levelCountOld = tempList[existIndex].levelCount;
+        const minLevelCountOld = tempList[existIndex].minLevelCount;
+        tempList[existIndex] = {
+          index: indexNew,
+          levelCount: levelCountNew + levelCountOld,
+          minLevelCount: ((minLevelCountOld < levelCountNew) ? (minLevelCountOld) : (levelCountNew)),
+        };
       } else {
-
-        // console.log('not found');
-        // console.log(obj_3.levelName ? obj_3.levelName : '0');
-
-        checkList.push({ index: Number(obj_3.indexOrder), mark: (obj_3.levelName ? obj_3.levelName.split('|').length : 0) });
+        tempList.push(
+          {
+            index: indexNew,
+            levelCount: levelCountNew,
+            minLevelCount: levelCountNew,
+          }
+        );
       }
+
     });
 
-    checkList.forEach(obj_4 => {
-      _levelsSettingValid = _levelsSettingValid * (obj_4.mark > 1 ? 1 : 0);
+    tempList.forEach(obj_5 => {
+      _levelsSettingValid = _levelsSettingValid * ((obj_5.levelCount >= 2 && obj_5.minLevelCount >= 1) ? 1 : 0);
     });
-
-    // console.log('_factorSelectionValid: ' + _factorSelectionValid.toString());
-    // console.log('_levelsSettingValid: ' + _levelsSettingValid.toString());
-    // console.log(checkList);
 
     this.factorSelectionValid = _factorSelectionValid === 1 ? true : false;
     this.levelsSettingValid = _levelsSettingValid === 1 ? true : false;
 
-
-
-
-
-
-
-
+    // cropMeasurementValid
     const cropIdFAP = '57';
     let _cropMeasurementValid = 1;
     this.siteCropList
@@ -454,41 +437,76 @@ export class ExpSiteEditComponent implements OnInit, OnChanges {
       });
     this.cropMeasurementValid = _cropMeasurementValid === 1 ? true : false;
 
+
     const dialogRef = this.dialog.open(ManageDownloadSendComponent, {
       data:
       {
         expNameValid: this.expNameValid,
         expProNameValid: this.expProNameValid,
-
+        // cropSelectionValid
         cropSelectionValid: this.cropSelectionValid,
-
+        // factorSelectionValid levelsSettingValid
         factorSelectionValid: this.factorSelectionValid,
         levelsSettingValid: this.levelsSettingValid,
-
+        // cropMeasurementValid
         cropMeasurementValid: this.cropMeasurementValid,
 
         expSiteId: this.expSite.expSiteId,
         param1: this.expId + '_' + this.expSite.siteId + this.expSite.fieldbookId,
         param2: '0345',
 
-        param3: 'prod',
+        param3: 'dev',
         param4: null,
-        param5: this.expSite.expSiteId,
-        // param5: '86',
+        // param5: this.expSite.expSiteId,
+        param5: '86',
 
-        param6: this.expSite.experimentId
-        // param6: '176'
+        // param6: this.expSite.experimentId
+        param6: '176'
 
       },
       width: '80%',
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      // if (`${result}` === 'true') {
-      //   setTimeout(() => { this.getAllFull(); }, 500);
-      // }
-    });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (`${result}` === 'true') {
+    //     setTimeout(() => { this.getAllFull(); }, 500);
+    //   }
+    // });
+
 
   }
+
+  help1() {
+    window.open("https://agrofims.github.io/helpdocs/creatingafieldbook/site/", "_blank");
+  }
+
+  help2() {
+    window.open("https://agrofims.github.io/helpdocs/creatingafieldbook/design/", "_blank");
+  }
+
+  help3() {
+    window.open("https://agrofims.github.io/helpdocs/creatingafieldbook/fertilizer/", "_blank");
+  }
+
+  help4() {
+    window.open("https://agrofims.github.io/helpdocs/creatingafieldbook/practices/", "_blank");
+  }
+
+  help5() {
+    window.open("https://agrofims.github.io/helpdocs/creatingafieldbook/crop-measurement/", "_blank");
+  }
+
+  help6() {
+    window.open("https://agrofims.github.io/helpdocs/creatingafieldbook/phenology-measurements/", "_blank");
+  }
+
+  help7() {
+    window.open("https://agrofims.github.io/helpdocs/creatingafieldbook/weather-measurements/", "_blank");
+  }
+
+  help8() {
+    window.open("https://agrofims.github.io/helpdocs/creatingafieldbook/soil-measurements/", "_blank");
+  }
+
 }
 

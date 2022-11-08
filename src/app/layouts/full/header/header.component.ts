@@ -178,6 +178,10 @@ export class AppHeaderComponent implements OnInit {
     }, 5000);
   }
 
+  help() {
+    window.open('https://agrofims.github.io/helpdocs/', '_blank');
+  }
+
   getRandomColor() {
 
     const color = Math.floor(Math.random() * (40));

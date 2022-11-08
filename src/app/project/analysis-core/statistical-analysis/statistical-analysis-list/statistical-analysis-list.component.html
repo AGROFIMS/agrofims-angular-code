@@ -13,34 +13,165 @@
 
 
 
-<!-- <div fxLayout="row">
+<div fxLayout="row">
   <div fxFlex="100%">
+
     <mat-card>
       <mat-card-content>
-        <ul>
-          <li *ngFor="let file of files">
-            <mat-progress-bar [value]="file.progress"></mat-progress-bar>
-            <span id="file-label"></span>
-          </li>
-          <br>
-        </ul>
+        <form class="form">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Select one...</mat-label>
+            <mat-select name="fieldBook" [(ngModel)]="fieldBook">
+              <mat-option *ngFor="let siteFileItem  of siteFileList" [value]="siteFileItem.fileName">
+                {{siteFileItem.fileName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+
+          <div class="upload-class">
+            <div *ngFor="let file of files">
+              <mat-progress-bar [value]="file.progress"></mat-progress-bar>
+              <span id="file-label"></span>
+              <mat-label [ngClass]="{'text-green': file.color ==='green','text-red': file.color ==='red','text-black': file.color ==='black'}">
+                {{file.message}}</mat-label>
+            </div>
+
+            <div align="right">
+              <button mat-raised-button color="primary" (click)="onClick()" [disabled]='fieldBook===null'>
+                <mat-icon>file_upload</mat-icon>
+                Upload
+              </button>
+            </div>
+          </div>
+
+
+
+          <mat-form-field appearance="outline">
+            <mat-label>Statistical design of your experiment</mat-label>
+            <mat-select name="statisticalDesign" [(ngModel)]="statisticalDesign">
+              <mat-option *ngFor="let statisticalDesignItem  of statisticalDesignList" [value]="statisticalDesignItem.index">
+                {{statisticalDesignItem.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+
+
+
+          <mat-form-field appearance="outline" *ngIf="statisticalDesign===1">
+            <mat-label>Select Treatments</mat-label>
+            <mat-select name="crd_trt_selected" [(ngModel)]="crd_trt_selected" (ngModelChange)="crd_trt_selected_change()" multiple>
+              <mat-option *ngFor="let item of crd_trt_list" [value]="item">{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+          <mat-form-field appearance="outline" *ngIf="statisticalDesign===1">
+            <mat-label>Select Trait(s)</mat-label>
+            <mat-select name="crd_traits_selected" [(ngModel)]="crd_traits_selected" (ngModelChange)="crd_traits_selected_change()" multiple>
+              <mat-option *ngFor="let item of crd_traits_list" [value]="item">{{item}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+
+          <!-- <mat-form-field appearance="outline" *ngIf="statisticalDesign===1">
+            <mat-label>Select Treatments</mat-label>
+            <mat-chip-list #chipList aria-label="Variety names">
+              <mat-chip *ngFor="let chip of chipsSelected_crd_trt" [selectable]="selectable" [removable]="removable"
+                (removed)="removeChip(chip,'chipsSelected_crd_trt')">
+                {{chip}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes1" [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="addChip($event,'chipsSelected_crd_trt')">
+            </mat-chip-list>
+          </mat-form-field>
+
+
+
+          <mat-form-field appearance="outline" *ngIf="statisticalDesign===1">
+            <mat-label>Select Trait(s)</mat-label>
+            <mat-chip-list #chipList aria-label="Variety names">
+              <mat-chip *ngFor="let chip of chipsSelected_crd_traits" [selectable]="selectable" [removable]="removable"
+                (removed)="removeChip(chip,'chipsSelected_crd_traits')">
+                {{chip}}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes1" [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="addChip($event,'chipsSelected_crd_traits')">
+            </mat-chip-list>
+          </mat-form-field> -->
+
+
+          <!-- ... -->
+
+
+
+
+
+
+
+          <!-- <mat-form-field appearance="outline" *ngIf="statisticalDesign===1 || statisticalDesign===2">
+            <mat-label>Select Treatments</mat-label>
+            <input matInput name="input2">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" *ngIf="statisticalDesign===2 || statisticalDesign===4 || statisticalDesign===5">
+            <mat-label>Select Blocks/Replications</mat-label>
+            <input matInput name="input3">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" *ngIf="statisticalDesign===3 || statisticalDesign===4">
+            <mat-label>Select Factors</mat-label>
+            <input matInput name="input4">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Select Trait(s)</mat-label>
+            <input matInput name="input5">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" *ngIf="statisticalDesign===5">
+            <mat-label>Select Main Plot Factor</mat-label>
+            <input matInput name="input6">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" *ngIf="statisticalDesign===5">
+            <mat-label>Select Sub Plot Factor</mat-label>
+            <input matInput name="input7">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" *ngIf="statisticalDesign===5">
+            <mat-label>Select Sub Sub PLot Factor</mat-label>
+            <input matInput name="input8">
+          </mat-form-field> -->
+
+
+          <div align="right">
+            <button mat-raised-button color="primary" (click)="onDownload()" [disabled]='fieldBook===null'>
+              <mat-icon>file_download</mat-icon>
+              Download
+            </button>
+          </div>
+
+        </form>
+
       </mat-card-content>
-      <mat-card-actions>
-        <button mat-button color="warn" (click)="onClick()">
-          <mat-icon>file_upload</mat-icon>
-          Upload
-        </button>
-      </mat-card-actions>
+
     </mat-card>
-    <input type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept=".xls, .xlsx"
-      style="display:none;" />
-    <input type="file" #fileInput id="fileUpload" name="fileUpload" multiple="multiple" accept=".xls, .xlsx"
-      style="display:none;" />
+
+    <!-- multiple="multiple" -->
+    <input type="file" #fileUpload id="fileUpload" name="fileUpload" accept=".xls, .xlsx, .zip" style="display:none;" />
+    <input type="file" #fileInput id="fileUpload" name="fileUpload" accept=".xls, .xlsx, .zip" style="display:none;" />
   </div>
-</div> -->
+</div>
 
 
-
+<!-- 
 <div fxLayout="row">
   <div fxFlex="100%">
     <mat-card>
@@ -49,4 +180,4 @@
       </mat-card-content>
     </mat-card>
   </div>
-</div>
+</div> -->

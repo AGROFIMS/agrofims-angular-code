@@ -45,7 +45,7 @@ export class SiteFactorEditViComponent implements OnInit, OnChanges {
   measurementList: StudyVariable[];
 
   @Output() eventEmitterSiteFactorEditVIRemove = new EventEmitter<any>();
-  @Output() eventEmitterChangeUnit = new EventEmitter<boolean>();
+  // @Output() eventEmitterChangeUnit = new EventEmitter<boolean>();
 
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
 
@@ -81,16 +81,6 @@ export class SiteFactorEditViComponent implements OnInit, OnChanges {
       );
   }
 
-  remove(siteFactor: SiteFactor) {
-    this.siteFactorService
-      .delete(siteFactor.siteFactorId)
-      .subscribe(
-        () => {
-          this.eventEmitterSiteFactorEditVIRemove.emit(this.index);
-          this.updateTreatmentList();
-        }
-      );
-  }
 
   addChip(event: MatChipInputEvent): void {
     const input = event.input;
@@ -205,6 +195,23 @@ export class SiteFactorEditViComponent implements OnInit, OnChanges {
     }
   }
 
+
+  remove(siteFactor: SiteFactor) {
+
+    this.removeChip('all');
+
+    this.siteFactorService
+      .delete(siteFactor.siteFactorId)
+      .subscribe(
+        () => {
+
+          this.eventEmitterSiteFactorEditVIRemove.emit(this.index);
+          this.updateTreatmentList();
+        }
+      );
+  }
+
+
   removeChip(levelName: string): void {
     const index = this.levelNameSelected.indexOf(levelName);
     if (index >= 0) {
@@ -221,6 +228,31 @@ export class SiteFactorEditViComponent implements OnInit, OnChanges {
           this.siteFactor.siteFactorId
         );
       }
+    } else if (levelName === 'all') {
+
+      if (this.expSite.treatment) {
+        const treatmentList = this.expSite.treatment.split('|');
+        treatmentList.forEach((treatment, _index) => {
+          const levelNameList = treatment.split(' / ');
+          const _levelName = levelNameList[this.indexIG];
+          // if (levelName !== '-' && itemListSelected.includes(levelName)) {
+          console.log(_levelName);
+          console.log(this.levelNameSelected);
+
+
+          if (_levelName !== '-' && this.levelNameSelected.includes(_levelName.split('_')[1])) {
+            levelNameList[this.indexIG] = '-';
+            treatmentList[_index] = levelNameList.join(' / ');
+          }
+        });
+
+        this.expSite.treatment = treatmentList.join('|');
+        this.expSiteService
+          .put(this.expSite)
+          .subscribe();
+      }
+
+
     }
   }
 
@@ -331,7 +363,7 @@ export class SiteFactorEditViComponent implements OnInit, OnChanges {
     this.verifyInTreatment([]);
     this.put();
 
-    this.eventEmitterChangeUnit.emit(true);
+    // this.eventEmitterChangeUnit.emit(true);
 
   }
 
@@ -359,11 +391,9 @@ export class SiteFactorEditViComponent implements OnInit, OnChanges {
     measurementList: StudyVariable[],
     productValue: string) {
 
-    // get studyVariableId, typeFertilizer, productValue, elementListGroup
     let newStudyVariableId: string = null;
     let typeFertilizer = 'Nutrient';
     let newProductValue: string = null;
-    // const elementList = '0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0';
     let newElementListGroup = '0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0';
     if (factorNameMain === 'Fertilizer type and amount') {
       typeFertilizer = 'Product';

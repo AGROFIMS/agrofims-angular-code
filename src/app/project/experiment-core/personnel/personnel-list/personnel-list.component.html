@@ -1,16 +1,16 @@
-<mat-card-title>Personnel associated with the experiment
-  <button mat-raised-button color="primary" style="right: 0px; position: absolute;" (click)="loadProfile()"
-    align="right">
+<mat-card-header>
+  <mat-card-title>Personnel associated with the experiment</mat-card-title>
+  <button mat-icon-button color="primary" (click)="help()">
+    <mat-icon>help_outline</mat-icon>
+  </button>
+  <button mat-raised-button color="primary" style="right: 0px; position: absolute;" (click)="loadProfile()" align="right">
     <mat-icon>account_box</mat-icon> Load my info
   </button>
-</mat-card-title>
 
-
-
+</mat-card-header>
 
 <form class="example-form" *ngFor="let item of itemList; let i=index">
-  <app-personnel-edit [index]="i" [item]="item" [parameter]="parameter" [parameter2]="parameter2"
-    [parameter3]="parameter3"></app-personnel-edit>
+  <app-personnel-edit [index]="i" [item]="item" [parameter]="parameter" [parameter2]="parameter2" [parameter3]="parameter3"></app-personnel-edit>
 </form>
 
 <mat-card-actions>

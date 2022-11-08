@@ -7,6 +7,7 @@ export class SiteFile {
     public fileType: string,
     public fbappDisabled: string,
     public kdxDisabled: string,
+    public odkDisabled: string,
     public status: string,
     public siteFileId?: string,
     public createdAt?: string,

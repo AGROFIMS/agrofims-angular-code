@@ -41,6 +41,10 @@ export class ExpSiteListComponent implements OnInit {
     this.getAllFull(this.id);
   }
 
+  help() {
+    window.open("https://agrofims.github.io/helpdocs/creatingafieldbook/fieldbook/", "_blank");
+  }
+
   getAllFull(id: any) {
     return this.expSiteService
       .getFull(id)

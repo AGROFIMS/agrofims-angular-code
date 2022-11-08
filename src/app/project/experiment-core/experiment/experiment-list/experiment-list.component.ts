@@ -87,4 +87,8 @@ export class ExperimentListComponent implements OnInit {
     });
   }
 
+  help() {
+    window.open("https://agrofims.github.io/helpdocs/creatingafieldbook/experiments/", "_blank");
+  }
+
 }
