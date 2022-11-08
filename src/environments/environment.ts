@@ -9,7 +9,7 @@ export const environment = {
   // baseUrl: 'https://con.agrofims.org/agrofims/api/dev/0369/app/',
 
   // new 2022 with Metrika
-  baseUrl: "https://con.agrofims.org/agrofims/api/prod/0369/app/",
+  baseUrl: "https://con.agrofims.org/agrofims/api/prod/0370/app/",
   // baseUrlAuth: 'http://localhost:4000/api/auth',
   baseUrlAuth: "https://dev.agrofims.org/api/auth",
   // baseUrlAuth: '',
